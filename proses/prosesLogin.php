@@ -7,7 +7,7 @@ if(!$_POST['email'] || !$_POST['pass']){
 }else {
     $email  = $_POST['email'];
     $pass = $_POST['pass'];
-    $sql  = "SELECT * FROM user WHERE email_u = '".$email."' AND password_u = '".$pass."'";
+    $sql  = "SELECT * FROM user WHERE email_u = '".$email."' AND password_u = '".$pass."' AND status_u='1'";
     $cek=mysqli_query($koneksi,$sql);
 	$jumlah = mysqli_num_rows($cek);
     $hasil = mysqli_fetch_assoc($cek);
