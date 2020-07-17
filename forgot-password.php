@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Forgot Password</title>
+  <title>Dak Dak- Forgot Password</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -75,7 +75,7 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="register.html">Join Us!</a>
+                    <a class="small" href="register.php">Join Us!</a>
                   </div>
                   <div class="text-center">
                     <a class="small" href="login.php">Already have an account? Login!</a>
