@@ -16,7 +16,7 @@ if(!$_POST['email'] || !$_POST['pass']){
     }else {
         $_SESSION['id_user'] 			= $hasil ['id_user'];
         $_SESSION['id_roles']  	        = $hasil ['fk_id_al'];
-        $_SESSION['nama_u']	    	= $hasil['nama_u'];  
+        $_SESSION['nama_u']	    	    = $hasil['nama_u'];  
         header("location:../index.php");
         }
     }

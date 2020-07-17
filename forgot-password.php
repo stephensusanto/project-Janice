@@ -39,8 +39,28 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>
                     <p class="mb-4">We get it, stuff happens. Just enter your email address below and enter the new password!</p>
+                    <?php
+                        if (empty($_GET['alert'])) {
+                            echo "";
+                        } 
+
+                        elseif ($_GET['alert'] == 1) {
+                            echo "<div class='alert alert-danger alert-dismissable'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                    <h4>  <i class='icon fa fa-times-circle'></i> Reset Password Failed!</h4>
+                                    Email dan Password anda Tidak Sesuai!
+                                </div>";
+                        }
+                        elseif ($_GET['alert'] == 2) {
+                            echo "<div class='alert alert-success alert-dismissable'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                    <h4>  <i class='icon fa fa-check-circle'></i> Success!</h4>
+                                    Anda Telah Berhasil Me-Reset Password Anda!
+                                </div>";
+                        }
+                    ?>
                   </div>
-                  <form action="proses/prosesResetPass.php" class="user">
+                  <form action="proses/prosesResetPass.php" method ="POST" class="user">
                     <div class="form-group">
                       <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                     </div>
