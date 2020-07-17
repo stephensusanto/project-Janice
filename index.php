@@ -2,6 +2,7 @@
 <html lang="en">
 <?php
     include("header.php");
+    
 ?>
 
         <!-- Begin Page Content -->

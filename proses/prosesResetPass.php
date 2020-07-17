@@ -19,7 +19,7 @@ include("koneksi.php");
             }
             else
             {
-               header("location:../forgot-password.php?alert=1");
+               header("location:../forgot-password.php?alert=3");
             }
         }
     }
