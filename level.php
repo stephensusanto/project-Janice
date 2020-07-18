@@ -8,13 +8,13 @@
        <div class="container-fluid">
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Data Domisili</h1>
+<h1 class="h3 mb-2 text-gray-800">Data Akses Level</h1>
 
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-       <a href="tambahDomisili.php"> <button style="float:right; background-color:#4295f5; color:white" class="btn btn-user">Tambah Data</button></a>
+       <a href="tambahLevel.php"> <button style="float:right; background-color:#4295f5; color:white" class="btn btn-user">Tambah Data</button></a>
     </div>
   <div class="card-body">
   <?php  
@@ -66,16 +66,16 @@
         <?php
                   include("proses/koneksi.php");
                   if($_SESSION['level'] == "1" || $_SESSION['level'] == "2"){
-                    $query = "SELECT * FROM domisili ";
+                    $query = "SELECT * FROM level ";
                   } 
                   
                   $nomor =1;
                   $tampilin = mysqli_query($koneksi, $query);
                   while($output = mysqli_fetch_array($tampilin)){
                    
-                    $id = $output['id_dom'];
-                    $nama = $output['nama_dom'];
-                    $status = $output['status_dom'];
+                    $id = $output['id_level'];
+                    $nama = $output['nama_level'];
+                    $status = $output['status_level'];
                    
                   
                   ?>
@@ -117,9 +117,9 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form id="form_send" action='proses/prosesEditDomisili.php' method ='post'  enctype="multipart/form-data">	
+          <form id="form_send" action='proses/prosesEditLevel.php' method ='post'  enctype="multipart/form-data">	
           <input type='hidden' name='id' id="id">
-          <label for="exampleInputEmail1">Nama Produk</label>
+          <label for="exampleInputEmail1">Nama Level</label>
           <input type='text'class="form-control" name='nama' id="nama"> <br>
           <label for="exampleInputEmail1">Status</label>
           <Select class="form-control" name='status' id="status">

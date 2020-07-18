@@ -43,7 +43,7 @@ if(!$_SESSION['nama_u']){
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
+      <li class="nav-item ">
       <?php
       if($_SESSION['status'] =="2"){
         ?>
