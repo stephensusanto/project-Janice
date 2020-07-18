@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2020 at 08:07 AM
+-- Generation Time: Jul 18, 2020 at 08:14 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -84,7 +84,7 @@ CREATE TABLE `konfigurasi` (
 
 INSERT INTO `konfigurasi` (`id_konfig`, `fk_id_level`, `minimal_pembelian`, `deposit`) VALUES
 (1, 3, 240, 100000),
-(2, 4, 500, 600000);
+(2, 4, 500, 0);
 
 -- --------------------------------------------------------
 
