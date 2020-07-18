@@ -58,7 +58,7 @@ if(!$_SESSION['nama_u']){
           <span>Dashboard</span></a>
       </li>
       <?php
-        if($_SESSION['level'] == "1"){
+        if($_SESSION['level'] == "1" || $_SESSION['level'] == "2"){
           ?>
              <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -66,7 +66,7 @@ if(!$_SESSION['nama_u']){
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="users.php">User</a>
+            <a class="collapse-item" href="user.php">User</a>
             <a class="collapse-item" href="produk.php">Produk</a>
           </div>
         </div>

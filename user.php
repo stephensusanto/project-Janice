@@ -8,13 +8,13 @@
        <div class="container-fluid">
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Data Produk</h1>
+<h1 class="h3 mb-2 text-gray-800">Data User</h1>
 
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-       <a href="tambahProduk.php"> <button style="float:right; background-color:#4295f5; color:white" class="btn btn-user">Tambah Data</button></a>
+       <a href="tambahUser.php"> <button style="float:right; background-color:#4295f5; color:white" class="btn btn-user">Tambah Data</button></a>
     </div>
   <div class="card-body">
   <?php  
@@ -49,23 +49,27 @@
         <thead>
           <tr>
             <th>Nomor</th>
-            <th>Nama Barang</th>
-            <th>Harga Distributor</th>
-            <th>Harga Reseller</th>
-            <th>Desc Produk</th>
-            <th>Gambar</th>
+            <th>Nama </th>
+            <th>Email</th>
+            <th>Tanggal lahir</th>
+            <th>Telp</th>
+            <th>Alamat</th>
+            <th>Domisili</th>
+            <th>Level</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
         <tfoot>
           <tr>
-            <th>Nomor</th>
-            <th>Nama Barang</th>
-            <th>Harga Distributor</th>
-            <th>Harga Reseller</th>
-            <th>Desc Produk</th>
-            <th>Gambar</th>
+             <th>Nomor</th>
+            <th>Nama </th>
+            <th>Email</th>
+            <th>Tanggal lahir</th>
+            <th>Telp</th>
+            <th>Alamat</th>
+            <th>Domisili</th>
+            <th>Level</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -74,41 +78,66 @@
         <?php
                   include("proses/koneksi.php");
                   if($_SESSION['level'] == "1" || $_SESSION['level'] == "2"){
-                    $query = "SELECT * FROM produk ";
+                    $query = "SELECT * FROM user LEFT JOIN domisili on domisili.id_dom = user.fk_id_domisili ";
                   } 
-                  else if($_SESSION['level'] == "3"){
-                    $query = "SELECT * FROM produk INNER JOIN user ON user.id_user = produk.last_change where last_change = '".$_SESSION['level']."'";
-                  }
                   $nomor =1;
                   $tampilin = mysqli_query($koneksi, $query);
                   while($output = mysqli_fetch_array($tampilin)){
                    
-                    $id = $output['id_produk'];
-                    $nama = $output['nama_produk'];
-                    $id_user = $output['last_change'];
-                    $harga = $output['harga_produk'];
-                    $reseller = $output['harga_reseller'];
-                    $desc = $output['desc_produk'];
-                    $gambar = $output['gambar_produk'];
-                    $status = $output['status_produk'];
+                    $id = $output['id_user'];
+                    $nama = $output['nama_u'];
+                    $email = $output['email_u'];
+                    $dob = $output['dob_u'];
+                    $telp = $output['telp_u'];
+                    $alamat_u = $output['alamat_u'];
+                    $level = $output['level'];
+                    $domisili = $output['fk_id_domisili'];
+                    $namaDom = $output['nama_dom'];
+                    $status = $output['status_u'];
                    
                   
                   ?>
                     <tr>
                         <td><?php echo $nomor; ?></td>
                         <td><?php echo $nama; ?></td>
-                        <td><?php echo rupiah($harga); ?></td>
-                        <td><?php echo rupiah($reseller); ?></td>
-                        <td><?php echo $desc; ?></td>
-                        <td><image height ="100px" width ="100px" src="<?php echo $gambar ;?>"></td>
+                        <td><?php echo $email; ?></td>
+                        <td><?php echo date("d/m/Y", strtotime($dob)); ?></td>
+                        <td><?php echo $telp; ?></td>
+                        <td><?php echo $alamat_u; ?></td>
+                        <td><?php 
+                        if($domisili == "0"){
+                            echo "Semua Domisili"; 
+                        }else {
+                            echo $namaDom;
+                        }
+                       
+                        ?></td>
+                        <td><?php 
+                        if($level == "1"){
+                            echo "Super Admin"; 
+                        }
+                        else if($level == "2"){
+                            echo "Admin";
+                        }else if($level == "3"){
+                            echo "Distributor";
+                        }else {
+                            echo "Reseller";
+                        }
+                        ?></td>
                         <td><?php 
                         if($status =="0"){
                             echo "Tidak Aktif"; 
                         }
-                        else {
+                        else if($status =="1") {
                             echo "Aktif";
+                        }if($status =="2") {
+                            echo "on Progress";
+                        }
+                        if($status =="3") {
+                            echo "Pending";
                         }
                        ?></td>
+                        
                        <td> <button type='submit' data-toggle='modal' data-target='#myModal' class='btn btn-primary btn-flat btn_edit'
                             data-id_barang='<?php echo $id ;?>'
                             data-nama_barang='<?php echo $nama ;?>'

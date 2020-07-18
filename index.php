@@ -23,8 +23,25 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pemesanan (Bulan Ini)</div>
+                      <?php
+                        include("proses/koneksi.php");
+                        $tanggal = date("Y/m/d");
+                        $bulan =  date("m");
+                          $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi WHERE MONTH(tanggal_sesi) = '$bulan' ";
+                          $cek=mysqli_query($koneksi,$sql);
+                          $jumlah = mysqli_num_rows($cek);
+                          $total = 0;
+                          while($output = mysqli_fetch_array($cek)){
+                            $jumlahBarang = $output['quantity_barang'];
+                            $harga_barang = $output['harga_barang'];
+                            $jumlahSemua = $jumlahBarang * $harga_barang;
+
+                            $total += $jumlahSemua;
+                          }
+
+                      ?>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo rupiah($total); ?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -40,8 +57,24 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pemesanan (Hari ini)</div>
+                      <?php
+                        
+                        $tanggal = date("Y/m/d");
+                          $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi WHERE tanggal_sesi = '$tanggal' ";
+                          $cek=mysqli_query($koneksi,$sql);
+                          $jumlah = mysqli_num_rows($cek);
+                          $total = 0;
+                          while($output = mysqli_fetch_array($cek)){
+                            $jumlahBarang = $output['quantity_barang'];
+                            $harga_barang = $output['harga_barang'];
+                            $jumlahSemua = $jumlahBarang * $harga_barang;
+
+                            $total += $jumlahSemua;
+                          }
+
+                      ?>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo rupiah($total); ?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -57,15 +90,22 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Produk yang Tersedia </div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                        <?php
+                        
+                        $tanggal = date("Y/m/d");
+                          $sql  = "SELECT * FROM Produk Where status_produk = '1'";
+                          $cek=mysqli_query($koneksi,$sql);
+                          $jumlah = mysqli_num_rows($cek);
+                        
+
+                      ?>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $jumlah; ?></div>
                         </div>
                         <div class="col">
-                          <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
+                         
                         </div>
                       </div>
                     </div>
@@ -84,7 +124,13 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                      <?php
+                       
+                          $sql  = "SELECT * FROM user WHERE status_u = '3'";
+                          $cek=mysqli_query($koneksi,$sql);
+                          $jumlah = mysqli_num_rows($cek);
+                      ?>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $jumlah;?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-comments fa-2x text-gray-300"></i>
