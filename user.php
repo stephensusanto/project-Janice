@@ -138,13 +138,25 @@
                         }
                        ?></td>
                         
-                       <td> <button type='submit' data-toggle='modal' data-target='#myModal' class='btn btn-primary btn-flat btn_edit'
-                            data-id_barang='<?php echo $id ;?>'
-                            data-nama_barang='<?php echo $nama ;?>'
-                            data-deskripsi_barang='<?php echo $desc; ?>'
-                            data-harga_barang='<?php echo $harga; ?>'
-                            data-harga_reseller='<?php echo $reseller; ?>'
-                            data-status_barang='<?php echo $status; ?>'> edit</button>  </td>
+                       <td> 
+                       <?php 
+                       if($status == "2"){
+
+                       }else {
+                           ?>
+                       <button type='submit' data-toggle='modal' data-target='#myModal' class='btn btn-primary btn-flat btn_edit'
+                            data-id='<?php echo $id ;?>'
+                            data-nama='<?php echo $nama ;?>'
+                            data-email='<?php echo $email ;?>'
+                            data-dob='<?php echo $dob; ?>'
+                            data-telp='<?php echo $telp; ?>'
+                            data-alamat='<?php echo $alamat_u; ?>'
+                            data-level='<?php echo $level; ?>'
+                            data-domisili='<?php echo $domisili; ?>'
+                            data-status='<?php echo $status; ?>'> edit</button>  </td>
+                       <?php }
+                       ?>
+
                     </tr>
                     <?php
                     $nomor +=1;
@@ -168,23 +180,25 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form id="form_send" action='proses/prosesEditProduk.php' method ='post'  enctype="multipart/form-data">	
-          <input type='hidden' name='id_barang' id="id_barang">
-          <label for="exampleInputEmail1">Nama Produk</label>
-          <input type='text'class="form-control" name='nama_barang' id="nama_barang"> <br>
+        <form id="form_send" action='proses/prosesEditUser.php' method ='post'  enctype="multipart/form-data">	
+          <input type='hidden' name='id' id="id">
+          <label for="exampleInputEmail1">Nama User</label>
+          <input type='text'class="form-control" name='nama' id="nama" > <br>
 
-          <label for="exampleInputEmail1">Deskripsi Produk</label> <br>
-          <input type='textarea' class="form-control" name='deskripsi_barang' id="deskripsi_barang"><br> 
+          <label for="exampleInputEmail1">Email User</label> <br>
+          <input type='textarea' class="form-control" name='email' id="email" ><br> 
 
-          <label for="exampleInputEmail1">Harga Distributor</label>
-          <input type='text' class="form-control" name='harga_barang' id="harga_barang"><br>
-          <label for="exampleInputEmail1">Harga Reseller</label>
+          <label for="exampleInputEmail1">Tanggal Lahir</label>
+          <input type='date' class="form-control" name='dob' id="dob"><br>
+          <label for="exampleInputEmail1">No. Telpon</label>
 
-          <input type='text' class="form-control" name='harga_reseller' id="harga_reseller"><br>
-          <label for="exampleInputEmail1">Gambar Produk</label> <br>
-          <input type="file" name="berkas" id="berkas"> <br> <br>    
+          <input type='text' class="form-control" name='telp' id="telp"><br>
+          <label for="exampleInputEmail1">Alamat</label> <br>
+          <textarea class="form-control" name="alamat" id="alamat"></textarea> <br>    
+
+        
           <label for="exampleInputEmail1">Status</label>
-          <Select class="form-control" name='status_barang' id="status_barang">
+          <Select class="form-control" name='status' id="status" >
           <option value='1'> Aktif </option>
           <option value='0'> Tidak Aktif</option> 
           </select><br>
@@ -261,24 +275,50 @@
   <script>
 		 $(document).ready(function() {
         $(".btn_edit").click(function(event){
-          var id_barang = $(this).data('id_barang');
-          var nama_barang = $(this).data('nama_barang');
-          var deskripsi_barang = $(this).data('deskripsi_barang');
-          var harga_barang = $(this).data('harga_barang');
-          var harga_reseller = $(this).data('harga_reseller');
-          var status_barang = $(this).data('status_barang');
-          
+          var id = $(this).data('id');
+          var nama = $(this).data('nama');
+          var dob = $(this).data('dob');
+          var email = $(this).data('email');
+          var telp = $(this).data('telp');
+          var alamat = $(this).data('alamat');
+          var tipe = $(this).data('level');
+          var status = $(this).data('status');
         
-          $("#id_barang").val(id_barang);
-          $("#nama_barang").val(nama_barang);
-          $("#deskripsi_barang").val(deskripsi_barang);
-          $("#harga_barang").val(harga_barang);
-          
-          $("#harga_reseller").val(harga_reseller);
-          
-          
-          $("#status_barang").val(status_barang);
-          
+            if(status == "3"){
+                $("#id").val(id);
+                $("#nama").val(nama);
+                $("#dob").val(dob);
+                $("#email").val(email);
+                $("#telp").val(telp);
+                $("#alamat").val(alamat);
+                $("#tipe").val(tipe);
+                $("#status").val(status);
+                document.getElementById("nama").readOnly = true; 
+                document.getElementById("dob").readOnly = true; 
+                document.getElementById("email").readOnly = true; 
+                document.getElementById("telp").readOnly = true; 
+                document.getElementById("alamat").readOnly = true; 
+                document.getElementById("tipe").disabled = true; 
+               
+                
+                
+            }else {
+                $("#id").val(id);
+                $("#nama").val(nama);
+                $("#dob").val(dob);
+                $("#email").val(email);
+                $("#telp").val(telp);
+                $("#alamat").val(alamat);
+                $("#tipe").val(tipe);
+                $("#status").val(status);
+                document.getElementById("nama").readOnly = false; 
+                document.getElementById("dob").readOnly = false; 
+                document.getElementById("email").readOnly = false; 
+                document.getElementById("telp").readOnly = false; 
+                document.getElementById("alamat").readOnly = false; 
+                document.getElementById("tipe").disabled = false; 
+            }
+         
           
           /*
           $('#form_send').form('clear');

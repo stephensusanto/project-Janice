@@ -16,9 +16,9 @@ if(!empty($_POST["harga_barang"])){
 if(!empty($_POST["harga_reseller"])){
    $harga_reseller = $_POST['harga_reseller'];
 }
-if(!empty($_POST["status_barang"])){
+
   $status = $_POST['status_barang'];
-}
+
 if(!empty($_FILES["berkas"])){
   $gambar = $_FILES['berkas']['name'];
   $tipe = $_FILES['berkas']['type'];
@@ -27,7 +27,7 @@ if(!empty($_FILES["berkas"])){
 $id_u = $_SESSION['id_user'];
   
     if(!$gambar){
-        if(!$desc || !$harga || !$harga_reseller || !$status){
+        if(!$desc || !$harga || !$harga_reseller || $status == ''){
             header("Location:../produk.php?alert=1");
         }else {
           echo  $query = "UPDATE produk
@@ -49,7 +49,7 @@ $id_u = $_SESSION['id_user'];
         }
     }else {
         $realName = $_SESSION['id_user'].$barang.".".explode("/",$tipe)[1];
-        if(!$desc || !$harga || !$harga_reseller || !$status){
+        if(!$desc || !$harga || !$harga_reseller || $status == ''){
             header("Location:../produk.php?alert=1");
         }else {
             $loc = "http://localhost/gitHub/projectJanice/img/produk/";

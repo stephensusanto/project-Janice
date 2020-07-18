@@ -123,7 +123,7 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">User Notif</div>
                       <?php
                        
                           $sql  = "SELECT * FROM user WHERE status_u = '3'";
