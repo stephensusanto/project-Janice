@@ -15,7 +15,7 @@ if(!$_POST['email'] || !$_POST['pass']){
         header("location:../login.php?alert=1");
     }else {
         $_SESSION['id_user'] 			= $hasil ['id_user'];
-        $_SESSION['level']  	        = $hasil ['level'];
+        $_SESSION['level']  	        = $hasil ['fk_id_level'];
         $_SESSION['nama_u']	    	    = $hasil['nama_u'];  
         $_SESSION['status']	    	    = $hasil['status_u'];  
         if($hasil['status_u'] == "2"){

@@ -34,7 +34,7 @@ if(!$_SESSION['nama_u']){
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
         
         <div class="sidebar-brand-text mx-3">Dak Dak Admin <sup></sup></div>
       </a>
@@ -58,19 +58,34 @@ if(!$_SESSION['nama_u']){
           <span>Dashboard</span></a>
       </li>
       <?php
-        if($_SESSION['level'] == "1" || $_SESSION['level'] == "2"){
+        if($_SESSION['level'] == '1' || $_SESSION['level'] == '2'){
           ?>
+             <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
+          <span>User</span>
+        </a>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="user.php?level=2">Admin</a>
+            <a class="collapse-item" href="user.php?level=3">Distributor</a>
+            <a class="collapse-item" href="user.php?level=4">Reseller</a>
+          </div>
+        </div>
+      </li>
              <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <span>Settings</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="user.php">User</a>
             <a class="collapse-item" href="produk.php">Produk</a>
+            <a class="collapse-item" href="level.php">Akses Level</a>
+            <a class="collapse-item" href="domisili.php">Domisili</a>
+            <a class="collapse-item" href="konfig.php">Konfigurasi</a>
           </div>
         </div>
       </li>
+   
           <?php
         }
         ?>

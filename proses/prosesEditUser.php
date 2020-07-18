@@ -24,6 +24,9 @@
     if(!empty($_POST["tipe"])){
         $tipe = $_POST['tipe'];
     }
+    if(!empty($_GET["level"])){
+        $editedLevel =   $_GET['level'] ;
+    }
     
     $status=$_POST['status'];
 
@@ -32,21 +35,45 @@
     $findDataStatus = mysqli_fetch_assoc($find)['status_u'];
     if($findDataStatus == '3'){
         if($status == ''){
-            //header("location:../user.php?alert=1");
+            if($editedLevel == '2'){
+                header("location:../user.php?level=2&&alert=1");
+            }elseif($editedLevel == '3'){
+                header("location:../user.php?level=3&&alert=1");
+            }elseif($editedLevel == '4'){
+                header("location:../user.php?level=4&&alert=1");
+            }
         }else {
             $query = "UPDATE user SET 
             status_u = '$status' WHERE id_user = '$id'";
             $jalan = mysqli_query($koneksi, $query);
             if($jalan){
-                header("location:../user.php?alert=2");
+                if($editedLevel == '2'){
+                    header("location:../user.php?level=2&&alert=2");
+                }elseif($editedLevel == '3'){
+                    header("location:../user.php?level=3&&alert=2");
+                }elseif($editedLevel == '4'){
+                    header("location:../user.php?level=4&&alert=2");
+                }
             }
             else {
-                header("location:../user.php?alert=3");
+                if($editedLevel == '2'){
+                    header("location:../user.php?level=2&&alert=3");
+                }elseif($editedLevel == '3'){
+                    header("location:../user.php?level=3&&alert=3");
+                }elseif($editedLevel == '4'){
+                    header("location:../user.php?level=4&&alert=3");
+                }
             }
         }
     }else {
         if(!$nama || !$email || !$dob || !$telp || !$alamat || $status == ''){
-            header("location:../user.php?alert=1");
+            if($editedLevel == '2'){
+                header("location:../user.php?level=2&&alert=1");
+            }elseif($editedLevel == '3'){
+                header("location:../user.php?level=3&&alert=1");
+            }elseif($editedLevel == '4'){
+                header("location:../user.php?level=4&&alert=1");
+            }
             
         }else {
             $query = "UPDATE user SET 
@@ -58,10 +85,22 @@
             status_u = '$status' WHERE id_user = '$id'";
             $jalan = mysqli_query($koneksi,$query);
             if($jalan){
-                header("location:../user.php?alert=2");
+                if($editedLevel == '2'){
+                    header("location:../user.php?level=2&&alert=2");
+                }elseif($editedLevel == '3'){
+                    header("location:../user.php?level=3&&alert=2");
+                }elseif($editedLevel == '4'){
+                    header("location:../user.php?level=4&&alert=2");
+                }
             }
             else {
-                header("location:../user.php?alert=3");
+                if($editedLevel == '2'){
+                    header("location:../user.php?level=2&&alert=3");
+                }elseif($editedLevel == '3'){
+                    header("location:../user.php?level=3&&alert=3");
+                }elseif($editedLevel == '4'){
+                    header("location:../user.php?level=4&&alert=3");
+                }
             }
         }
     }

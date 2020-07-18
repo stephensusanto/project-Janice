@@ -24,19 +24,40 @@
     if(!empty($_POST["status"])){
         $status=$_POST['status'];
     }
+    if(!empty($_GET["level"])){
+        $editedLevel =   $_GET['level'] ;
+    }
 
     if(!$nama || !$email || !$dob || !$pass || !$telp || !$alamat || !$tipe || !$status){
-        header("location:../user.php?alert=1");
+        if($editedLevel == '2'){
+            header("location:../user.php?level=2&&alert=1");
+        }elseif($editedLevel == '3'){
+            header("location:../user.php?level=3&&alert=1");
+        }elseif($editedLevel == '4'){
+            header("location:../user.php?level=4&&alert=1");
+        }
     }else {
         $ttl = date("Y/m/d H:m:s");
         $query = "INSERT INTO user (nama_u, email_u, dob_u, telp_u, alamat_u, tanggal_daftar, password_u, level, fk_id_domisili, status_u)
         VALUES ('".$nama."', '".$email."', '".$dob."', '".$telp."','".$alamat."', now(),'".$pass."','".$tipe."','0','".$status."')";
         $jalan = mysqli_query($koneksi,$query);
         if($jalan){
-            header("location:../user.php?alert=2");
+            if($editedLevel == '2'){
+                header("location:../user.php?level=2&&alert=2");
+            }elseif($editedLevel == '3'){
+                header("location:../user.php?level=3&&alert=2");
+            }elseif($editedLevel == '4'){
+                header("location:../user.php?level=4&&alert=2");
+            }
         }
         else {
-            header("location:../user.php?alert=3");
+            if($editedLevel == '2'){
+                header("location:../user.php?level=2&&alert=3");
+            }elseif($editedLevel == '3'){
+                header("location:../user.php?level=3&&alert=3");
+            }elseif($editedLevel == '4'){
+                header("location:../user.php?level=4&&alert=3");
+            }
         }
     }
 ?>

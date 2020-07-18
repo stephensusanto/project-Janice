@@ -2,6 +2,7 @@
 <html lang="en">
 <?php
     include("header.php");
+    $levelRow = $_GET['level'];
 ?>
 
        <!-- Begin Page Content -->
@@ -14,7 +15,13 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-       <a href="tambahUser.php"> <button style="float:right; background-color:#4295f5; color:white" class="btn btn-user">Tambah Data</button></a>
+    <?php 
+    if($levelRow == '2' && $_SESSION['level'] == '1'){
+        ?>
+        <a href="tambahUser.php?level=<?php echo $levelRow; ?>"> <button style="float:right; background-color:#4295f5; color:white" class="btn btn-user">Tambah Data</button></a>
+   <?php
+   }
+    ?>
     </div>
   <div class="card-body">
   <?php  
@@ -77,8 +84,9 @@
         <tbody>
         <?php
                   include("proses/koneksi.php");
+                 
                   if($_SESSION['level'] == "1" || $_SESSION['level'] == "2"){
-                    $query = "SELECT * FROM user LEFT JOIN domisili on domisili.id_dom = user.fk_id_domisili ";
+                    $query = "SELECT * FROM user LEFT JOIN domisili on domisili.id_dom = user.fk_id_domisili WHERE fk_id_level = '".$levelRow."'";
                   } 
                   $nomor =1;
                   $tampilin = mysqli_query($koneksi, $query);
@@ -90,7 +98,7 @@
                     $dob = $output['dob_u'];
                     $telp = $output['telp_u'];
                     $alamat_u = $output['alamat_u'];
-                    $level = $output['level'];
+                    $level = $output['fk_id_level'];
                     $domisili = $output['fk_id_domisili'];
                     $namaDom = $output['nama_dom'];
                     $status = $output['status_u'];
@@ -180,7 +188,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-        <form id="form_send" action='proses/prosesEditUser.php' method ='post'  enctype="multipart/form-data">	
+        <form id="form_send" action='proses/prosesEditUser.php?level=<?php echo $levelRow; ?>' method ='post'  enctype="multipart/form-data">	
           <input type='hidden' name='id' id="id">
           <label for="exampleInputEmail1">Nama User</label>
           <input type='text'class="form-control" name='nama' id="nama" > <br>
