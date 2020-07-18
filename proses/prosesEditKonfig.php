@@ -6,14 +6,14 @@
     if(!empty($_POST["pembelian"])){
         $minimal_pembelian = $_POST['pembelian'];
     }
-    if(!empty($_POST["deposit"])){
+    
         $deposit=$_POST['deposit'];
-    }
+    
         
     
    
 
-    if(!$deposit || !$minimal_pembelian){  
+    if($deposit == ''|| !$minimal_pembelian){  
         header("location:../konfig.php?alert=1");
     }else {
         $ttl = date("Y/m/d H:m:s");
