@@ -35,7 +35,14 @@
                 <h4>  <i class='icon fa fa-check-circle'></i> Success!</h4>
                 Anda telah berhasil mengupdate data.
               </div>";
-	  }
+    }
+    elseif ($_GET['alert'] == 3) {
+      echo "<div class='alert alert-info alert-dismissable'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4>  <i class='icon fa fa-check-circle'></i> Success!</h4>
+              Anda telah berhasil mengupdate data.
+            </div>";
+  }
       ?>
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -108,7 +115,7 @@
                             data-nama_barang='<?php echo $nama ;?>'
                             data-deskripsi_barang='<?php echo $desc; ?>'
                             data-harga_barang='<?php echo $harga; ?>'
-                            data-stock_barang='<?php echo $stok; ?>'
+                            data-harga_reseller='<?php echo $reseller; ?>'
                             data-status_barang='<?php echo $status; ?>'> edit</button>  </td>
                     </tr>
                     <?php
@@ -141,15 +148,15 @@
           <label for="exampleInputEmail1">Deskripsi Produk</label> <br>
           <input type='textarea' class="form-control" name='deskripsi_barang' id="deskripsi_barang"><br> 
 
-          <label for="exampleInputEmail1">Harga Produk</label>
+          <label for="exampleInputEmail1">Harga Distributor</label>
           <input type='text' class="form-control" name='harga_barang' id="harga_barang"><br>
-          <label for="exampleInputEmail1">Stock Produk</label>
+          <label for="exampleInputEmail1">Harga Reseller</label>
 
-          <input type='text' class="form-control" name='stock_barang' id="stock_barang"><br>
+          <input type='text' class="form-control" name='harga_reseller' id="harga_reseller"><br>
           <label for="exampleInputEmail1">Gambar Produk</label> <br>
           <input type="file" name="berkas" id="berkas"> <br> <br>    
           <label for="exampleInputEmail1">Status</label>
-          <Select class="form-control" name='status_barang'>
+          <Select class="form-control" name='status_barang' id="status_barang">
           <option value='1'> Aktif </option>
           <option value='0'> Tidak Aktif</option> 
           </select><br>
@@ -230,7 +237,7 @@
           var nama_barang = $(this).data('nama_barang');
           var deskripsi_barang = $(this).data('deskripsi_barang');
           var harga_barang = $(this).data('harga_barang');
-          var stock_barang = $(this).data('stock_barang');
+          var harga_reseller = $(this).data('harga_reseller');
           var status_barang = $(this).data('status_barang');
           
         
@@ -238,15 +245,11 @@
           $("#nama_barang").val(nama_barang);
           $("#deskripsi_barang").val(deskripsi_barang);
           $("#harga_barang").val(harga_barang);
-          if(stock_barang == "Unlimited"){
-            $("#stock_barang").val(stock_barang);
-            document.getElementById("stock_barang").readOnly  = true;
-          }else {
-            $("#stock_barang").val(stock_barang);
-            document.getElementById("stock_barang").readOnly  = false;
-          }
           
-          $("#status_barang").val(status);
+          $("#harga_reseller").val(harga_reseller);
+          
+          
+          $("#status_barang").val(status_barang);
           
           
           /*
