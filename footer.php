@@ -57,6 +57,114 @@
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
   <script src="js/demo/datatables-demo.js"></script>
+  <?php
+
+  $year = date("Y");
+  $jan = dataBulan($koneksi,"1", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $feb = dataBulan($koneksi,"2", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $mar = dataBulan($koneksi,"3", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $ap = dataBulan($koneksi,"4", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $mei = dataBulan($koneksi,"5", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $jun = dataBulan($koneksi,"6", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $jul = dataBulan($koneksi,"7", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $aug = dataBulan($koneksi,"8", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $sep = dataBulan($koneksi,"9", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $oct = dataBulan($koneksi,"10", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $nov = dataBulan($koneksi,"11", $year, $_SESSION['id_user'], $_SESSION['level']);
+  $des = dataBulan($koneksi,"12", $year, $_SESSION['id_user'], $_SESSION['level']);
+ 
+  ?>
+  <script>
+
+    var ctx = document.getElementById("myAreaChart");
+    var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      datasets: [{
+        label: "Earnings",
+        lineTension: 0.3,
+        backgroundColor: "rgba(78, 115, 223, 0.05)",
+        borderColor: "rgba(78, 115, 223, 1)",
+        pointRadius: 3,
+        pointBackgroundColor: "rgba(78, 115, 223, 1)",
+        pointBorderColor: "rgba(78, 115, 223, 1)",
+        pointHoverRadius: 3,
+        pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+        pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+        pointHitRadius: 10,
+        pointBorderWidth: 2,
+        data: [<?php echo $jan.",".$feb.",".$mar.",".$ap.",".$mei.",".$jun.",".$jul.",".$aug.",".$sep.",".$oct.",".$nov.",".$des ; ?>],
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 10,
+        right: 25,
+        top: 25,
+        bottom: 0
+      }
+    },
+    scales: {
+      xAxes: [{
+        time: {
+          unit: 'date'
+        },
+        gridLines: {
+          display: false,
+          drawBorder: false
+        },
+        ticks: {
+          maxTicksLimit: 7
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          maxTicksLimit: 5,
+          padding: 10,
+          // Include a dollar sign in the ticks
+          callback: function(value, index, values) {
+            return 'Rp' + number_format(value);
+          }
+        },
+        gridLines: {
+          color: "rgb(234, 236, 244)",
+          zeroLineColor: "rgb(234, 236, 244)",
+          drawBorder: false,
+          borderDash: [2],
+          zeroLineBorderDash: [2]
+        }
+      }],
+    },
+    legend: {
+      display: false
+    },
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      titleMarginBottom: 10,
+      titleFontColor: '#6e707e',
+      titleFontSize: 14,
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      intersect: false,
+      mode: 'index',
+      caretPadding: 10,
+      callbacks: {
+        label: function(tooltipItem, chart) {
+          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+          return datasetLabel + ': Rp' + number_format(tooltipItem.yLabel);
+        }
+      }
+    }
+  }
+});
+</script>
   
 </body>
 
