@@ -21,6 +21,10 @@
          return "0";
       }
    }
+ 
+
+ 
+   
    function takeKonfirmasi($koneksi, $konfirmasi){
       $queryKonfirm = "SELECT * FROM konfirmasi_pembayaran Where id_konfirmasi = '$konfirmasi'";
       $jalankanQuery = mysqli_query($koneksi, $queryKonfirm);
@@ -33,36 +37,47 @@
          return "0";
       }
    }
+   
    function changeStockEveryProductDistributorToReseller($koneksi, $konfirmasi, $user){
+      
          $idSesi = takeKonfirmasi($koneksi,$konfirmasi) ;
          if($idSesi != '0'){
             $query = "SELECT * from detail_transaksi WHERE fk_id_sesi = '$idSesi'";
             $jalan = mysqli_query($koneksi, $query);
+            $array = array();
             if($jalan){
                while($output = mysqli_fetch_array($jalan)){
                   $produk = $output['fk_id_produk'];
                   $stock = $output['quantity_barang'];
-                  negativeCheck(changeStock($koneksi, $produk, $stock, $user));
+                  $a = checkAllStock($koneksi,$produk,$stock, $user);
+                  array_push($array,$a);
+                  //changeStock($koneksi, $produk, $stock, $user);
+                 
                }
-               if(changeStatusSesi($koneksi, $konfirmasi) != 0){ 
+               //check jika di dalam array ada yang 0 maka stoknya ada yang kurang maka sistem akan meminta user untuk check kembali barangnya
+               if(count(array_keys($array, '1')) == count($array)){
+                  while($output = mysqli_fetch_array($jalan)){
+                     $produk = $output['fk_id_produk'];
+                     $stock = $output['quantity_barang'];
+                     changeStock($koneksi, $produk, $stock, $user);
+                    
+                  }
+                  if(changeStatusSesi($koneksi, $konfirmasi) != 0){ 
                      return "1";
-               }else {
+                  }else {
+                     return "0";
+                  }
+               }else{
                   return "0";
                }
+               
             }
          }else {
             return "0";
          }
-      
-      
-   }
+     
 
-   function negativeCheck($x) {
-      if ($x < 0) {
-          throw new Exception('Tidak Negatif');
-      }
-      return 1/$x;
-  }
+   }
 
    function changeStockEveryProductAdminToDistributor($koneksi, $konfirmasi, $user){
       
@@ -87,6 +102,21 @@
       }
    }
 
+   function checkAllStock($koneksi,$produk,$stock, $user){
+      $query2 =  "SELECT * FROM stock WHERE fk_id_produk = '$produk' AND fk_id_user = '$user'";
+      $cekStock = mysqli_query($koneksi,$query2);
+      if($cekStock){
+         while($output = mysqli_fetch_array($cekStock)){
+            $sementara = $output['jumlah_stock'];
+         }
+         $stockBerubah = $sementara - $stock;
+         if($stockBerubah < 0){
+            return "0";
+         }else {
+            return "1";
+         }
+    }
+   }
    
 
    function changeStock($koneksi,$produk,$stock, $user){
@@ -97,16 +127,15 @@
             $sementara = $output['jumlah_stock'];
          }
          $stockBerubah = $sementara - $stock;
-         if($stockBerubah < 0){
-            $query = "Update stock SET jumlah_stock = '$stockBerubah' WHERE fk_id_produk = '$produk' AND fk_id_user = '$user' ";
-            $cek = mysqli_query($koneksi,$query);
-            if($cek){
-               return "1";
-            }else {
-               return "0";
-            }
+         $query = "Update stock SET jumlah_stock = '$stockBerubah' WHERE fk_id_produk = '$produk' AND fk_id_user = '$user' ";
+         $cek = mysqli_query($koneksi,$query);
+         if($cek){
+            return "1";
+         }else {
+            return "0";
          }
-         return false;
+         
+         
       }
        
    }
