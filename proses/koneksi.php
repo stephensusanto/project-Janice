@@ -11,9 +11,110 @@
       return $hasil_rupiah;
     
    }
+
+   function changeStatusSesi($koneksi, $idSesi){
+      $query = "UPDATE sesi_transaksi SET status_sesi = '1'";
+      $cek = mysqli_query($koneksi, $query);
+      if($cek){
+         return "1";
+      }else {
+         return "0";
+      }
+   }
+   function takeKonfirmasi($koneksi, $konfirmasi){
+      $queryKonfirm = "SELECT * FROM konfirmasi_pembayaran Where id_konfirmasi = '$konfirmasi'";
+      $jalankanQuery = mysqli_query($koneksi, $queryKonfirm);
+      if($jalankanQuery){
+         while($output = mysqli_fetch_array($jalankanQuery)){
+            $idSesi = $output['fk_id_sesi_transaksi'];
+         }
+         return $idSesi;
+      }else {
+         return "0";
+      }
+   }
+   function changeStockEveryProductDistributorToReseller($koneksi, $konfirmasi, $user){
+      $idSesi = takeKonfirmasi($koneksi,$konfirmasi) ;
+      if($idSesi != '0'){
+         $query = "SELECT * from detail_transaksi WHERE fk_id_sesi = '$idSesi'";
+         $jalan = mysqli_query($koneksi, $query);
+         if($jalan){
+            while($output = mysqli_fetch_array($jalan)){
+               $produk = $output['fk_id_produk'];
+               $stock = $output['quantity_barang'];
+               changeStock($koneksi, $produk, $stock, $user);
+            }
+           if(changeStatusSesi($koneksi, $konfirmasi) != 0){ 
+               return "1";
+           }else {
+              return "0";
+           }
+         }
+      }else {
+         return "0";
+      }
+   }
+
+   function changeStockEveryProductAdminToDistributor($koneksi, $konfirmasi, $user){
+      
+      $idSesi = takeKonfirmasi($koneksi,$konfirmasi) ;
+      if($idSesi != '0'){
+         $query = "SELECT * from detail_trasansaksi WHERE fk_id_sesi = '$idSesi'";
+         $jalan = mysqli_query($koneksi, $query);
+         if($jalan){
+            while($output = mysqli_fetch_array($jalan)){
+               $produk = $output['fk_id_produk'];
+               $stock = $output['quantity_barang'];
+               changeStock2($koneksi, $produk, $stock, $user);
+            }
+           if(changeStatusSesi($koneksi, $konfirmasi) != 0){ 
+               return "1";
+           }else {
+              return "0";
+           }
+         }
+      }else {
+         return "0";
+      }
+   }
+
+   
+
    function changeStock($koneksi,$produk,$stock, $user){
-      $query = "Update stock SET jumlah_stock = '$stock' WHERE fk_id_produk = '$produk' AND fk_id_user = '$user' ";
-      mysqli_query($koneksi,$query);
+      $query2 =  "SELECT * FROM stock WHERE fk_id_produk = '$produk' AND fk_id_user = '$user'";
+      $cekStock = mysqli_query($koneksi,$query2);
+      if($cekStock){
+         while($output = mysqli_fetch_array($cekStock)){
+            $sementara = $output['jumlah_stock'];
+         }
+         $stockBerubah = $sementara - $stock;
+         $query = "Update stock SET jumlah_stock = '$stockBerubah' WHERE fk_id_produk = '$produk' AND fk_id_user = '$user' ";
+         $cek = mysqli_query($koneksi,$query);
+         if($cek){
+            return "1";
+         }else {
+            return "0";
+         }
+      }
+       
+   }
+
+   function changeStock2($koneksi,$produk,$stock, $user){
+      $cekStock = mysqli_query($koneksi, "SELECT * FROM stock WHERE fk_id_produk = '$produk' AND fk_id_user = '$user'");
+      if($cekStock){
+         while($output = mysqli_fetch_array($jalan)){
+            $sementara = $output['jumlah_stock'];
+         }
+         $stockBerubah = $sementara + $stock;
+         $query = "Update stock SET jumlah_stock = '$stockBerubah' WHERE fk_id_produk = '$produk' AND fk_id_user = '$user' ";
+         $cek = mysqli_query($koneksi,$query);
+         if($cek){
+            return "1";
+         }else {
+            return "0";
+         }
+      }
+       
    }
 
    function dataBulan($koneksi, $bulan, $year, $id_u, $level){

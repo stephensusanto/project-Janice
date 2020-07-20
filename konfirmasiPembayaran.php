@@ -129,11 +129,11 @@
                        <td>
                         <?php if($status == '2'){
                             ?>
-                        <a href="proses/prosesKonfirmasi.php?code=1&id=<?php echo $id;?>"><button type='submit' data-toggle='modal' data-target='#myModal' class='btn btn-success btn-flat btn_edit'
+                        <a href="proses/prosesKonfirmasi.php?u=<?php echo $id_u; ?>&code=1&level=<?php echo $_SESSION['level']; ?>&id=<?php echo $id;?>"><button type='submit'  class='btn btn-success btn-flat btn_edit'
                            > Sudah Terima</button></a>
                             <br>
                             <br>
-                            <a href="proses/prosesKonfirmasi.php?code=2&id=<?php echo $id;?>"><button type='submit' data-toggle='modal' data-target='#myModal' class='btn btn-danger btn-flat btn_edit'
+                            <a href="proses/prosesKonfirmasi.php?u=<?php echo $id_u; ?>&code=2&level=<?php echo $_SESSION['level']; ?>&id=<?php echo $id;?>"><button type='submit'  class='btn btn-danger btn-flat btn_edit'
                            > Belum Terima</button>  </td></a>
                             <?php
                         }
