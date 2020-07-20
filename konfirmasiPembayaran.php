@@ -78,9 +78,9 @@
                   $id_u = $_SESSION['id_user'];
                   if($_SESSION['level'] == "1" || $_SESSION['level'] == "2"){
                       //status 2  = menunggu konfirmasi
-                    $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.distributor = user.id_user WHERE (konfirmasi_status = '2' AND user.fk_id_level = '1') OR (konfirmasi_status = '2' AND user.fk_id_level = '2') ";
+                    $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.distributor = user.id_user WHERE ( user.fk_id_level = '1') OR (  user.fk_id_level = '2') ";
                   } else {
-                    $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.distributor = user.id_user INNER JOIN rekening on rekening.fk_user_id = user.id_user WHERE konfirmasi_status = '2' AND sesi_transaksi.distributor = '$id_u' ";
+                    $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.distributor = user.id_user INNER JOIN rekening on rekening.fk_user_id = user.id_user WHERE   sesi_transaksi.distributor = '$id_u' ";
                   }
                   
                   $nomor =1;
@@ -98,21 +98,46 @@
                         $gabungan = $namaBank."-".$noRekening;
                         $nomorRekeningTujuan = $gabungan;
                     }
-                    $level = $output['fk_id_level'];
-                    $namaLevel = $output['nama_level'];
-                    $pembelian = $output['minimal_pembelian'];
-                    $deposit = $output['deposit'];
+                    $bankPengirim = $output['bank_pengirim'];
+                    $noRekPengirim = $output['nomor_rekening_pengirim'];
+                    $dataPengirim = $bankPengirim."-".$noRekPengirim;
+                    $namaPengirim = $output['nama_pengirim'];
+                    $jumlahPengirim = $output['jumlah_transfer'];
+                    $tTransfer = $output['tgl_transfer'];
+                    $gambar = $output['bukti_transfer'];
+                    $status = $output['konfirmasi_status'];
                   
                   ?>
                     <tr>
                         <td><?php echo $nomor; ?></td>
                         <td><?php echo $nomorRekeningTujuan; ?></td>
-                        <td><?php echo $pembelian." dus"; ?></td>
-                        <td><?php echo rupiah($deposit); ?></td>
-                       <td> <button type='submit' data-toggle='modal' data-target='#myModal' class='btn btn-primary btn-flat btn_edit'
-                            data-id='<?php echo $id ;?>'
-                            data-pembelian='<?php echo $pembelian ;?>'
-                            data-deposit='<?php echo $deposit; ?>'> edit</button>  </td>
+                        <td><?php echo $dataPengirim; ?></td>
+                        <td><?php echo $namaPengirim ?></td>
+                        <td><?php echo rupiah($jumlahPengirim); ?></td>
+                        <td><?php echo date("d-m-Y", strtotime($tTransfer)); ?></td>
+                       
+                        <td><image height ="100px" width ="100px" src="<?php echo $gambar ;?>"></td>
+                        <td><?php 
+                        if($status == '1'){
+                            echo "Lunas"; 
+                        }else if($status == '0') {
+                            echo "Belum Diterima";
+                        }else {
+                            echo "Menunggu Konfirmasi";
+                        }
+                        ?></td>
+                       <td>
+                        <?php if($status == '2'){
+                            ?>
+                        <a href="proses/prosesKonfirmasi.php?code=1&id=<?php echo $id;?>"><button type='submit' data-toggle='modal' data-target='#myModal' class='btn btn-success btn-flat btn_edit'
+                           > Sudah Terima</button></a>
+                            <br>
+                            <br>
+                            <a href="proses/prosesKonfirmasi.php?code=2&id=<?php echo $id;?>"><button type='submit' data-toggle='modal' data-target='#myModal' class='btn btn-danger btn-flat btn_edit'
+                           > Belum Terima</button>  </td></a>
+                            <?php
+                        }
+                        ?>
                     </tr>
                     <?php
                     $nomor +=1;
