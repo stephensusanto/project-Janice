@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2020 at 08:14 AM
+-- Generation Time: Jul 20, 2020 at 06:46 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -97,13 +97,22 @@ CREATE TABLE `konfirmasi_pembayaran` (
   `fk_id_sesi_transaksi` int(11) NOT NULL,
   `fk_id_rekening` int(11) NOT NULL,
   `nomor_rekening_pengirim` varchar(25) NOT NULL,
+  `bank_pengirim` varchar(30) NOT NULL,
   `nama_pengirim` varchar(50) NOT NULL,
   `jumlah_transfer` int(15) NOT NULL,
   `tgl_transfer` date NOT NULL,
   `bukti_transfer` text NOT NULL,
   `konfirmasi_status` int(11) NOT NULL COMMENT '0 = belum bayar, 1 sudah lunas',
-  `konfirmasi_tgl` date NOT NULL
+  `konfirmasi_tgl` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `konfirmasi_pembayaran`
+--
+
+INSERT INTO `konfirmasi_pembayaran` (`id_konfirmasi`, `fk_id_sesi_transaksi`, `fk_id_rekening`, `nomor_rekening_pengirim`, `bank_pengirim`, `nama_pengirim`, `jumlah_transfer`, `tgl_transfer`, `bukti_transfer`, `konfirmasi_status`, `konfirmasi_tgl`) VALUES
+(1, 1, 1, '7645645645345', 'MANDIRI', 'stephen', 500000, '2020-07-15', 'etst', 2, '2020-07-09'),
+(2, 2, 1, '4544444', 'BANK MEGA', 'kontoru', 600000, '2020-07-20', 'test', 2, '2020-07-20');
 
 -- --------------------------------------------------------
 
@@ -187,8 +196,9 @@ CREATE TABLE `rekening` (
 --
 
 INSERT INTO `rekening` (`id_rekening`, `fk_user_id`, `nomor_rekening`, `bank_rekening`, `status_rekening`) VALUES
-(1, 1, '02135125213', 'BCA', 1),
-(2, 1, '0000021035566482', 'MANDIRI', 1);
+(1, 0, '02135125213', 'BCA', 1),
+(2, 0, '0000021035566482', 'MANDIRI', 1),
+(3, 4, '363633333', 'BANK MEGA', 1);
 
 -- --------------------------------------------------------
 
@@ -211,6 +221,7 @@ CREATE TABLE `reset_password` (
 CREATE TABLE `sesi_transaksi` (
   `id_sesi` int(11) NOT NULL,
   `fk_id_u` int(11) NOT NULL,
+  `distributor` int(11) NOT NULL,
   `tipe_sesi` int(1) NOT NULL COMMENT '1 = register distributor, 2 = register reseller, 3 = pemesanan distributor, 4 = pemesanan reseller',
   `tanggal_sesi` date NOT NULL,
   `status_sesi` int(1) NOT NULL,
@@ -221,9 +232,9 @@ CREATE TABLE `sesi_transaksi` (
 -- Dumping data for table `sesi_transaksi`
 --
 
-INSERT INTO `sesi_transaksi` (`id_sesi`, `fk_id_u`, `tipe_sesi`, `tanggal_sesi`, `status_sesi`, `deposit`) VALUES
-(1, 4, 2, '2020-07-18', 0, NULL),
-(2, 3, 2, '2020-07-01', 1, NULL);
+INSERT INTO `sesi_transaksi` (`id_sesi`, `fk_id_u`, `distributor`, `tipe_sesi`, `tanggal_sesi`, `status_sesi`, `deposit`) VALUES
+(1, 4, 1, 2, '2020-07-19', 1, NULL),
+(2, 4, 4, 2, '2020-07-01', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -238,6 +249,13 @@ CREATE TABLE `stock` (
   `jumlah_stock` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `stock`
+--
+
+INSERT INTO `stock` (`id_stock`, `fk_id_produk`, `fk_id_user`, `jumlah_stock`) VALUES
+(1, 2, 4, 200);
+
 -- --------------------------------------------------------
 
 --
@@ -251,6 +269,7 @@ CREATE TABLE `user` (
   `dob_u` date NOT NULL,
   `telp_u` varchar(15) NOT NULL,
   `alamat_u` text NOT NULL,
+  `alamat_pengiriman` text NOT NULL,
   `tanggal_daftar` datetime NOT NULL,
   `password_u` text NOT NULL,
   `fk_id_level` int(11) NOT NULL,
@@ -262,11 +281,11 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `nama_u`, `email_u`, `dob_u`, `telp_u`, `alamat_u`, `tanggal_daftar`, `password_u`, `fk_id_level`, `fk_id_domisili`, `status_u`) VALUES
-(1, 'Dak Dak', 'pw@gmail.com', '2020-07-08', '0218788888', 'Jalan Raya Bogor', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 1, 0, 1),
-(2, 'asd', 'test2@gmail.com', '2020-07-22', '123123123', 'Dak Dak Office', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 2, 1, 1),
-(4, 'stephen2', 'test@gmail.com', '2020-07-01', '5555', 'Bogor Raya', '2020-07-17 16:26:38', 'c4ca4238a0b923820dcc509a6f75849b', 3, 1, 1),
-(8, 'dwwww', 'dw@gmail.com', '2020-07-08', 'lokasl@gmail.co', 'bojong gede', '2020-07-18 10:42:44', 'c4ca4238a0b923820dcc509a6f75849b', 2, 0, 1);
+INSERT INTO `user` (`id_user`, `nama_u`, `email_u`, `dob_u`, `telp_u`, `alamat_u`, `alamat_pengiriman`, `tanggal_daftar`, `password_u`, `fk_id_level`, `fk_id_domisili`, `status_u`) VALUES
+(1, 'Dak Dak', 'pw@gmail.com', '2020-07-08', '0218788888', 'Jalan Raya Bogor', 'Dak Dak Office', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 1, 0, 1),
+(2, 'asd', 'test2@gmail.com', '2020-07-22', '123123123', 'Dak Dak Office', 'Dak Dak Office', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 2, 1, 1),
+(4, 'stephen2', 'test@gmail.com', '2020-07-01', '5555', 'Bogor Raya', 'Dak Dak Office', '2020-07-17 16:26:38', 'c4ca4238a0b923820dcc509a6f75849b', 3, 1, 1),
+(8, 'dwwww', 'dw@gmail.com', '2020-07-08', 'lokasl@gmail.co', 'bojong gede', 'Dak Dak Office', '2020-07-18 10:42:44', 'c4ca4238a0b923820dcc509a6f75849b', 2, 0, 1);
 
 --
 -- Indexes for dumped tables
@@ -289,6 +308,12 @@ ALTER TABLE `domisili`
 --
 ALTER TABLE `konfigurasi`
   ADD PRIMARY KEY (`id_konfig`);
+
+--
+-- Indexes for table `konfirmasi_pembayaran`
+--
+ALTER TABLE `konfirmasi_pembayaran`
+  ADD PRIMARY KEY (`id_konfirmasi`);
 
 --
 -- Indexes for table `level`
@@ -361,6 +386,12 @@ ALTER TABLE `konfigurasi`
   MODIFY `id_konfig` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `konfirmasi_pembayaran`
+--
+ALTER TABLE `konfirmasi_pembayaran`
+  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `level`
 --
 ALTER TABLE `level`
@@ -382,7 +413,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `rekening`
 --
 ALTER TABLE `rekening`
-  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `reset_password`
@@ -400,7 +431,7 @@ ALTER TABLE `sesi_transaksi`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id_stock` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_stock` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
