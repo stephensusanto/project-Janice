@@ -23,7 +23,7 @@ if(!$_POST['email'] || !$_POST['pass']){
         }else if($hasil['status_u'] == "1"){
             header("location:../index.php");
         }else {
-            header("location:../login.php");
+            header("location:../login.php?alert=1");
         }
     }
 }
