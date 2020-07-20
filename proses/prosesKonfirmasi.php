@@ -4,9 +4,9 @@
     $id_user = $_GET['u'];
     //1 approve, else tolak
     if($_GET['code']=='1'){
-        $query = "UPDATE konfirmasi_pembayaran SET konfirmasi_status = '1' WHERE id_konfirmasi = '$id' ";
+        $query = "UPDATE konfirmasi_pembayaran SET konfirmasi_status = '1', konfirmasi_tgl = now() WHERE id_konfirmasi = '$id' ";
     }else {
-        $query = "UPDATE konfirmasi_pembayaran SET konfirmasi_status = '0' WHERE id_konfirmasi = '$id'";
+        $query = "UPDATE konfirmasi_pembayaran SET konfirmasi_status = '0', konfirmasi_tgl = now() WHERE id_konfirmasi = '$id'";
     }
     $cek = mysqli_query($koneksi, $query);
     //ketika transaksi yang login adalah admin maka admin ke distributor (penambahan stock) selain itu pengurangan stock di tabel stock

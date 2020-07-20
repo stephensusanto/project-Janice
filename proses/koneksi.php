@@ -34,26 +34,35 @@
       }
    }
    function changeStockEveryProductDistributorToReseller($koneksi, $konfirmasi, $user){
-      $idSesi = takeKonfirmasi($koneksi,$konfirmasi) ;
-      if($idSesi != '0'){
-         $query = "SELECT * from detail_transaksi WHERE fk_id_sesi = '$idSesi'";
-         $jalan = mysqli_query($koneksi, $query);
-         if($jalan){
-            while($output = mysqli_fetch_array($jalan)){
-               $produk = $output['fk_id_produk'];
-               $stock = $output['quantity_barang'];
-               changeStock($koneksi, $produk, $stock, $user);
+         $idSesi = takeKonfirmasi($koneksi,$konfirmasi) ;
+         if($idSesi != '0'){
+            $query = "SELECT * from detail_transaksi WHERE fk_id_sesi = '$idSesi'";
+            $jalan = mysqli_query($koneksi, $query);
+            if($jalan){
+               while($output = mysqli_fetch_array($jalan)){
+                  $produk = $output['fk_id_produk'];
+                  $stock = $output['quantity_barang'];
+                  negativeCheck(changeStock($koneksi, $produk, $stock, $user));
+               }
+               if(changeStatusSesi($koneksi, $konfirmasi) != 0){ 
+                     return "1";
+               }else {
+                  return "0";
+               }
             }
-           if(changeStatusSesi($koneksi, $konfirmasi) != 0){ 
-               return "1";
-           }else {
-              return "0";
-           }
+         }else {
+            return "0";
          }
-      }else {
-         return "0";
-      }
+      
+      
    }
+
+   function negativeCheck($x) {
+      if ($x < 0) {
+          throw new Exception('Tidak Negatif');
+      }
+      return 1/$x;
+  }
 
    function changeStockEveryProductAdminToDistributor($koneksi, $konfirmasi, $user){
       
@@ -88,13 +97,16 @@
             $sementara = $output['jumlah_stock'];
          }
          $stockBerubah = $sementara - $stock;
-         $query = "Update stock SET jumlah_stock = '$stockBerubah' WHERE fk_id_produk = '$produk' AND fk_id_user = '$user' ";
-         $cek = mysqli_query($koneksi,$query);
-         if($cek){
-            return "1";
-         }else {
-            return "0";
+         if($stockBerubah < 0){
+            $query = "Update stock SET jumlah_stock = '$stockBerubah' WHERE fk_id_produk = '$produk' AND fk_id_user = '$user' ";
+            $cek = mysqli_query($koneksi,$query);
+            if($cek){
+               return "1";
+            }else {
+               return "0";
+            }
          }
+         return false;
       }
        
    }
