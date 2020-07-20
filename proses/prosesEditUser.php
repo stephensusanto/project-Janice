@@ -21,6 +21,10 @@
     if(!empty($_POST["alamat"])){
         $alamat =$_POST['alamat'];
     }
+    
+    if(!empty($_POST["alamat_p"])){
+        $alamat_p =$_POST['alamat_p'];
+    }
     if(!empty($_POST["tipe"])){
         $tipe = $_POST['tipe'];
     }
@@ -66,7 +70,7 @@
             }
         }
     }else {
-        if(!$nama || !$email || !$dob || !$telp || !$alamat || $status == ''){
+        if(!$nama || !$email || !$dob || !$telp || !$alamat || !$alamat_p || $status == ''){
             if($editedLevel == '2'){
                 header("location:../user.php?level=2&&alert=1");
             }elseif($editedLevel == '3'){
@@ -81,7 +85,8 @@
             email_u= '$email' , 
             dob_u= '$dob' , 
             telp_u= '$telp' , 
-            alamat_u= '$alamat' ,  
+            alamat_u= '$alamat' , 
+            alamat_pengiriman = '$alamat_p', 
             status_u = '$status' WHERE id_user = '$id'";
             $jalan = mysqli_query($koneksi,$query);
             if($jalan){

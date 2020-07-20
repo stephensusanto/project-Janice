@@ -33,7 +33,8 @@
           <input type='text' class="form-control" name='telp' ><br>
           <label for="exampleInputEmail1">Alamat</label> <br>
           <textarea class="form-control" name="alamat"></textarea> <br> <br>    
-
+          <label for="exampleInputEmail1">Alamat Pengiriman</label> <br>
+          <textarea class="form-control" name="alamat_k"></textarea> <br> <br>    
           <label for="exampleInputEmail1">Password</label>
 
           <input type='password' class="form-control" name='pass' ><br>

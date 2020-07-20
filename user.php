@@ -61,6 +61,7 @@
             <th>Tanggal lahir</th>
             <th>Telp</th>
             <th>Alamat</th>
+            <th>Alamat Pengiriman</th>
             <th>Domisili</th>
             <th>Level</th>
             <th>Status</th>
@@ -75,6 +76,7 @@
             <th>Tanggal lahir</th>
             <th>Telp</th>
             <th>Alamat</th>
+            <th>Alamat Pengiriman</th>
             <th>Domisili</th>
             <th>Level</th>
             <th>Status</th>
@@ -98,6 +100,7 @@
                     $dob = $output['dob_u'];
                     $telp = $output['telp_u'];
                     $alamat_u = $output['alamat_u'];
+                    $alamat_p = $output['alamat_pengiriman'];
                     $level = $output['fk_id_level'];
                     $domisili = $output['fk_id_domisili'];
                     $namaDom = $output['nama_dom'];
@@ -112,6 +115,7 @@
                         <td><?php echo date("d/m/Y", strtotime($dob)); ?></td>
                         <td><?php echo $telp; ?></td>
                         <td><?php echo $alamat_u; ?></td>
+                        <td><?php echo $alamat_p; ?></td>
                         <td><?php 
                         if($domisili == "0"){
                             echo "Semua Domisili"; 
@@ -159,6 +163,7 @@
                             data-dob='<?php echo $dob; ?>'
                             data-telp='<?php echo $telp; ?>'
                             data-alamat='<?php echo $alamat_u; ?>'
+                            data-alamat_p='<?php echo $alamat_p; ?>'
                             data-level='<?php echo $level; ?>'
                             data-domisili='<?php echo $domisili; ?>'
                             data-status='<?php echo $status; ?>'> edit</button>  </td>
@@ -202,8 +207,10 @@
 
           <input type='text' class="form-control" name='telp' id="telp"><br>
           <label for="exampleInputEmail1">Alamat</label> <br>
-          <textarea class="form-control" name="alamat" id="alamat"></textarea> <br>    
+          <textarea class="form-control" name="alamat" id="alamat"></textarea> <br>  
 
+          <label for="exampleInputEmail1">Alamat Pengiriman</label> <br>
+          <textarea class="form-control" name="alamat_p" id="alamat_p"></textarea> <br>    
         
           <label for="exampleInputEmail1">Status</label>
           <Select class="form-control" name='status' id="status" >
@@ -289,6 +296,7 @@
           var email = $(this).data('email');
           var telp = $(this).data('telp');
           var alamat = $(this).data('alamat');
+          var alamatP = $(this).data('alamat_p');
           var tipe = $(this).data('level');
           var status = $(this).data('status');
         
@@ -298,14 +306,16 @@
                 $("#dob").val(dob);
                 $("#email").val(email);
                 $("#telp").val(telp);
-                $("#alamat").val(alamat);
+                $("#alamat_p").val(alamatP);
                 $("#tipe").val(tipe);
                 $("#status").val(status);
                 document.getElementById("nama").readOnly = true; 
                 document.getElementById("dob").readOnly = true; 
                 document.getElementById("email").readOnly = true; 
                 document.getElementById("telp").readOnly = true; 
-                document.getElementById("alamat").readOnly = true; 
+                document.getElementById("alamat").readOnly = true;
+                document.getElementById("alamat_p").readOnly = true;
+                 
                 document.getElementById("tipe").disabled = true; 
                
                 
@@ -317,6 +327,7 @@
                 $("#email").val(email);
                 $("#telp").val(telp);
                 $("#alamat").val(alamat);
+                $("#alamat_p").val(alamatP);
                 $("#tipe").val(tipe);
                 $("#status").val(status);
                 document.getElementById("nama").readOnly = false; 
@@ -324,6 +335,7 @@
                 document.getElementById("email").readOnly = false; 
                 document.getElementById("telp").readOnly = false; 
                 document.getElementById("alamat").readOnly = false; 
+                document.getElementById("alamat_p").readOnly = false;
                 document.getElementById("tipe").disabled = false; 
             }
          
