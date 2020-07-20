@@ -41,7 +41,6 @@ if(!$_SESSION['nama_u']){
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-
       <!-- Nav Item - Dashboard -->
       <li class="nav-item ">
       <?php
@@ -72,6 +71,10 @@ if(!$_SESSION['nama_u']){
           </div>
         </div>
       </li>
+      <li class="nav-item ">
+      <a class="nav-link" href="konfirmasiPembayaran.php">
+          <span>Konfirmasi Pembayaran</span></a>
+      </li>
              <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <span>Settings</span>
@@ -85,7 +88,7 @@ if(!$_SESSION['nama_u']){
           </div>
         </div>
       </li>
-   
+     
           <?php
         }
         ?>
@@ -164,8 +167,9 @@ if(!$_SESSION['nama_u']){
 
     
       
-
+          
             <div class="topbar-divider d-none d-sm-block"></div>
+          
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
