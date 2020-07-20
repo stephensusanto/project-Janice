@@ -35,5 +35,16 @@
         }
         return $total;
    }
+
+   function getNamaRekening($koneksi, $idRekening){
+      $query = "SELECT * FROM rekening WHERE id_rekening = '$idRekening' ";
+      $hasil = mysqli_query($koneksi, $query);
+      while($output = mysqli_fetch_array($hasil)){
+         $namaBank = $output['bank_rekening'];
+         $noRekening = $output['nomor_rekening'];
+         $gabungan = $namaBank."-".$noRekening;
+       }
+       return $gabungan;
+   }
   
 ?> 
