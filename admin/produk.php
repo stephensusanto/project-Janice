@@ -76,16 +76,14 @@
                   if($_SESSION['level'] == "1" || $_SESSION['level'] == "2"){
                     $query = "SELECT * FROM produk ";
                   } 
-                  else if($_SESSION['level'] == "3"){
-                    $query = "SELECT * FROM produk INNER JOIN user ON user.id_user = produk.last_change where last_change = '".$_SESSION['level']."'";
-                  }
+                
                   $nomor =1;
                   $tampilin = mysqli_query($koneksi, $query);
                   while($output = mysqli_fetch_array($tampilin)){
                    
                     $id = $output['id_produk'];
                     $nama = $output['nama_produk'];
-                    $id_user = $output['last_change'];
+                    $id_user = $output['fk_id_user'];
                     $harga = $output['harga_produk'];
                     $reseller = $output['harga_reseller'];
                     $desc = $output['desc_produk'];
