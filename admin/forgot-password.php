@@ -74,9 +74,7 @@
                     <Button  class="btn btn-primary btn-user btn-block"> Reset Password </Button>
                   </form>
                   <hr>
-                  <div class="text-center">
-                    <a class="small" href="register.php">Join Us!</a>
-                  </div>
+   
                   <div class="text-center">
                     <a class="small" href="login.php">Already have an account? Login!</a>
                   </div>
