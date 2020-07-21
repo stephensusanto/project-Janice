@@ -98,7 +98,7 @@
                         <td><?php echo rupiah($harga); ?></td>
                         <td><?php echo rupiah($reseller); ?></td>
                         <td><?php echo $desc; ?></td>
-                        <td><image height ="100px" width ="100px" src="<?php echo $gambar ;?>"></td>
+                        <td><image height ="100px" width ="100px" src="<?php echo getDirectoryProduct().$gambar ;?>"></td>
                         <td><?php 
                         if($status =="0"){
                             echo "Tidak Aktif"; 

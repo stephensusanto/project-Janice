@@ -35,13 +35,12 @@ if(!empty($_FILES["berkas"])){
             header("Location:../produk.php?alert=1");
         }else {
             $realName = $_SESSION['id_user'].$barang.".".explode("/",$tipe)[1];
-            $loc = "http://localhost/gitHub/projectJanice/admin/img/produk/";
             $query = "INSERT INTO produk (fk_id_user, nama_produk,desc_produk,harga_produk,harga_reseller,gambar_produk,status_produk, tgl_masuk) VALUES
             ('$id_u','$barang',
             '$desc',
             '$harga',
            '$harga_reseller',
-           '$loc$realName',
+           '$realName',
             '$status',now())";
            
             $hasil = mysqli_query($koneksi, $query);

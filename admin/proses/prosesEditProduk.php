@@ -52,7 +52,7 @@ $id_u = $_SESSION['id_user'];
         if(!$desc || !$harga || !$harga_reseller || $status == ''){
             header("Location:../produk.php?alert=1");
         }else {
-            $loc = "http://localhost/gitHub/projectJanice/admin/img/produk/";
+            
             $query = "UPDATE produk
             SET
             id_produk 			= '$id',
@@ -60,7 +60,7 @@ $id_u = $_SESSION['id_user'];
             desc_produk     	= '$desc',
             harga_produk		= '$harga',
             harga_reseller 		= '$harga_reseller',
-            gambar_produk       = '$loc$realName',
+            gambar_produk       = '$realName',
             status_produk 		= '$status',
             fk_id_user         = '$id_u'
             WHERE id_produk		 = '".$id."'";

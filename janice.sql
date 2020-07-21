@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2020 at 11:56 AM
+-- Generation Time: Jul 21, 2020 at 01:16 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -173,9 +173,9 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `fk_id_user`, `nama_produk`, `harga_produk`, `harga_reseller`, `desc_produk`, `gambar_produk`, `tgl_masuk`, `status_produk`) VALUES
-(1, 2, 'Dak Dak Hot 1', 40000, 30000, 'Ini Produk Dak Dak Pedas Level 3', 'http://localhost/gitHub/projectJanice/admin/img/produk/2Dak Dak Hot 1.jpg', '2020-07-17 00:00:00', 1),
-(2, 1, 'test2', 10000, 20000, 'ini barang gagal', 'http://localhost/gitHub/projectJanice/admin/img/produk/2test2.gif', '2020-07-15 00:00:28', 1),
-(3, 2, 'test3', 500000, 60000, 'ini barang asin', 'http://localhost/gitHub/projectJanice/admin/img/produk/2test3.jpeg', '2020-07-18 09:42:24', 1);
+(1, 2, 'Dak Dak Hot 1', 40000, 30000, 'Ini Produk Dak Dak Pedas Level 3', '2Dak Dak Hot 1.jpg', '2020-07-17 00:00:00', 1),
+(2, 1, 'test2', 10000, 20000, 'ini barang gagal', '2test2.gif', '2020-07-15 00:00:28', 1),
+(3, 1, 'test3', 500000, 60000, 'ini barang asin', '1test3.jpeg', '2020-07-18 09:42:24', 1);
 
 -- --------------------------------------------------------
 
