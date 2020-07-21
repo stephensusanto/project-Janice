@@ -38,7 +38,7 @@ $id_u = $_SESSION['id_user'];
             harga_produk		= '$harga',
             harga_reseller 		= '$harga_reseller',
             status_produk 		= '$status',
-            last_change         = '$id_u'
+            fk_id_user         = '$id_u'
             WHERE id_produk		 = '".$id."'";
             $hasil = mysqli_query($koneksi, $query);
             if($hasil){
@@ -62,7 +62,7 @@ $id_u = $_SESSION['id_user'];
             harga_reseller 		= '$harga_reseller',
             gambar_produk       = '$loc$realName',
             status_produk 		= '$status',
-            last_change         = '$id_u'
+            fk_id_user         = '$id_u'
             WHERE id_produk		 = '".$id."'";
             $hasil = mysqli_query($koneksi, $query);
             $upload = move_uploaded_file($temporary, '../img/produk/'.$realName);

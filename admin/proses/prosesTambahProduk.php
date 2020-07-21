@@ -36,7 +36,7 @@ if(!empty($_FILES["berkas"])){
         }else {
             $realName = $_SESSION['id_user'].$barang.".".explode("/",$tipe)[1];
             $loc = "http://localhost/gitHub/projectJanice/admin/img/produk/";
-            $query = "INSERT INTO produk (last_change, nama_produk,desc_produk,harga_produk,harga_reseller,gambar_produk,status_produk, tgl_masuk) VALUES
+            $query = "INSERT INTO produk (fk_id_user, nama_produk,desc_produk,harga_produk,harga_reseller,gambar_produk,status_produk, tgl_masuk) VALUES
             ('$id_u','$barang',
             '$desc',
             '$harga',
