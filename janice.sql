@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2020 at 06:46 AM
+-- Generation Time: Jul 21, 2020 at 11:56 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -111,8 +111,8 @@ CREATE TABLE `konfirmasi_pembayaran` (
 --
 
 INSERT INTO `konfirmasi_pembayaran` (`id_konfirmasi`, `fk_id_sesi_transaksi`, `fk_id_rekening`, `nomor_rekening_pengirim`, `bank_pengirim`, `nama_pengirim`, `jumlah_transfer`, `tgl_transfer`, `bukti_transfer`, `konfirmasi_status`, `konfirmasi_tgl`) VALUES
-(1, 1, 1, '7645645645345', 'MANDIRI', 'stephen', 500000, '2020-07-15', 'etst', 2, '2020-07-09'),
-(2, 2, 1, '4544444', 'BANK MEGA', 'kontoru', 600000, '2020-07-20', 'test', 2, '2020-07-20');
+(1, 1, 1, '7645645645345', 'MANDIRI', 'Anggun', 500000, '2020-07-15', 'etst', 1, '2020-07-21'),
+(2, 2, 1, '4544444', 'BANK MEGA', 'kuntor', 600000, '2020-07-20', 'test', 1, '2020-07-21');
 
 -- --------------------------------------------------------
 
@@ -158,7 +158,7 @@ CREATE TABLE `notifikasi` (
 
 CREATE TABLE `produk` (
   `id_produk` int(11) NOT NULL,
-  `last_change` int(11) NOT NULL,
+  `fk_id_user` int(11) NOT NULL,
   `nama_produk` varchar(50) NOT NULL,
   `harga_produk` bigint(20) NOT NULL,
   `harga_reseller` bigint(25) NOT NULL,
@@ -172,10 +172,10 @@ CREATE TABLE `produk` (
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`id_produk`, `last_change`, `nama_produk`, `harga_produk`, `harga_reseller`, `desc_produk`, `gambar_produk`, `tgl_masuk`, `status_produk`) VALUES
-(1, 2, 'Dak Dak Hot 1', 40000, 30000, 'Ini Produk Dak Dak Pedas Level 3', 'http://localhost/gitHub/projectJanice/img/produk/2Dak Dak Hot 1.jpg', '2020-07-17 00:00:00', 1),
-(2, 1, 'test2', 10000, 20000, 'ini barang gagal', 'http://localhost/gitHub/projectJanice/img/produk/2test2.gif', '2020-07-15 00:00:28', 1),
-(3, 2, 'test3', 500000, 60000, 'ini barang asin', 'http://localhost/gitHub/projectJanice/img/produk/2test3.jpeg', '2020-07-18 09:42:24', 1);
+INSERT INTO `produk` (`id_produk`, `fk_id_user`, `nama_produk`, `harga_produk`, `harga_reseller`, `desc_produk`, `gambar_produk`, `tgl_masuk`, `status_produk`) VALUES
+(1, 2, 'Dak Dak Hot 1', 40000, 30000, 'Ini Produk Dak Dak Pedas Level 3', 'http://localhost/gitHub/projectJanice/admin/img/produk/2Dak Dak Hot 1.jpg', '2020-07-17 00:00:00', 1),
+(2, 1, 'test2', 10000, 20000, 'ini barang gagal', 'http://localhost/gitHub/projectJanice/admin/img/produk/2test2.gif', '2020-07-15 00:00:28', 1),
+(3, 2, 'test3', 500000, 60000, 'ini barang asin', 'http://localhost/gitHub/projectJanice/admin/img/produk/2test3.jpeg', '2020-07-18 09:42:24', 1);
 
 -- --------------------------------------------------------
 
@@ -186,6 +186,7 @@ INSERT INTO `produk` (`id_produk`, `last_change`, `nama_produk`, `harga_produk`,
 CREATE TABLE `rekening` (
   `id_rekening` int(11) NOT NULL,
   `fk_user_id` int(11) NOT NULL,
+  `nama_rekening` varchar(30) NOT NULL,
   `nomor_rekening` varchar(25) NOT NULL,
   `bank_rekening` varchar(30) NOT NULL,
   `status_rekening` int(1) NOT NULL COMMENT '0 = tidak aktif, 1 = aktif'
@@ -195,10 +196,10 @@ CREATE TABLE `rekening` (
 -- Dumping data for table `rekening`
 --
 
-INSERT INTO `rekening` (`id_rekening`, `fk_user_id`, `nomor_rekening`, `bank_rekening`, `status_rekening`) VALUES
-(1, 0, '02135125213', 'BCA', 1),
-(2, 0, '0000021035566482', 'MANDIRI', 1),
-(3, 4, '363633333', 'BANK MEGA', 1);
+INSERT INTO `rekening` (`id_rekening`, `fk_user_id`, `nama_rekening`, `nomor_rekening`, `bank_rekening`, `status_rekening`) VALUES
+(1, 0, 'DAk Dak', '02135125213', 'BCA', 1),
+(2, 0, 'DAk Dak', '0000021035566482', 'MANDIRI', 1),
+(3, 4, 'Anggun', '363633333', 'BANK MEGA', 1);
 
 -- --------------------------------------------------------
 
@@ -221,7 +222,7 @@ CREATE TABLE `reset_password` (
 CREATE TABLE `sesi_transaksi` (
   `id_sesi` int(11) NOT NULL,
   `fk_id_u` int(11) NOT NULL,
-  `distributor` int(11) NOT NULL,
+  `id_distributor` int(11) NOT NULL,
   `tipe_sesi` int(1) NOT NULL COMMENT '1 = register distributor, 2 = register reseller, 3 = pemesanan distributor, 4 = pemesanan reseller',
   `tanggal_sesi` date NOT NULL,
   `status_sesi` int(1) NOT NULL,
@@ -232,9 +233,9 @@ CREATE TABLE `sesi_transaksi` (
 -- Dumping data for table `sesi_transaksi`
 --
 
-INSERT INTO `sesi_transaksi` (`id_sesi`, `fk_id_u`, `distributor`, `tipe_sesi`, `tanggal_sesi`, `status_sesi`, `deposit`) VALUES
+INSERT INTO `sesi_transaksi` (`id_sesi`, `fk_id_u`, `id_distributor`, `tipe_sesi`, `tanggal_sesi`, `status_sesi`, `deposit`) VALUES
 (1, 4, 1, 2, '2020-07-19', 1, NULL),
-(2, 4, 4, 2, '2020-07-01', 0, NULL);
+(2, 5, 4, 2, '2020-07-01', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -254,7 +255,8 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`id_stock`, `fk_id_produk`, `fk_id_user`, `jumlah_stock`) VALUES
-(1, 2, 4, 200);
+(1, 2, 4, 10),
+(20, 1, 4, 60);
 
 -- --------------------------------------------------------
 
@@ -282,10 +284,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nama_u`, `email_u`, `dob_u`, `telp_u`, `alamat_u`, `alamat_pengiriman`, `tanggal_daftar`, `password_u`, `fk_id_level`, `fk_id_domisili`, `status_u`) VALUES
-(1, 'Dak Dak', 'pw@gmail.com', '2020-07-08', '0218788888', 'Jalan Raya Bogor', 'Dak Dak Office', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 1, 0, 1),
-(2, 'asd', 'test2@gmail.com', '2020-07-22', '123123123', 'Dak Dak Office', 'Dak Dak Office', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 2, 1, 1),
-(4, 'stephen2', 'test@gmail.com', '2020-07-01', '5555', 'Bogor Raya', 'Dak Dak Office', '2020-07-17 16:26:38', 'c4ca4238a0b923820dcc509a6f75849b', 3, 1, 1),
-(8, 'dwwww', 'dw@gmail.com', '2020-07-08', 'lokasl@gmail.co', 'bojong gede', 'Dak Dak Office', '2020-07-18 10:42:44', 'c4ca4238a0b923820dcc509a6f75849b', 2, 0, 1);
+(1, 'Dak Dak', 'dak@gmail.com', '2020-07-08', '0218788888', 'Jalan Raya Bogor', 'Dak Dak Office', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 1, 0, 1),
+(2, 'nobody', 'test2@gmail.com', '2020-07-22', '123123123', 'Dak Dak Office', 'Dak Dak Office2', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 2, 1, 1),
+(4, 'janice', 'test@gmail.com', '2020-07-01', '5555', 'Bogor Raya', 'Dak Dak Office', '2020-07-17 16:26:38', 'c4ca4238a0b923820dcc509a6f75849b', 3, 1, 1),
+(8, 'dwwww', 'dw@gmail.com', '2020-07-08', '123213213', 'bojong gede', 'Dak Dak Office  333', '2020-07-18 10:42:44', 'c4ca4238a0b923820dcc509a6f75849b', 2, 0, 1);
 
 --
 -- Indexes for dumped tables
@@ -431,7 +433,7 @@ ALTER TABLE `sesi_transaksi`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id_stock` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_stock` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `user`
