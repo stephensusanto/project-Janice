@@ -71,7 +71,10 @@ if(!$_SESSION['nama_u']){
           </div>
         </div>
       </li>
-      
+      <li class="nav-item ">
+      <a class="nav-link" href="konfirmasiPembayaran.php">
+          <span>Konfirmasi Pembayaran</span></a>
+      </li>
              <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <span>Settings</span>

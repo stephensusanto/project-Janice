@@ -30,10 +30,10 @@
                         $bulan =  date("m");
                         $id_u = $_SESSION['id_user'];
                         if($_SESSION['level'] == '1' || $_SESSION['level'] == '2'){
-                          $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.distributor  WHERE (MONTH(tanggal_sesi) = '$bulan' AND status_sesi ='1' AND user.fk_id_level = '1') OR (MONTH(tanggal_sesi) = '$bulan' AND status_sesi ='1' AND user.fk_id_level = '2')";
+                          $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.id_distributor  WHERE (MONTH(tanggal_sesi) = '$bulan' AND status_sesi ='1' AND user.fk_id_level = '1') OR (MONTH(tanggal_sesi) = '$bulan' AND status_sesi ='1' AND user.fk_id_level = '2')";
                           }
                           else {
-                           $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.distributor  WHERE (MONTH(tanggal_sesi) = '$bulan' AND status_sesi ='1' AND sesi_transaksi.distributor= '$id_u') ";
+                           $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.id_distributor  WHERE (MONTH(tanggal_sesi) = '$bulan' AND status_sesi ='1' AND sesi_transaksi.id_distributor= '$id_u') ";
                           } 
                           $cek=mysqli_query($koneksi,$sql);
                           $jumlah = mysqli_num_rows($cek);
@@ -68,10 +68,10 @@
                         
                           $tanggal = date("Y/m/d");
                           if($_SESSION['level'] == '1' || $_SESSION['level'] == '2'){
-                            $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.distributor WHERE (tanggal_sesi = '$tanggal' AND user.fk_id_level = '1') OR (tanggal_sesi = '$tanggal' AND user.fk_id_level = '2')  ";
+                            $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.id_distributor WHERE (tanggal_sesi = '$tanggal' AND user.fk_id_level = '1') OR (tanggal_sesi = '$tanggal' AND user.fk_id_level = '2')  ";
                             }
                             else {
-                              $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.distributor WHERE (tanggal_sesi = '$tanggal' AND user.id_user = ' $id_u')";
+                              $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.id_distributor WHERE (tanggal_sesi = '$tanggal' AND user.id_user = ' $id_u')";
                             } 
                         
                           $cek=mysqli_query($koneksi,$sql);
@@ -138,9 +138,9 @@
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Konfirmasi Pembayaran</div>
                       <?php
                           if($_SESSION['level']=='1'||$_SESSION['level']=='2'){
-                            $sql  = "SELECT * FROM konfirmasi_pembayaran INNER JOIN sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi  INNER JOIN user on sesi_transaksi.distributor = user.id_user WHERE (konfirmasi_status = '2' AND user.fk_id_level = '1') OR (konfirmasi_status = '2' AND user.fk_id_level = '2')";
+                            $sql  = "SELECT * FROM konfirmasi_pembayaran INNER JOIN sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi  INNER JOIN user on sesi_transaksi.id_distributor = user.id_user WHERE (konfirmasi_status = '2' AND user.fk_id_level = '1') OR (konfirmasi_status = '2' AND user.fk_id_level = '2')";
                           }else {
-                            $sql  = "SELECT * FROM konfirmasi_pembayaran INNER JOIN sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.distributor = user.id_user WHERE (konfirmasi_status = '2' AND user.id_user = '$id_u')  ";
+                            $sql  = "SELECT * FROM konfirmasi_pembayaran INNER JOIN sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.id_distributor = user.id_user WHERE (konfirmasi_status = '2' AND user.id_user = '$id_u')  ";
                           }
                           $cek=mysqli_query($koneksi,$sql);
                           $jumlah = mysqli_num_rows($cek);

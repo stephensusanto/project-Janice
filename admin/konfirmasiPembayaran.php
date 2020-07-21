@@ -78,9 +78,9 @@
                   $id_u = $_SESSION['id_user'];
                   if($_SESSION['level'] == "1" || $_SESSION['level'] == "2"){
                       //status 2  = menunggu konfirmasi
-                    $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.distributor = user.id_user WHERE ( user.fk_id_level = '1') OR (  user.fk_id_level = '2') ";
+                    $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.id_distributor = user.id_user WHERE ( user.fk_id_level = '1') OR (  user.fk_id_level = '2') ";
                   } else {
-                    $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.distributor = user.id_user INNER JOIN rekening on rekening.fk_user_id = user.id_user WHERE   sesi_transaksi.distributor = '$id_u' ";
+                    $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.id_distributor = user.id_user INNER JOIN rekening on rekening.fk_user_id = user.id_user WHERE   sesi_transaksi.id_distributor = '$id_u' ";
                   }
                   
                   $nomor =1;
@@ -106,6 +106,7 @@
                     $tTransfer = $output['tgl_transfer'];
                     $gambar = $output['bukti_transfer'];
                     $status = $output['konfirmasi_status'];
+                    $tujuan = $output['fk_id_u']
                   
                   ?>
                     <tr>
@@ -129,11 +130,11 @@
                        <td>
                         <?php if($status == '2'){
                             ?>
-                        <a href="proses/prosesKonfirmasi.php?u=<?php echo $id_u; ?>&code=1&level=<?php echo $_SESSION['level']; ?>&id=<?php echo $id;?>"><button type='submit'  class='btn btn-success btn-flat btn_edit'
+                        <a href="proses/prosesKonfirmasi.php?d=<?php echo $tujuan;?>&u=<?php echo $id_u; ?>&code=1&level=<?php echo $_SESSION['level']; ?>&id=<?php echo $id;?>"><button type='submit'  class='btn btn-success btn-flat btn_edit'
                            > Sudah Terima</button></a>
                             <br>
                             <br>
-                            <a href="proses/prosesKonfirmasi.php?u=<?php echo $id_u; ?>&code=2&level=<?php echo $_SESSION['level']; ?>&id=<?php echo $id;?>"><button type='submit'  class='btn btn-danger btn-flat btn_edit'
+                            <a href="proses/prosesKonfirmasi.php?d=<?php echo $tujuan;?>&u=<?php echo $id_u; ?>&code=2&level=<?php echo $_SESSION['level']; ?>&id=<?php echo $id;?>"><button type='submit'  class='btn btn-danger btn-flat btn_edit'
                            > Belum Terima</button>  </td></a>
                             <?php
                         }
