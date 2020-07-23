@@ -29,6 +29,26 @@
                     <div class="row">  
                         <div class="col-lg-5 center p-50 background-white b-r-6">
                          <center>  <img src="images/logo.jpeg" style="width:40%" alt="Polo Logo"> </center>  
+                         <?php
+                        if (empty($_GET['alert'])) {
+                            echo "";
+                        } 
+
+                        elseif ($_GET['alert'] == 1) {
+                            echo "<div class='alert alert-danger alert-dismissable'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                    <h4>  <i class='icon fa fa-times-circle'></i> Login Failed!</h4>
+                                    Username atau Password salah, cek kembali Username dan Password Anda.
+                                </div>";
+                        }
+                        elseif ($_GET['alert'] == 2) {
+                            echo "<div class='alert alert-success alert-dismissable'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                    <h4>  <i class='icon fa fa-check-circle'></i> Success!</h4>
+                                    Anda telah berhasil logout.
+                                </div>";
+                        }
+                    ?>
                             <h3>Login to your Account</h3>
                             <form action="proses/prosesLogin.php" method="POST">
                                 <div class="form-group">
