@@ -21,24 +21,23 @@
             <div class="container">
                 <div>
                     <div class="text-center m-b-30">
-                        <a href="index.html" class="logo">
+                        <a href="index.php" class="logo">
                           
                             
                         </a>
                     </div>
-                    <div class="row">
-                        
+                    <div class="row">  
                         <div class="col-lg-5 center p-50 background-white b-r-6">
                          <center>  <img src="images/logo.jpeg" style="width:40%" alt="Polo Logo"> </center>  
                             <h3>Login to your Account</h3>
-                            <form>
+                            <form action="proses/prosesLogin.php" method="POST">
                                 <div class="form-group">
                                     <label class="sr-only">Username or Email</label>
-                                    <input type="text" class="form-control" placeholder="Username or Email">
+                                    <input type="text" name="email" class="form-control" placeholder="Username or Email">
                                 </div>
                                 <div class="form-group m-b-5">
                                     <label class="sr-only">Password</label>
-                                    <input type="password" class="form-control" placeholder="Password">
+                                    <input type="password" name="pass" class="form-control" placeholder="Password">
                                 </div>
                                 <div class="form-group form-inline text-left">
                                     <div class="form-check">
@@ -48,7 +47,7 @@
                                     </div>
                                 </div>
                                 <div class="text-left form-group">
-                                    <button type="button" class="btn">Login</button>
+                                    <input type="submit" value="Login" class="btn"></button>
                                 </div>
                             </form>
                             <p class="small">Don't have an account yet? <a href="#">Register New Account</a>

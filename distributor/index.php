@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<?php 
+    SESSION_START();
+    include ("proses/koneksi.php");
+    if(!$_SESSION['nama_u']){
+        header("location:login.php");
+    }
+
+?>
 <html lang="en">
 
 <head>
@@ -23,6 +31,7 @@
             <div class="header-inner">
                 <div class="container">
                     <!--Logo-->
+                    
                     <div id="logo"> <a href="index.html"><span class="logo-default">DAKDAK SALTED EGG</span><span class="logo-dark">POLO</span></a> </div>
                     <!--End: Logo-->
                     <!-- Search -->
@@ -76,7 +85,7 @@
                                     </li>
                                     
                                     <li><a href="index.html">Profil Saya</a></li>
-                                     <li><a href="index.html">Log Out</a></li>
+                                     <li><a href="proses/prosesLogout.php">Log Out</a></li>
                                     
                                 </ul>
                             </nav>
@@ -91,7 +100,7 @@
         <section id="page-title" data-bg-parallax="images/bg2.jpg" >
             <div class="container">
                 <div class="page-title">
-                    <h1>Selamat Datang Distributor A</h1>
+                    <h1>Selamat Datang Distributor <?php echo $_SESSION['nama_u']; ?></h1>
                     <span>Inspiration comes of working every day.</span>
                 </div>
                 <div class="breadcrumb">
