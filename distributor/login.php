@@ -70,7 +70,7 @@
                                     <input type="submit" value="Login" class="btn"></button>
                                 </div>
                             </form>
-                            <p class="small">Don't have an account yet? <a href="#">Register New Account</a>
+                            <p class="small">Don't have an account yet? <a href="register.php">Register New Account</a>
                             </p>
                         </div>
                     </div>

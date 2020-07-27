@@ -10,9 +10,9 @@ if(!$_POST['email'] || !$_POST['pass']){
     $sql  = "SELECT * FROM user WHERE email_u = '".$email."' AND password_u = '".$pass."'";
     $cek=mysqli_query($koneksi,$sql);
 	$jumlah = mysqli_num_rows($cek);
-    $hasil = mysqli_fetch_assoc($cek);
+   echo $hasil = mysqli_fetch_assoc($cek);
     if($jumlah == 0 ){
-        header("location:../login.php?alert=1");
+       // header("location:../login.php?alert=1");
     }else {
         $_SESSION['id_user'] 			= $hasil ['id_user'];
         $_SESSION['level']  	        = $hasil ['fk_id_level'];
