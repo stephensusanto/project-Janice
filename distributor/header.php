@@ -7,8 +7,8 @@
                         <div class="container">
                             <nav>
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="index.html">Pesan Stock</a></li>
+                                    <li><a href="index.php">Home</a></li>
+                                    <li><a href="pemesanan.php">Pesan Stock</a></li>
                                     <li><a href="index.html">Konfirmasi Pembayaran</a></li>
                                     
                                     <li class="dropdown"><a href="#">Lihat Laporan</a>

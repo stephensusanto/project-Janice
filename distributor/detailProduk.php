@@ -5,6 +5,7 @@
     if(!$_SESSION['nama_u']){
         header("location:login.php");
     }
+    $id = $_GET['id'];
 
 ?>
 <html lang="en">
@@ -79,7 +80,7 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a href="#">Home</a> </li>
+                        <li><a href="#">Detail Produk</a> </li>
                         
                     </ul>
                 </div>
@@ -94,70 +95,75 @@
                 <!-- DataTable -->
                 <div class="row mb-3">
                     <div class="col-lg-6">
-                        <h4>Data Penjualan Anda</h4>
+                        <h4>Detail Produk</h4>
                     </div>
                     <div class="col-lg-6 text-right">
                         <div id="export_buttons" class="mt-2"></div>
+                        
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
-                        <table id="datatable" class="table table-bordered table-hover" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Nama Pembeli</th>
-                                    <th>Barang</th>
-                                    <th>Jumlah Barang</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal Pembelian</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    $id_u = $_SESSION['id_user'];
-                                    $sql  = "SELECT * FROM sesi_transaksi 
-                                    INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi 
-                                    INNER JOIN user on user.id_user = sesi_transaksi.fk_id_u 
-                                    INNER JOIN produk on produk.id_produk = detail_transaksi.fk_id_produk
-                                    WHERE (status_sesi ='1' 
-                                    AND sesi_transaksi.id_distributor= '$id_u') ";
-                                    $jalan =mysqli_query($koneksi, $sql);
+                <?php
+                        if (empty($_GET['alert'])) {
+                            echo "";
+                        } 
 
-                                    while($output = mysqli_fetch_assoc($jalan)){
-                                        $namaPembeli = $output['nama_u'];
-                                        $barang = $output['nama_produk'];
-                                        $jml = $output['quantity_barang'];
-                                        $harga =$output['harga_barang'];
-                                        $total = $jml * $harga;
-                                        $tgl = $output['tanggal_sesi'];
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $namaPembeli ;?></td>
-                                            <td><?php echo $barang;?></td>
-                                            <td><?php echo $jml;?></td>
-                                            <td><?php echo rupiah($harga);?></td>
-                                            <td><?php echo rupiah($total);?></td>
-                                            <td><?php echo date("d-m-Y", strtotime($tgl));?></td>
-                                        </tr>
-                                   <?php } ?>
-
-                            
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Nama Pembeli</th>
-                                    <th>Barang</th>
-                                    <th>Jumlah Barang</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal Pembelian</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                        elseif ($_GET['alert'] == 1) {
+                            echo "<div class='alert alert-danger alert-dismissable'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                    <h4>  <i class='icon fa fa-times-circle'></i> Gagal Melakukan Penambahan Ke Keranjang!</h4>
+                                    Ada Data yang Kosong Mohon Mengisi Semua Data!
+                                </div>";
+                        }
+                        elseif ($_GET['alert'] == 2) {
+                            echo "<div class='alert alert-success alert-dismissable'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                    <h4>  <i class='icon fa fa-check-circle'></i> Success!</h4>
+                                    Anda Telah Berhasil Memasukan Produk ke Keranjang Anda!
+                                </div>";
+                        }
+                        elseif ($_GET['alert'] == 3) {
+                          echo "<div class='alert alert-info alert-dismissable'>
+                                  <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                  <h4>  <i class='icon fa fa-check-circle'></i> Gagal!</h4>
+                                  Terjadi kesalahan pada server silahkan mencoba beberapa saat lagi!
+                              </div>";
+                      }
+                    ?>
+                  <?php 
+                    $query = "SELECT * FROM produk WHERE id_produk = '$id'";
+                    $execute = mysqli_query($koneksi,$query);
+                    $output = mysqli_fetch_assoc($execute);
+                  ?>
+                <div class="col-sm-12" style ="float: right important!;">
+					<div style ="margin-bottom: 40px;overflow: hidden;margin-top: 10px;"><!--product-details-->
+						<div style ="float: left;" class="col-sm-5">
+							<div style = "position: relative;">
+								<img style ="vertical-align: middle;" width="300px" height = "300px" src="<?php echo getDirectoryProduct().$output['gambar_produk']; ?>"  alt="" />
+							</div>
+						</div>
+                        <form method="post" action="proses/tambahKeranjang.php?id=<?php echo $id?>&&hb=<?php echo $output['harga_produk']; ?>&&d=1">
+                            <div  style ="float: left;" class="col-sm-7">
+                                <div style = "border: 1px solid #F7F7F0;overflow: hidden;padding-bottom: 60px;padding-left: 60px;padding-top: 60px;position: relative;"><!--/product-information-->
+                                    <h2><?php echo $output['nama_produk'];?> </h2>
+                                    <span style = "display: inline-block;margin-bottom: 8px;margin-top: 18px">
+                                        <span style = "display: inline-block;margin-bottom: 8px;margin-top: 18px"><?php echo rupiah($output['harga_produk']);  ?></span>
+                                        <label>Quantity:</label>
+                                        <input type="text" size="3"  name="qty" value="1" />
+                                        <button type="submit" name='submit' class="btn btn-fefault cart"> 
+                                            <i class="fa fa-shopping-cart"></i>
+                                            Add to cart
+                                        </button>
+                                    </span>
+                                    <p><b>Stok:</b> No Limit</p>
+                                    <p><b>Seller:</b> Dak Dak</p>
+                                </div><!--/product-information-->
+                            </div>
+                        </form>
+					</div><!--/product-details-->
+					
+				</div>
+                    
                 </div>
                 <!-- end: DataTable -->
             </div>
@@ -183,45 +189,6 @@
 
     <!--Datatables plugin files-->
     <script src='plugins/datatables/datatables.min.js'></script>
-    <script>
-        $(document).ready(function () {
-            var table = $('#datatable').DataTable({
-                buttons: [{
-                    extend: 'print',
-                    title: 'Test Data export',
-                    exportOptions: {
-                        columns: "thead th:not(.noExport)"
-                    }
-                }, {
-                    extend: 'pdf',
-                    title: 'Test Data export',
-                    exportOptions: {
-                        columns: "thead th:not(.noExport)"
-                    }
-                }, {
-                    extend: 'excel',
-                    title: 'Test Data export',
-                    exportOptions: {
-                        columns: "thead th:not(.noExport)"
-                    }
-                }, {
-                    extend: 'csv',
-                    title: 'Test Data export',
-                    exportOptions: {
-                        columns: "thead th:not(.noExport)"
-                    }
-                }, {
-                    extend: 'copy',
-                    title: 'Test Data export',
-                    exportOptions: {
-                        columns: "thead th:not(.noExport)"
-                    }
-                }]
-            });
-            table.buttons().container().appendTo('#export_buttons');
-            $("#export_buttons .btn").removeClass('btn-secondary').addClass('btn-light');
-        });
-    </script>
 </body>
 
 </html>

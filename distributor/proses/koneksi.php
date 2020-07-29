@@ -12,5 +12,9 @@
     
    }
 
+   function getDirectoryProduct(){
+      $loc = "http://localhost/gitHub/projectJanice/admin/img/produk/";
+      return $loc;
+   }
  
 ?> 

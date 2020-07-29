@@ -79,7 +79,7 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a href="#">Home</a> </li>
+                        <li><a href="#">Pemesanan</a> </li>
                         
                     </ul>
                 </div>
@@ -94,70 +94,35 @@
                 <!-- DataTable -->
                 <div class="row mb-3">
                     <div class="col-lg-6">
-                        <h4>Data Penjualan Anda</h4>
+                        <h4>Pemesanan</h4>
                     </div>
                     <div class="col-lg-6 text-right">
                         <div id="export_buttons" class="mt-2"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
-                        <table id="datatable" class="table table-bordered table-hover" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Nama Pembeli</th>
-                                    <th>Barang</th>
-                                    <th>Jumlah Barang</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal Pembelian</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    $id_u = $_SESSION['id_user'];
-                                    $sql  = "SELECT * FROM sesi_transaksi 
-                                    INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi 
-                                    INNER JOIN user on user.id_user = sesi_transaksi.fk_id_u 
-                                    INNER JOIN produk on produk.id_produk = detail_transaksi.fk_id_produk
-                                    WHERE (status_sesi ='1' 
-                                    AND sesi_transaksi.id_distributor= '$id_u') ";
-                                    $jalan =mysqli_query($koneksi, $sql);
-
-                                    while($output = mysqli_fetch_assoc($jalan)){
-                                        $namaPembeli = $output['nama_u'];
-                                        $barang = $output['nama_produk'];
-                                        $jml = $output['quantity_barang'];
-                                        $harga =$output['harga_barang'];
-                                        $total = $jml * $harga;
-                                        $tgl = $output['tanggal_sesi'];
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $namaPembeli ;?></td>
-                                            <td><?php echo $barang;?></td>
-                                            <td><?php echo $jml;?></td>
-                                            <td><?php echo rupiah($harga);?></td>
-                                            <td><?php echo rupiah($total);?></td>
-                                            <td><?php echo date("d-m-Y", strtotime($tgl));?></td>
-                                        </tr>
-                                   <?php } ?>
-
-                            
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Nama Pembeli</th>
-                                    <th>Barang</th>
-                                    <th>Jumlah Barang</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal Pembelian</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                    <?php 
+                        $query = "SELECT * FROM produk WHERE status_produk ='1'";
+                        $execute = mysqli_query($koneksi, $query);
+                        while($output = mysqli_fetch_assoc($execute)){
+                            $id =  $output['id_produk'];
+                            $gambar = $output['gambar_produk'];
+                            ?>
+                             <div class = "col-lg-4">
+                                <center>
+                                    <image height ="300px" width ="300px" src="<?php echo getDirectoryProduct().$gambar; ?>">
+                                    <div class="col-lg-12 form-group">
+                                        <b> <?php echo $output['nama_produk']; ?> </b>
+                                        <p> <?php echo $output['desc_produk']; ?> </p>
+                                       <a href= "detailProduk.php?id=<?php echo $id;?>"> <button class="btn" type="input">Detail Produk</button></a>
+                                    </div>
+                                </center>
+                            </div>
+                        <?php
+                        }
+                    ?>
+                   
+                    
                 </div>
                 <!-- end: DataTable -->
             </div>
@@ -183,45 +148,6 @@
 
     <!--Datatables plugin files-->
     <script src='plugins/datatables/datatables.min.js'></script>
-    <script>
-        $(document).ready(function () {
-            var table = $('#datatable').DataTable({
-                buttons: [{
-                    extend: 'print',
-                    title: 'Test Data export',
-                    exportOptions: {
-                        columns: "thead th:not(.noExport)"
-                    }
-                }, {
-                    extend: 'pdf',
-                    title: 'Test Data export',
-                    exportOptions: {
-                        columns: "thead th:not(.noExport)"
-                    }
-                }, {
-                    extend: 'excel',
-                    title: 'Test Data export',
-                    exportOptions: {
-                        columns: "thead th:not(.noExport)"
-                    }
-                }, {
-                    extend: 'csv',
-                    title: 'Test Data export',
-                    exportOptions: {
-                        columns: "thead th:not(.noExport)"
-                    }
-                }, {
-                    extend: 'copy',
-                    title: 'Test Data export',
-                    exportOptions: {
-                        columns: "thead th:not(.noExport)"
-                    }
-                }]
-            });
-            table.buttons().container().appendTo('#export_buttons');
-            $("#export_buttons .btn").removeClass('btn-secondary').addClass('btn-light');
-        });
-    </script>
 </body>
 
 </html>
