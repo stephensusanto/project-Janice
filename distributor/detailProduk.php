@@ -147,7 +147,8 @@
                                 <div style = "border: 1px solid #F7F7F0;overflow: hidden;padding-bottom: 60px;padding-left: 60px;padding-top: 60px;position: relative;"><!--/product-information-->
                                     <h2><?php echo $output['nama_produk'];?> </h2>
                                     <span style = "display: inline-block;margin-bottom: 8px;margin-top: 18px">
-                                        <span style = "display: inline-block;margin-bottom: 8px;margin-top: 18px"><?php echo rupiah($output['harga_produk']);  ?></span>
+                                        <span style = "display: inline-block;margin-bottom: 8px;margin-top: 18px"><?php echo rupiah($output['harga_produk']);  ?> / lusin</span>
+                                        <br>
                                         <label>Quantity:</label>
                                         <input type="text" size="3"  name="qty" value="1" />
                                         <button type="submit" name='submit' class="btn btn-fefault cart"> 
