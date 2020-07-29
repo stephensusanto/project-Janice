@@ -34,7 +34,7 @@ if(!empty($_POST["qty"])){
             } 
         }
         //untuk cek sesi transaski sudah terigister atau belum
-       echo $queryCekk2 = "SELECT * FROM sesi_transaksi WHERE id_distributor = '$distributor' AND fk_id_u ='$user' AND status_sesi = '0'";
+        $queryCekk2 = "SELECT * FROM sesi_transaksi WHERE id_distributor = '$distributor' AND fk_id_u ='$user' AND status_sesi = '0'";
         $exe = mysqli_query($koneksi, $queryCekk2);
         $ambil2 = mysqli_fetch_assoc($exe);
         $itung = mysqli_num_rows($exe);
@@ -62,7 +62,7 @@ if(!empty($_POST["qty"])){
                 $query = "INSERT into detail_transaksi (fk_id_sesi,fk_id_produk,quantity_barang,harga_barang) VALUES('$idSesi', '$id', '$qty', '$harga')";
                 $execute = mysqli_query($koneksi, $query);
                 if($execute){
-                    //header("location:../detailProduk.php?id=$id&&alert=2");
+                    header("location:../detailProduk.php?id=$id&&alert=2");
                 }else {
                     header("location:../detailProduk.php?id=$id&&alert=3");
                 }
@@ -77,7 +77,7 @@ if(!empty($_POST["qty"])){
             }else {
                 $deposit = "NULL";
             }
-           echo $query = "INSERT INTO sesi_transaksi (fk_id_u, id_distributor,tipe_sesi,tanggal_sesi, status_sesi, deposit) VALUES('$user', '$distributor', '$tipeSesi', now(), '0', $deposit) ";
+            $query = "INSERT INTO sesi_transaksi (fk_id_u, id_distributor,tipe_sesi,tanggal_sesi, status_sesi, deposit) VALUES('$user', '$distributor', '$tipeSesi', now(), '0', $deposit) ";
             $execute = mysqli_query($koneksi, $query);
             if($execute){
                 $queryCekk5 = "SELECT * FROM sesi_transaksi WHERE id_distributor = '$distributor' AND fk_id_u ='$user' AND status_sesi = '0'";
@@ -115,7 +115,7 @@ if(!empty($_POST["qty"])){
                 }
 
             }else {
-               // header("location:../detailProduk.php?id=$id&&alert=3"); 
+                header("location:../detailProduk.php?id=$id&&alert=3"); 
             }
 
         }
