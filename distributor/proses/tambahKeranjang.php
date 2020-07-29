@@ -69,12 +69,14 @@ if(!empty($_POST["qty"])){
             }
            //jika tidak teregister
         }else {
+            //check sesi tipe sesinya jika 1 atau 2
             if($tipeSesi == "1" || $tipeSesi == "2"){
+                //ambil data dari konfigurasi
                 $queryCek4 = "SELECT * FROM konfigurasi WHERE fk_id_level = '$level'";
                 $exe4 = mysqli_query($koneksi, $queryCek4);
                 $ambilData = mysqli_fetch_assoc($exe4);
                 $deposit = $ambilData['deposit'];
-            }else {
+            }else { //jika tidak maka null
                 $deposit = "NULL";
             }
             $query = "INSERT INTO sesi_transaksi (fk_id_u, id_distributor,tipe_sesi,tanggal_sesi, status_sesi, deposit) VALUES('$user', '$distributor', '$tipeSesi', now(), '0', $deposit) ";
