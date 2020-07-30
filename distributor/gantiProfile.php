@@ -80,7 +80,7 @@
                 <div class="breadcrumb">
                     <ul>
                         <li><a href="index.php">Home</a> </li>
-                        <li><a href="profile.php">Profile</a> </li>  
+                        <li><a href="profile.php">Ganti Profile</a> </li>  
                         
                     </ul>
                 </div>
@@ -94,45 +94,8 @@
             <div class="container">
                 <!-- DataTable -->
                 
-                        <h1>Profile Anda</h1>
-                          <?php
-                        if (empty($_GET['alert'])) {
-                            echo "";
-                        } 
+                        <h1>Ganti Profile</h1>
 
-                        elseif ($_GET['alert'] == 1) {
-                            echo "<div class='alert alert-danger alert-dismissable'>
-                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                                    <h4>  <i class='icon fa fa-times-circle'></i> Gagal Melakukan Perubahan Data!</h4>
-                                    Ada Data yang Kosong Mohon Mengisi Semua Data!
-                                </div>";
-                        }
-                        elseif ($_GET['alert'] == 2) {
-                            echo "<div class='alert alert-success alert-dismissable'>
-                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                                    <h4>  <i class='icon fa fa-check-circle'></i> Success!</h4>
-                                    Anda Telah Berhasil Merubah Data Pribadi Anda!
-                                </div>";
-                        }
-                        elseif ($_GET['alert'] == 3) {
-                          echo "<div class='alert alert-info alert-dismissable'>
-                                  <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                                  <h4>  <i class='icon fa fa-check-circle'></i> Gagal!</h4>
-                                  Terjadi kesalahan pada server silahkan mencoba beberapa saat lagi!
-                              </div>";
-                      }
-                    ?>
-               
-                               <a href="gantiProfile.php"> <button class="btn btn-lg btn-slide " data-width="240" href="#">
-                                    <i class="fa fa-cog"></i>
-                                    <span>Ganti Profile</span>
-                                </button> </a>
-                
-                     
-                                <a href="gantiPass.php">  <button class="btn btn-lg btn-slide btn-dark" data-width="240" href="#">
-                                    <i class="fa fa-lock"></i>
-                                    <span>Ganti Password</span>
-                                </button>
                                 </a>
                                 <?php 
                                     $id =$_SESSION['id_user'];
@@ -141,52 +104,71 @@
                                     $tarik = mysqli_fetch_assoc($exe);
                                     $array = array();
                                     $array = explode(",",$tarik['alamat_u']);
+                                    $dom = $tarik['fk_id_domisili'];
                                 ?>
-                            <div class="row">
-                                    <div class="col-lg-12 form-group">
-                                        <label >Name</label>
-                                        <input type="text" name="nama" value="<?php echo $tarik['nama_u'] ;?>" placeholder="Name" class="form-control" readonly>
-                                    </div>
-                                    <div class="col-lg-12 form-group">
-                                        <label >Email</label>
-                                        <input type="text" name="email" value="<?php echo $tarik['email_u']; ?>" placeholder="Email" class="form-control" readonly>
-                                    </div>
-                                    <div class="col-lg-6 form-group">
-                                        <label>Password</label>
-                                        <input type="password" name="pass" value="<?php echo $tarik['password_u']; ?>" placeholder="Password" class="form-control" readonly>
-                                    </div>
-                                    <div class="col-lg-6 form-group">
-                                        <label >Birth Date</label>
-                                        <input type="Date" name="dob" value="<?php echo $tarik['dob_u']; ?>" placeholder="Password" class="form-control" readonly>
-                                    </div>
-                                    <div class="col-lg-12 form-group">
-                                        <label >Address</label>
-                                        <input type="text" name="alamat" value="<?php echo $array[0]; ?>" placeholder="Address" class="form-control" readonly>
-                                    </div>
-                                    <div class="col-lg-12 form-group">
-                                        <label >Delivery Address</label>
-                                        <input type="text" name="alamat" value="<?php echo $tarik['alamat_pengiriman'];  ?>" placeholder="Address" class="form-control" readonly>
-                                    </div>
-                                    <div class="col-lg-6 form-group">
-                                        <label >Apartment, suite, unit etc.</label>
-                                        <input type="text" name = "blok" value="<?php echo $array[1]; ?>" placeholder="Apartment, suite, unit etc." class="form-control" readonly>
-                                    </div>
-                                    <div class="col-lg-6 form-group">
-                                        <label >Domisili</label>
-                                        <input type="text" name = "blok" value="<?php echo $tarik['nama_dom']; ?>" placeholder="Apartment, suite, unit etc." class="form-control" readonly>
-                                    </div>
+                                <form action = "proses/prosesEditUser.php" method = "POST">
+                                    <div class="row">
+                                        <div class="col-lg-12 form-group">
+                                            <label >Name</label>
+                                            <input type="text" name="nama" value="<?php echo $tarik['nama_u'] ;?>" placeholder="Name" class="form-control" >
+                                        </div>
+                                        <div class="col-lg-12 form-group">
+                                            <label >Email</label>
+                                            <input type="text" name="email" value="<?php echo $tarik['email_u']; ?>" placeholder="Email" class="form-control" >
+                                        </div>
+                                        <div class="col-lg-12 form-group">
+                                            <label >Birth Date</label>
+                                            <input type="Date" name="dob" value="<?php echo $tarik['dob_u']; ?>" placeholder="Password" class="form-control" >
+                                        </div>
+                                        <div class="col-lg-12 form-group">
+                                            <label >Address</label>
+                                            <input type="text" name="alamat" value="<?php echo $array[0]; ?>" placeholder="Address" class="form-control" >
+                                        </div>
+                                        <div class="col-lg-12 form-group">
+                                            <label >Delivery Address</label>
+                                            <input type="text" name="delivery" value="<?php echo $tarik['alamat_pengiriman'];  ?>" placeholder="Address" class="form-control" >
+                                        </div>
+                                        <div class="col-lg-6 form-group">
+                                            <label >Apartment, suite, unit etc.</label>
+                                            <input type="text" name = "blok" value="<?php echo $array[1]; ?>" placeholder="Apartment, suite, unit etc." class="form-control" >
+                                        </div>
+                                        <div class="col-lg-6 form-group">
+                                            <label >Domisili</label>
+                                            <select class="form-control"  name="domisili">
+                                            <option>Pilih Domisili</option>
+                                            <?php
+                                            $query = "SELECT * FROM domisili where status_dom = '1'";
+                                            $tampilin = mysqli_query($koneksi, $query);
+                                            while($output = mysqli_fetch_array($tampilin)){
+                                                $id = $output['id_dom'];
+                                                $nama = $output['nama_dom'];
+                                            
+                                            ?>
+                                                <option value="<?php echo $id; ?>" 
+                                                <?php 
+                                                if($id == $dom)
+                                                { 
+                                                    echo 'selected = "selected"'; 
+                                                } ?> ><?php echo $nama; ?></option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
+                                        </div>
+                                        <div class="col-lg-6 form-group">
+                                            <label >Postcode / Zip</label>
+                                            <input type="text" name = "kodepos" value="<?php echo $array[2]; ?>" placeholder="Postcode / Zip" class="form-control" >
+                                        </div>
                                     
-                                    <div class="col-lg-6 form-group">
-                                        <label >Postcode / Zip</label>
-                                        <input type="text" name = "kodepos" value="<?php echo $array[2]; ?>" placeholder="Postcode / Zip" class="form-control" readonly>
-                                    </div>
-                                   
-                                    <div class="col-lg-6 form-group">
-                                        <label >Phone</label>
-                                        <input type="text" name="telp" value="<?php echo $tarik['telp_u']; ?>" placeholder="Phone" class="form-control" readonly>
-                                    </div>
-                                   
-                           </div> 
+                                        <div class="col-lg-6 form-group">
+                                            <label >Phone</label>
+                                            <input type="text" name="telp" value="<?php echo $tarik['telp_u']; ?>" placeholder="Phone" class="form-control" >
+                                        </div>
+                                        <div class="col-lg-12 form-group">
+                                            <button class="btn" type="input">Update Data </button>
+                                        </div>
+                                    </div> 
+                           </form>
                 <!-- end: DataTable -->
             </div>
         </section>

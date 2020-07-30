@@ -20,7 +20,7 @@
                                         </ul>
                                     </li>
                                     
-                                    <li><a href="index.html">Profil Saya</a></li>
+                                    <li><a href="profile.php">Profil Saya</a></li>
                                      <li><a href="proses/prosesLogout.php">Log Out</a></li>
                                     
                                 </ul>

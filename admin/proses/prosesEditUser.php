@@ -37,8 +37,11 @@
     $cari = "SELECT * FROM user WHERE id_user = '$id' ";
     $find = mysqli_query($koneksi, $cari);
     $findDataStatus = mysqli_fetch_assoc($find)['status_u'];
+    //jika statusnya 3
     if($findDataStatus == '3'){
+        //jika status dari post kosong
         if($status == ''){
+            //level orang yang diedit
             if($editedLevel == '2'){
                 header("location:../user.php?level=2&&alert=1");
             }elseif($editedLevel == '3'){
@@ -46,7 +49,7 @@
             }elseif($editedLevel == '4'){
                 header("location:../user.php?level=4&&alert=1");
             }
-        }else {
+        }else { //jika status dari post tidak kosong dan statusnya 3
             $query = "UPDATE user SET 
             status_u = '$status' WHERE id_user = '$id'";
             $jalan = mysqli_query($koneksi, $query);

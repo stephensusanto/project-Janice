@@ -85,6 +85,10 @@
                                         <label >Address</label>
                                         <input type="text" name="alamat" value="" placeholder="Address" class="form-control">
                                     </div>
+                                    <div class="col-lg-12 form-group">
+                                        <label >Delivery Address</label>
+                                        <input type="text" name="deliv" value="" placeholder="Address" class="form-control">
+                                    </div>
                                     <div class="col-lg-6 form-group">
                                         <label >Apartment, suite, unit etc.</label>
                                         <input type="text" name = "blok" value="" placeholder="Apartment, suite, unit etc." class="form-control">
