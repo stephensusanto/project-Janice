@@ -98,10 +98,14 @@
                     </div>
                     <div class="col-lg-6 text-right">
                         <div id="export_buttons" class="mt-2"></div>
+                        <form>
+                            
+                        </form>
                     </div>
                 </div>
                 <div class="row">
                     <?php 
+                    if($_SESSION['level'] == "3"){ //jika sebagai distributor
                         $query = "SELECT * FROM produk WHERE status_produk ='1'";
                         $execute = mysqli_query($koneksi, $query);
                         while($output = mysqli_fetch_assoc($execute)){
@@ -120,6 +124,10 @@
                             </div>
                         <?php
                         }
+                    }else {
+
+                    }
+                       
                     ?>
                    
                     
