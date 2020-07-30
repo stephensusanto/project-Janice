@@ -75,7 +75,11 @@
         <section id="page-title" data-bg-parallax="images/bg2.jpg" >
             <div class="container">
                 <div class="page-title">
-                    <h1>Selamat Datang Distributor <?php echo $_SESSION['nama_u']; ?></h1>
+                    <h1>Selamat Datang <?php if($_SESSION['level'] == "3"){
+                        echo "Distributor ". $_SESSION['nama_u']; 
+                    }else {
+                        echo "Reseller ". $_SESSION['nama_u'];
+                     } ?></h1>
                     <span>Inspiration comes of working every day.</span>
                 </div>
                 <div class="breadcrumb">
@@ -112,7 +116,7 @@
                             echo "<div class='alert alert-danger alert-dismissable'>
                                     <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
                                     <h4>  <i class='icon fa fa-times-circle'></i> Gagal Melakukan Penambahan Ke Keranjang!</h4>
-                                    Ada Data yang Kosong Mohon Mengisi Semua Data!
+                                    Data Yang Anda Input Tidak Sesuai!
                                 </div>";
                         }
                         elseif ($_GET['alert'] == 2) {
@@ -134,6 +138,13 @@
                     $query = "SELECT * FROM produk WHERE id_produk = '$id'";
                     $execute = mysqli_query($koneksi,$query);
                     $output = mysqli_fetch_assoc($execute);
+                    if($_SESSION['level'] == "4"){
+                        $user = $_GET['user'];
+                        $query2 = "SELECT * from user WHERE id_user = '$user'";
+                        $exe = mysqli_query($koneksi, $query2);
+                        $tarik = mysqli_fetch_assoc($exe);
+                    }
+                   
                   ?>
                 <div class="col-sm-12" style ="float: right important!;">
 					<div style ="margin-bottom: 40px;overflow: hidden;margin-top: 10px;"><!--product-details-->
@@ -142,22 +153,46 @@
 								<img style ="vertical-align: middle;" width="300px" height = "300px" src="<?php echo getDirectoryProduct().$output['gambar_produk']; ?>"  alt="" />
 							</div>
 						</div>
-                        <form method="post" action="proses/tambahKeranjang.php?id=<?php echo $id?>&&hb=<?php echo $output['harga_produk']; ?>&&d=1">
+                        <form method="post" action="proses/tambahKeranjang.php?id=<?php echo $id?>&&hb=<?php if($_SESSION['level'] == '3'){echo $output['harga_produk'];}else {echo $_GET['harga'];} ?>&&d=<?php if($_SESSION['level'] == "3"){ echo "1";}else { echo $tarik['id_user'];} ?>&stock=<?php  if($_SESSION['level'] == "3"){ echo "0";}else { echo $_GET['stock'];} ?>">
                             <div  style ="float: left;" class="col-sm-7">
                                 <div style = "border: 1px solid #F7F7F0;overflow: hidden;padding-bottom: 60px;padding-left: 60px;padding-top: 60px;position: relative;"><!--/product-information-->
                                     <h2><?php echo $output['nama_produk'];?> </h2>
                                     <span style = "display: inline-block;margin-bottom: 8px;margin-top: 18px">
-                                        <span style = "display: inline-block;margin-bottom: 8px;margin-top: 18px"><?php echo rupiah($output['harga_produk']);  ?> / lusin</span>
+                                        <span style = "display: inline-block;margin-bottom: 8px;margin-top: 18px"><?php 
+                                        if($_SESSION['level'] == '3'){
+                                            echo rupiah($output['harga_produk']);  
+                                        }
+                                        else {
+                                            echo rupiah($_GET['harga']);
+                                        }
+                                        ?> / lusin</span>
                                         <br>
                                         <label>Quantity:</label>
-                                        <input type="text" size="3"  name="qty" value="1" />
-                                        <button type="submit" name='submit' class="btn btn-fefault cart"> 
+                                        <input type="text" size="3" id="qty"  name="qty" value="1" />
+                                        <button id ="tombol"type="submit" name='submit' class="btn btn-fefault cart"> 
                                             <i class="fa fa-shopping-cart"></i>
                                             Add to cart
                                         </button>
                                     </span>
-                                    <p><b>Stok:</b> No Limit</p>
-                                    <p><b>Seller:</b> Dak Dak</p>
+                                    <p><b>Stok:</b><?php 
+                                     if($_SESSION['level'] == '3'){
+                                        echo "No Limit";  
+                                    }
+                                    else {
+                                        echo $_GET['stock']." lusin";
+                                    }
+                                    
+                                    ?></p>
+                                    <p><b>Seller:</b> <?php
+                                     if($_SESSION['level'] == '3'){
+                                        echo "Dak Dak";  
+                                    }
+                                    else {
+                                        
+                                        echo $tarik['nama_u'];
+                                    }
+                                    
+                                    ?></p>
                                 </div><!--/product-information-->
                             </div>
                         </form>
@@ -190,6 +225,18 @@
 
     <!--Datatables plugin files-->
     <script src='plugins/datatables/datatables.min.js'></script>
+    <script>
+    
+       $("#tombol").change(function(){
+        var level = <?php echo $_SESSION['level'];?>
+        var stok = <?php echo $_GET['stock']; ?>;
+        var qty = document.getElementById("qty").value; 
+        if(level == "4"){
+            
+        } 
+                        
+     });  
+    </script>
 </body>
 
 </html>

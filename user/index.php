@@ -74,7 +74,11 @@
         <section id="page-title" data-bg-parallax="images/bg2.jpg" >
             <div class="container">
                 <div class="page-title">
-                    <h1>Selamat Datang Distributor <?php echo $_SESSION['nama_u']; ?></h1>
+                <h1>Selamat Datang <?php if($_SESSION['level'] == "3"){
+                        echo "Distributor ". $_SESSION['nama_u']; 
+                    }else {
+                        echo "Reseller ". $_SESSION['nama_u'];
+                     } ?></h1>
                     <span>Inspiration comes of working every day.</span>
                 </div>
                 <div class="breadcrumb">

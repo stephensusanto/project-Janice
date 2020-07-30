@@ -74,7 +74,11 @@
         <section id="page-title" data-bg-parallax="images/bg2.jpg" >
             <div class="container">
                 <div class="page-title">
-                    <h1>Selamat Datang Distributor <?php echo $_SESSION['nama_u']; ?></h1>
+                <h1>Selamat Datang <?php if($_SESSION['level'] == "3"){
+                        echo "Distributor ". $_SESSION['nama_u']; 
+                    }else {
+                        echo "Reseller ". $_SESSION['nama_u'];
+                     } ?></h1>
                     <span>Inspiration comes of working every day.</span>
                 </div>
                 <div class="breadcrumb">
@@ -98,12 +102,45 @@
                     </div>
                     <div class="col-lg-6 text-right">
                         <div id="export_buttons" class="mt-2"></div>
-                        <form>
-                            
-                        </form>
+                        
                     </div>
                 </div>
-                <div class="row">
+    <div class="form-group">
+		<?php
+			if($_SESSION['level'] == "4"){
+
+		?>
+		<label class="sr-only">Domisili</label>
+			<select class="form-control " name="domisili" id="domisili">
+				<option>Pilih Domisili</option>
+				<?php
+				$query = "SELECT * FROM domisili where status_dom = '1'";
+				$tampilin = mysqli_query($koneksi, $query);
+				while($output = mysqli_fetch_array($tampilin)){
+					$id = $output['id_dom'];
+					$nama = $output['nama_dom'];
+				
+				?>
+					<option value="<?php echo $id; ?>"><?php echo $nama; ?></option>
+				<?php
+				}
+				?>
+			</select>
+	</div>
+		<div class="form-group m-b-5">
+			<label class="sr-only">User</label>
+			<select class="form-control " name="list_user" id="list_user">
+					<option>Pilih User</option>
+				  
+			</select>
+		</div>
+				<?php
+				}
+				?>
+                   
+
+               
+                <div class="row" id="produk">
                     <?php 
                     if($_SESSION['level'] == "3"){ //jika sebagai distributor
                         $query = "SELECT * FROM produk WHERE status_produk ='1'";
@@ -124,8 +161,6 @@
                             </div>
                         <?php
                         }
-                    }else {
-
                     }
                        
                     ?>
@@ -156,6 +191,31 @@
 
     <!--Datatables plugin files-->
     <script src='plugins/datatables/datatables.min.js'></script>
+
+    <script>
+    $("#domisili").change(function(){
+       var id_dom = $(this).val(); 
+       $.ajax({
+          type: "POST",
+          dataType: "html",
+          url: "data_user.php?dom="+id_dom,
+          success: function(msg){
+             $("select#list_user").html(msg);                                                                                                           
+          }
+       });                    
+     });  
+     $("#list_user").change(function(){
+       var user = $(this).val(); 
+       $.ajax({
+          type: "POST",
+          dataType: "html",
+          url: "data_produk.php?id="+user,
+          success: function(msg){
+             $("div#produk").html(msg);                                                                                                           
+          }
+       });                    
+     });  
+    </script>
 </body>
 
 </html>
