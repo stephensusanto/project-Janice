@@ -145,9 +145,7 @@
                         }if($status =="2") {
                             echo "on Progress";
                         }
-                        if($status =="3") {
-                            echo "Pending";
-                        }
+                        
                        ?></td>
                         
                        <td> 
@@ -232,7 +230,7 @@
    <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; <?php echo "DAk Dak";?></span>
+            <span>Copyright &copy; <?php echo "Dak Dak";?></span>
           </div>
         </div>
       </footer>

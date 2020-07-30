@@ -183,7 +183,7 @@
    <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; <?php echo "DAk Dak";?></span>
+            <span>Copyright &copy; <?php echo "Dak Dak";?></span>
           </div>
         </div>
       </footer>
