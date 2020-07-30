@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2020 at 01:16 PM
+-- Generation Time: Jul 30, 2020 at 04:03 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -43,7 +43,10 @@ CREATE TABLE `detail_transaksi` (
 INSERT INTO `detail_transaksi` (`id_detail`, `fk_id_sesi`, `fk_id_produk`, `quantity_barang`, `harga_barang`) VALUES
 (1, 1, 1, 60, 20000),
 (2, 1, 2, 50, 40000),
-(3, 2, 2, 240, 30000);
+(3, 2, 2, 240, 30000),
+(6, 5, 1, 750, 40000),
+(7, 5, 2, 20, 10000),
+(8, 6, 2, 1, 10000);
 
 -- --------------------------------------------------------
 
@@ -175,7 +178,8 @@ CREATE TABLE `produk` (
 INSERT INTO `produk` (`id_produk`, `fk_id_user`, `nama_produk`, `harga_produk`, `harga_reseller`, `desc_produk`, `gambar_produk`, `tgl_masuk`, `status_produk`) VALUES
 (1, 2, 'Dak Dak Hot 1', 40000, 30000, 'Ini Produk Dak Dak Pedas Level 3', '2Dak Dak Hot 1.jpg', '2020-07-17 00:00:00', 1),
 (2, 1, 'test2', 10000, 20000, 'ini barang gagal', '2test2.gif', '2020-07-15 00:00:28', 1),
-(3, 1, 'test3', 500000, 60000, 'ini barang asin', '1test3.jpeg', '2020-07-18 09:42:24', 1);
+(3, 1, 'test3', 500000, 60000, 'ini barang asin', '1test3.jpeg', '2020-07-18 09:42:24', 1),
+(4, 1, 'dak dak asin', 50000, 60000, 'ini barang asin', '2Dak Dak Hot 1.jpg', '2020-07-29 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -225,7 +229,7 @@ CREATE TABLE `sesi_transaksi` (
   `id_distributor` int(11) NOT NULL,
   `tipe_sesi` int(1) NOT NULL COMMENT '1 = register distributor, 2 = register reseller, 3 = pemesanan distributor, 4 = pemesanan reseller',
   `tanggal_sesi` date NOT NULL,
-  `status_sesi` int(1) NOT NULL,
+  `status_sesi` int(1) NOT NULL COMMENT ' 0 = belum lunas, 1 = sudah lunas',
   `deposit` int(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -235,7 +239,9 @@ CREATE TABLE `sesi_transaksi` (
 
 INSERT INTO `sesi_transaksi` (`id_sesi`, `fk_id_u`, `id_distributor`, `tipe_sesi`, `tanggal_sesi`, `status_sesi`, `deposit`) VALUES
 (1, 4, 1, 2, '2020-07-19', 1, NULL),
-(2, 5, 4, 2, '2020-07-01', 1, NULL);
+(2, 8, 4, 2, '2020-07-01', 1, NULL),
+(5, 10, 1, 1, '2020-07-29', 0, 100000),
+(6, 4, 1, 3, '2020-07-30', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -286,8 +292,10 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id_user`, `nama_u`, `email_u`, `dob_u`, `telp_u`, `alamat_u`, `alamat_pengiriman`, `tanggal_daftar`, `password_u`, `fk_id_level`, `fk_id_domisili`, `status_u`) VALUES
 (1, 'Dak Dak', 'dak@gmail.com', '2020-07-08', '0218788888', 'Jalan Raya Bogor', 'Dak Dak Office', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 1, 0, 1),
 (2, 'nobody', 'test2@gmail.com', '2020-07-22', '123123123', 'Dak Dak Office', 'Dak Dak Office2', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 2, 1, 1),
-(4, 'janice', 'test@gmail.com', '2020-07-01', '5555', 'Bogor Raya', 'Dak Dak Office', '2020-07-17 16:26:38', 'c4ca4238a0b923820dcc509a6f75849b', 3, 1, 1),
-(8, 'dwwww', 'dw@gmail.com', '2020-07-08', '123213213', 'bojong gede', 'Dak Dak Office  333', '2020-07-18 10:42:44', 'c4ca4238a0b923820dcc509a6f75849b', 2, 0, 1);
+(4, 'janice2', 'test@gmail.com', '2020-07-01', '5555', 'Bogor Raya ,     123,     123123', 'Dak Dak Office 333', '2020-07-17 16:26:38', 'c4ca4238a0b923820dcc509a6f75849b', 3, 1, 1),
+(8, 'dwwww', 'dw@gmail.com', '2020-07-08', '123213213', 'bojong gede , 123, 123123', 'Dak Dak Offic33', '2020-07-18 10:42:44', 'c4ca4238a0b923820dcc509a6f75849b', 4, 0, 1),
+(10, 'pw', 'pw@gmail.com', '2020-07-01', '12123123123', 'asd, 123, 123123', '', '2020-07-27 19:59:36', 'c4ca4238a0b923820dcc509a6f75849b', 3, 1, 2),
+(13, 'asd', 'asd@gmail.com', '2020-07-01', '4', 'jalan best friend, 444, 4', 'jalan musuh bebyutuan', '2020-07-30 17:25:35', 'd41d8cd98f00b204e9800998ecf8427e', 3, 1, 2);
 
 --
 -- Indexes for dumped tables
@@ -373,7 +381,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `domisili`
@@ -409,7 +417,7 @@ ALTER TABLE `notifikasi`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `rekening`
@@ -427,7 +435,7 @@ ALTER TABLE `reset_password`
 -- AUTO_INCREMENT for table `sesi_transaksi`
 --
 ALTER TABLE `sesi_transaksi`
-  MODIFY `id_sesi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_sesi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `stock`
@@ -439,7 +447,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
