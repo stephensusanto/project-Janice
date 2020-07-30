@@ -300,12 +300,13 @@
           var tipe = $(this).data('level');
           var status = $(this).data('status');
         
-            if(status == "3"){
+            if(tipe == "3" || tipe == "4"){
                 $("#id").val(id);
                 $("#nama").val(nama);
                 $("#dob").val(dob);
                 $("#email").val(email);
                 $("#telp").val(telp);
+                $("#alamat").val(alamat);
                 $("#alamat_p").val(alamatP);
                 $("#tipe").val(tipe);
                 $("#status").val(status);
