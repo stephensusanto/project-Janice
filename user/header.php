@@ -10,18 +10,23 @@
                                     <li><a href="index.php">Home</a></li>
                                     <li><a href="pemesanan.php">Pesan Stock</a></li>
                                     <li><a href="index.html">Konfirmasi Pembayaran</a></li>
-                                    
+                                    <?php 
+                                    if($_SESSION['level'] == "3"){
+                                    ?>
                                     <li class="dropdown"><a href="#">Lihat Laporan</a>
                                         <ul class="dropdown-menu">
                                             
                                             <li><a href="#">Laporan Pemesanan Reseller</a></li>
-                                             <li><a href="#">Laporan Stock Barang</a></li>
+                                            <li><a href="#">Laporan Stock Barang</a></li>
                                             
                                         </ul>
                                     </li>
+                                    <?php 
+                                    }
+                                    ?>
                                     
                                     <li><a href="profile.php">Profil Saya</a></li>
-                                     <li><a href="proses/prosesLogout.php">Log Out</a></li>
+                                    <li><a href="proses/prosesLogout.php">Log Out</a></li>
                                     
                                 </ul>
                             </nav>
