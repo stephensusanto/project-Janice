@@ -117,7 +117,7 @@
                         <td><?php echo rupiah($jumlahPengirim); ?></td>
                         <td><?php echo date("d-m-Y", strtotime($tTransfer)); ?></td>
                        
-                        <td><image height ="100px" width ="100px" src="<?php echo $gambar ;?>"></td>
+                        <td><image height ="100px" width ="100px" src="<?php echo getDirectoryBukti().$gambar ;?>"></td>
                         <td><?php 
                         if($status == '1'){
                             echo "Lunas"; 

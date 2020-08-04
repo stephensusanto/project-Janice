@@ -9,10 +9,18 @@
                                 <ul>
                                     <li><a href="index.php">Home</a></li>
                                     <li><a href="pemesanan.php">Pesan Stock</a></li>
-                                    <li><a href="index.html">Konfirmasi Pembayaran</a></li>
+                                    <li><a href="pembayaran.php">Pembayaran</a></li>
                                     <?php 
                                     if($_SESSION['level'] == "3"){
                                     ?>
+                                    <li class="dropdown"><a href="#">Konfirmasi</a>
+                                        <ul class="dropdown-menu">
+                                            
+                                            <li><a href="#">Pembayaran</a></li>
+                                            <li><a href="#">Pembelian</a></li>
+                                            
+                                        </ul>
+                                    </li>
                                     <li class="dropdown"><a href="#">Lihat Laporan</a>
                                         <ul class="dropdown-menu">
                                             
@@ -22,6 +30,10 @@
                                         </ul>
                                     </li>
                                     <?php 
+                                    }else {
+                                        ?>
+                                        <li><a href="pemesanan.php">Konfirmasi Pembelian</a></li>
+                                        <?php
                                     }
                                     ?>
                                     

@@ -112,7 +112,7 @@
 		?>
 		<label class="sr-only">Domisili</label>
 			<select class="form-control " name="domisili" id="domisili">
-				<option>Pilih Domisili</option>
+				<option value="0000">Pilih Domisili</option>
 				<?php
 				$query = "SELECT * FROM domisili where status_dom = '1'";
 				$tampilin = mysqli_query($koneksi, $query);

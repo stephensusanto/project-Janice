@@ -12,8 +12,10 @@
     
    }
 
-   function changeStatusSesi($koneksi, $idSesi){
-      $query = "UPDATE sesi_transaksi SET status_sesi = '1'";
+   function changeStatusSesi($koneksi, $idSesi, $user){
+      $query = "UPDATE sesi_transaksi SET status_sesi = '1' WHERE id_sesi = '$idSesi'";
+      $cek = mysqli_query($koneksi, $query);
+      $query = "UPDATE user SET status_u = '1' WHERE id_user = '$user'";
       $cek = mysqli_query($koneksi, $query);
       if($cek){
          return "1";
@@ -96,7 +98,7 @@
                $stock = $output['quantity_barang'];
                changeStock2($koneksi, $produk, $stock, $user);
             }
-           if(changeStatusSesi($koneksi, $konfirmasi) != 0){ 
+           if(changeStatusSesi($koneksi, $konfirmasi, $user) != 0){ 
                return "1";
            }else {
               return "0";
@@ -206,6 +208,11 @@
 
    function getDirectoryProduct(){
       $loc = "http://localhost/gitHub/projectJanice/admin/img/produk/";
+      return $loc;
+   }
+
+   function getDirectoryBukti(){
+      $loc = "http://localhost/gitHub/projectJanice/admin/img/bukti/";
       return $loc;
    }
   
