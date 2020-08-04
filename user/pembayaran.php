@@ -210,7 +210,6 @@
        });                    
      });  
     $('#transfer').change(function(e){
-        
        var user = $(this).val(); 
        var data = <?php 
        if(!empty($_SESSION['harga_semua']))
@@ -220,10 +219,13 @@
             echo "0";
         }
          ?>;
-       if(user != data){
-            $("#btn").prop('disabled', true);
-       } else {
+         console.log(user);
+         console.log(data);
+       if(user == data){
             $("#btn").prop('disabled', false);
+            
+       } else {
+        $("#btn").prop('disabled', true);
        }         
     });
  

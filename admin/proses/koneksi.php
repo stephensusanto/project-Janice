@@ -13,11 +13,11 @@
    }
 
    function changeStatusSesi($koneksi, $idSesi, $user){
-      $query = "UPDATE sesi_transaksi SET status_sesi = '1' WHERE id_sesi = '$idSesi'";
-      $cek = mysqli_query($koneksi, $query);
-      $query = "UPDATE user SET status_u = '1' WHERE id_user = '$user'";
-      $cek = mysqli_query($koneksi, $query);
-      if($cek){
+      $query1 = "UPDATE sesi_transaksi SET status_sesi = '1' WHERE id_sesi = '$idSesi'";
+      $cek1 = mysqli_query($koneksi, $query1);
+      $query2 = "UPDATE user SET status_u = '1' WHERE id_user = '$user'";
+      $cek2 = mysqli_query($koneksi, $query2);
+      if($cek1 && $cek2){
          return "1";
       }else {
          return "0";
@@ -90,7 +90,7 @@
       
       $idSesi = takeKonfirmasi($koneksi,$konfirmasi) ;
       if($idSesi != '0'){
-        echo $query = "SELECT * from detail_transaksi WHERE fk_id_sesi = '$idSesi'";
+         $query = "SELECT * from detail_transaksi WHERE fk_id_sesi = '$idSesi'";
          $jalan = mysqli_query($koneksi, $query);
          if($jalan){
             while($output = mysqli_fetch_array($jalan)){
@@ -98,7 +98,7 @@
                $stock = $output['quantity_barang'];
                changeStock2($koneksi, $produk, $stock, $user);
             }
-           if(changeStatusSesi($koneksi, $konfirmasi, $user) != 0){ 
+           if(changeStatusSesi($koneksi, $idSesi, $user) != 0){ 
                return "1";
            }else {
               return "0";
