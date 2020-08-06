@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2020 at 04:03 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.1.32
+-- Waktu pembuatan: 06 Agu 2020 pada 16.02
+-- Versi server: 10.4.6-MariaDB
+-- Versi PHP: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_transaksi`
+-- Struktur dari tabel `detail_transaksi`
 --
 
 CREATE TABLE `detail_transaksi` (
@@ -36,22 +36,10 @@ CREATE TABLE `detail_transaksi` (
   `harga_barang` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `detail_transaksi`
---
-
-INSERT INTO `detail_transaksi` (`id_detail`, `fk_id_sesi`, `fk_id_produk`, `quantity_barang`, `harga_barang`) VALUES
-(1, 1, 1, 60, 20000),
-(2, 1, 2, 50, 40000),
-(3, 2, 2, 240, 30000),
-(6, 5, 1, 750, 40000),
-(7, 5, 2, 20, 10000),
-(8, 6, 2, 1, 10000);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `domisili`
+-- Struktur dari tabel `domisili`
 --
 
 CREATE TABLE `domisili` (
@@ -61,7 +49,7 @@ CREATE TABLE `domisili` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `domisili`
+-- Dumping data untuk tabel `domisili`
 --
 
 INSERT INTO `domisili` (`id_dom`, `nama_dom`, `status_dom`) VALUES
@@ -71,7 +59,7 @@ INSERT INTO `domisili` (`id_dom`, `nama_dom`, `status_dom`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `konfigurasi`
+-- Struktur dari tabel `konfigurasi`
 --
 
 CREATE TABLE `konfigurasi` (
@@ -82,17 +70,17 @@ CREATE TABLE `konfigurasi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `konfigurasi`
+-- Dumping data untuk tabel `konfigurasi`
 --
 
 INSERT INTO `konfigurasi` (`id_konfig`, `fk_id_level`, `minimal_pembelian`, `deposit`) VALUES
 (1, 3, 240, 100000),
-(2, 4, 500, 0);
+(2, 4, 200, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `konfirmasi_pembayaran`
+-- Struktur dari tabel `konfirmasi_pembayaran`
 --
 
 CREATE TABLE `konfirmasi_pembayaran` (
@@ -109,18 +97,10 @@ CREATE TABLE `konfirmasi_pembayaran` (
   `konfirmasi_tgl` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `konfirmasi_pembayaran`
---
-
-INSERT INTO `konfirmasi_pembayaran` (`id_konfirmasi`, `fk_id_sesi_transaksi`, `fk_id_rekening`, `nomor_rekening_pengirim`, `bank_pengirim`, `nama_pengirim`, `jumlah_transfer`, `tgl_transfer`, `bukti_transfer`, `konfirmasi_status`, `konfirmasi_tgl`) VALUES
-(1, 1, 1, '7645645645345', 'MANDIRI', 'Anggun', 500000, '2020-07-15', 'etst', 1, '2020-07-21'),
-(2, 2, 1, '4544444', 'BANK MEGA', 'kuntor', 600000, '2020-07-20', 'test', 1, '2020-07-21');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `level`
+-- Struktur dari tabel `level`
 --
 
 CREATE TABLE `level` (
@@ -130,7 +110,7 @@ CREATE TABLE `level` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `level`
+-- Dumping data untuk tabel `level`
 --
 
 INSERT INTO `level` (`id_level`, `nama_level`, `status_level`) VALUES
@@ -142,7 +122,7 @@ INSERT INTO `level` (`id_level`, `nama_level`, `status_level`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notifikasi`
+-- Struktur dari tabel `notifikasi`
 --
 
 CREATE TABLE `notifikasi` (
@@ -150,13 +130,13 @@ CREATE TABLE `notifikasi` (
   `notifikasi_untuk_id` int(11) NOT NULL,
   `notifikasi_isi` text NOT NULL,
   `notifikasi_status` int(1) NOT NULL,
-  `notifikasi_tgl` date NOT NULL
+  `notifikasi_tgl` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produk`
+-- Struktur dari tabel `produk`
 --
 
 CREATE TABLE `produk` (
@@ -171,20 +151,10 @@ CREATE TABLE `produk` (
   `status_produk` int(11) NOT NULL COMMENT '0 = tidak aktif, 1 = aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `produk`
---
-
-INSERT INTO `produk` (`id_produk`, `fk_id_user`, `nama_produk`, `harga_produk`, `harga_reseller`, `desc_produk`, `gambar_produk`, `tgl_masuk`, `status_produk`) VALUES
-(1, 2, 'Dak Dak Hot 1', 40000, 30000, 'Ini Produk Dak Dak Pedas Level 3', '2Dak Dak Hot 1.jpg', '2020-07-17 00:00:00', 1),
-(2, 1, 'test2', 10000, 20000, 'ini barang gagal', '2test2.gif', '2020-07-15 00:00:28', 1),
-(3, 1, 'test3', 500000, 60000, 'ini barang asin', '1test3.jpeg', '2020-07-18 09:42:24', 1),
-(4, 1, 'dak dak asin', 50000, 60000, 'ini barang asin', '2Dak Dak Hot 1.jpg', '2020-07-29 00:00:00', 1);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rekening`
+-- Struktur dari tabel `rekening`
 --
 
 CREATE TABLE `rekening` (
@@ -196,19 +166,10 @@ CREATE TABLE `rekening` (
   `status_rekening` int(1) NOT NULL COMMENT '0 = tidak aktif, 1 = aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `rekening`
---
-
-INSERT INTO `rekening` (`id_rekening`, `fk_user_id`, `nama_rekening`, `nomor_rekening`, `bank_rekening`, `status_rekening`) VALUES
-(1, 0, 'DAk Dak', '02135125213', 'BCA', 1),
-(2, 0, 'DAk Dak', '0000021035566482', 'MANDIRI', 1),
-(3, 4, 'Anggun', '363633333', 'BANK MEGA', 1);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reset_password`
+-- Struktur dari tabel `reset_password`
 --
 
 CREATE TABLE `reset_password` (
@@ -220,7 +181,7 @@ CREATE TABLE `reset_password` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sesi_transaksi`
+-- Struktur dari tabel `sesi_transaksi`
 --
 
 CREATE TABLE `sesi_transaksi` (
@@ -233,20 +194,10 @@ CREATE TABLE `sesi_transaksi` (
   `deposit` int(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `sesi_transaksi`
---
-
-INSERT INTO `sesi_transaksi` (`id_sesi`, `fk_id_u`, `id_distributor`, `tipe_sesi`, `tanggal_sesi`, `status_sesi`, `deposit`) VALUES
-(1, 4, 1, 2, '2020-07-19', 1, NULL),
-(2, 8, 4, 2, '2020-07-01', 1, NULL),
-(5, 10, 1, 1, '2020-07-29', 0, 100000),
-(6, 4, 1, 3, '2020-07-30', 0, NULL);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stock`
+-- Struktur dari tabel `stock`
 --
 
 CREATE TABLE `stock` (
@@ -256,18 +207,10 @@ CREATE TABLE `stock` (
   `jumlah_stock` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `stock`
---
-
-INSERT INTO `stock` (`id_stock`, `fk_id_produk`, `fk_id_user`, `jumlah_stock`) VALUES
-(1, 2, 4, 10),
-(20, 1, 4, 60);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -286,168 +229,163 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id_user`, `nama_u`, `email_u`, `dob_u`, `telp_u`, `alamat_u`, `alamat_pengiriman`, `tanggal_daftar`, `password_u`, `fk_id_level`, `fk_id_domisili`, `status_u`) VALUES
-(1, 'Dak Dak', 'dak@gmail.com', '2020-07-08', '0218788888', 'Jalan Raya Bogor', 'Dak Dak Office', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 1, 0, 1),
-(2, 'nobody', 'test2@gmail.com', '2020-07-22', '123123123', 'Dak Dak Office', 'Dak Dak Office2', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 2, 1, 1),
-(4, 'janice2', 'test@gmail.com', '2020-07-01', '5555', 'Bogor Raya ,     123,     123123', 'Dak Dak Office 333', '2020-07-17 16:26:38', 'c4ca4238a0b923820dcc509a6f75849b', 3, 1, 1),
-(8, 'dwwww', 'dw@gmail.com', '2020-07-08', '123213213', 'bojong gede , 123, 123123', 'Dak Dak Offic33', '2020-07-18 10:42:44', 'c4ca4238a0b923820dcc509a6f75849b', 4, 0, 1),
-(10, 'pw', 'pw@gmail.com', '2020-07-01', '12123123123', 'asd, 123, 123123', '', '2020-07-27 19:59:36', 'c4ca4238a0b923820dcc509a6f75849b', 3, 1, 2),
-(13, 'asd', 'asd@gmail.com', '2020-07-01', '4', 'jalan best friend, 444, 4', 'jalan musuh bebyutuan', '2020-07-30 17:25:35', 'd41d8cd98f00b204e9800998ecf8427e', 3, 1, 2);
+(1, 'Dak Dak', 'dak@gmail.com', '2020-07-08', '0218788888', 'Jalan Raya Bogor', 'Dak Dak Office', '0000-00-00 00:00:00', 'c4ca4238a0b923820dcc509a6f75849b', 1, 0, 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `detail_transaksi`
+-- Indeks untuk tabel `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
   ADD PRIMARY KEY (`id_detail`);
 
 --
--- Indexes for table `domisili`
+-- Indeks untuk tabel `domisili`
 --
 ALTER TABLE `domisili`
   ADD PRIMARY KEY (`id_dom`);
 
 --
--- Indexes for table `konfigurasi`
+-- Indeks untuk tabel `konfigurasi`
 --
 ALTER TABLE `konfigurasi`
   ADD PRIMARY KEY (`id_konfig`);
 
 --
--- Indexes for table `konfirmasi_pembayaran`
+-- Indeks untuk tabel `konfirmasi_pembayaran`
 --
 ALTER TABLE `konfirmasi_pembayaran`
   ADD PRIMARY KEY (`id_konfirmasi`);
 
 --
--- Indexes for table `level`
+-- Indeks untuk tabel `level`
 --
 ALTER TABLE `level`
   ADD PRIMARY KEY (`id_level`);
 
 --
--- Indexes for table `notifikasi`
+-- Indeks untuk tabel `notifikasi`
 --
 ALTER TABLE `notifikasi`
   ADD PRIMARY KEY (`notifikasi_id`);
 
 --
--- Indexes for table `produk`
+-- Indeks untuk tabel `produk`
 --
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`id_produk`);
 
 --
--- Indexes for table `rekening`
+-- Indeks untuk tabel `rekening`
 --
 ALTER TABLE `rekening`
   ADD PRIMARY KEY (`id_rekening`);
 
 --
--- Indexes for table `reset_password`
+-- Indeks untuk tabel `reset_password`
 --
 ALTER TABLE `reset_password`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `sesi_transaksi`
+-- Indeks untuk tabel `sesi_transaksi`
 --
 ALTER TABLE `sesi_transaksi`
   ADD PRIMARY KEY (`id_sesi`);
 
 --
--- Indexes for table `stock`
+-- Indeks untuk tabel `stock`
 --
 ALTER TABLE `stock`
   ADD PRIMARY KEY (`id_stock`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `detail_transaksi`
+-- AUTO_INCREMENT untuk tabel `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- AUTO_INCREMENT for table `domisili`
+-- AUTO_INCREMENT untuk tabel `domisili`
 --
 ALTER TABLE `domisili`
   MODIFY `id_dom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `konfigurasi`
+-- AUTO_INCREMENT untuk tabel `konfigurasi`
 --
 ALTER TABLE `konfigurasi`
   MODIFY `id_konfig` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `konfirmasi_pembayaran`
+-- AUTO_INCREMENT untuk tabel `konfirmasi_pembayaran`
 --
 ALTER TABLE `konfirmasi_pembayaran`
-  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `level`
+-- AUTO_INCREMENT untuk tabel `level`
 --
 ALTER TABLE `level`
   MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `notifikasi`
+-- AUTO_INCREMENT untuk tabel `notifikasi`
 --
 ALTER TABLE `notifikasi`
-  MODIFY `notifikasi_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `notifikasi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `produk`
+-- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
   MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `rekening`
+-- AUTO_INCREMENT untuk tabel `rekening`
 --
 ALTER TABLE `rekening`
-  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `reset_password`
+-- AUTO_INCREMENT untuk tabel `reset_password`
 --
 ALTER TABLE `reset_password`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `sesi_transaksi`
+-- AUTO_INCREMENT untuk tabel `sesi_transaksi`
 --
 ALTER TABLE `sesi_transaksi`
-  MODIFY `id_sesi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_sesi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `stock`
+-- AUTO_INCREMENT untuk tabel `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id_stock` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_stock` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

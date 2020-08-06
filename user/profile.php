@@ -137,12 +137,20 @@
                                     <span>Ganti Password</span>
                                 </button>
                                 </a>
+                                <?php
+                                    if($_SESSION['level'] == "3"){
 
+                                   
+                                ?>
                                 <a href="rekening.php">  <button class="btn btn-lg btn-slide btn-warning" data-width="240" href="#">
                                     <i class="fa fa-credit-card"></i>
                                     <span>Data Rekening</span>
                                 </button>
                                 </a>
+                                <?php
+
+                                    }
+                                    ?>
                                 <?php 
                                     $id =$_SESSION['id_user'];
                                     $query = "SELECT * FROM user INNER JOIN domisili on domisili.id_dom = user.fk_id_domisili WHERE id_user = '$id'";

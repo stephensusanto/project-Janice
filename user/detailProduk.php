@@ -179,7 +179,7 @@
                                         echo "No Limit";  
                                     }
                                     else {
-                                        echo $_GET['stock']." lusin";
+                                        echo $_GET['stock']." pcs";
                                     }
                                     
                                     ?></p>
