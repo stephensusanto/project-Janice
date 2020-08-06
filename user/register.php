@@ -7,7 +7,7 @@
     <meta name="author" content="INSPIRO" />
     <meta name="description" content="Themeforest Template Polo">
     <!-- Document title -->
-    <title>POLO | The Multi-Purpose HTML5 Template</title>
+    <title>Register Dak Dak Distributor System</title>
     <!-- Stylesheets & Fonts -->
     <link href="css/plugins.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -71,7 +71,7 @@
                                     </div>
                                     <div class="col-lg-12 form-group">
                                         <label >Email</label>
-                                        <input type="text" name="email" value="" placeholder="Email" class="form-control">
+                                        <input type="email" name="email" value="" placeholder="Email" class="form-control">
                                     </div>
                                     <div class="col-lg-6 form-group">
                                         <label>Password</label>
@@ -81,14 +81,35 @@
                                         <label >Birth Date</label>
                                         <input type="Date" name="dob" value="" placeholder="Password" class="form-control">
                                     </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label>Re-Enter Password</label>
+                                        <input type="password" name="passb" value="" placeholder="Password" class="form-control">
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label >Sebagai</label>
+                                        <select class="form-control " name="level">
+                                            <option>Pilih Pendaftaran</option>
+                                            <?php
+                                            include("proses/koneksi.php");
+                                            $query = "SELECT * FROM level where status_level = '1' AND id_level = '3' OR id_level = '4'";
+                                            $tampilin = mysqli_query($koneksi, $query);
+                                            while($output = mysqli_fetch_array($tampilin)){
+                                                $id = $output['id_level'];
+                                                $nama = $output['nama_level'];
+                                            
+                                            ?>
+                            
+                                                <option value="<?php echo $id; ?>"><?php echo $nama; ?></option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
                                     <div class="col-lg-12 form-group">
                                         <label >Address</label>
                                         <input type="text" name="alamat" value="" placeholder="Address" class="form-control">
                                     </div>
-                                    <div class="col-lg-12 form-group">
-                                        <label >Delivery Address</label>
-                                        <input type="text" name="deliv" value="" placeholder="Address" class="form-control">
-                                    </div>
+                                    
                                     <div class="col-lg-6 form-group">
                                         <label >Apartment, suite, unit etc.</label>
                                         <input type="text" name = "blok" value="" placeholder="Apartment, suite, unit etc." class="form-control">
@@ -98,7 +119,7 @@
                                         <select class="form-control " name="domisili">
                                             <option>Pilih Domisili</option>
                                             <?php
-                                            include("proses/koneksi.php");
+                                            
                                             $query = "SELECT * FROM domisili where status_dom = '1'";
                                             $tampilin = mysqli_query($koneksi, $query);
                                             while($output = mysqli_fetch_array($tampilin)){
@@ -123,6 +144,12 @@
                                         <label >Phone</label>
                                         <input type="text" name="telp" value="" placeholder="Phone" class="form-control">
                                     </div>
+                                    <div class="col-lg-12 form-group">
+                                        <label >Delivery Address</label>
+                                        <textarea name="deliv" value="" placeholder="Address" class="form-control"></textarea>
+                                        
+                                    </div>
+                                  
                                     <div class="col-lg-12 form-group">
                                         <button class="btn" type="input">Register New Account </button>
                                         <a href ="login.php" ><button type="button" class="btn btn-danger m-l-10">Cancel</button></a>

@@ -80,13 +80,13 @@
                       //status 2  = menunggu konfirmasi
                     $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.id_distributor = user.id_user WHERE ( user.fk_id_level = '1') OR (  user.fk_id_level = '2') ";
                   } else {
-                    $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.id_distributor = user.id_user INNER JOIN rekening on rekening.fk_user_id = user.id_user WHERE   sesi_transaksi.id_distributor = '$id_u' ";
+                    $query = "SELECT * FROM konfirmasi_pembayaran inner join sesi_transaksi on sesi_transaksi.id_sesi = konfirmasi_pembayaran.fk_id_sesi_transaksi INNER JOIN user on sesi_transaksi.id_distributor = user.id_user  WHERE   sesi_transaksi.id_distributor = '$id_u' ";
                   }
                   
                   $nomor =1;
                   $tampilin = mysqli_query($koneksi, $query);
                   while($output = mysqli_fetch_array($tampilin)){
-                   
+                    $sesi = $output['id_sesi'];
                     $id = $output['id_konfirmasi'];
                     //rekening tujuan
                     if($_SESSION['level'] == "1" || $_SESSION['level'] == "2"){
@@ -128,14 +128,21 @@
                         }
                         ?></td>
                        <td>
-                        <?php if($status == '2'){
+                       <?php if($status == '2'){
                             ?>
-                        <a href="proses/prosesKonfirmasi.php?d=<?php echo $tujuan;?>&u=<?php echo $id_u; ?>&code=1&level=<?php echo $_SESSION['level']; ?>&id=<?php echo $id;?>"><button type='submit'  class='btn btn-success btn-flat btn_edit'
+                            <a href="proses/prosesKonfirmasi.php?d=<?php echo $tujuan;?>&u=<?php echo $id_u; ?>&code=1&level=<?php echo $_SESSION['level']; ?>&id=<?php echo $id;?>"><button type='submit'  class='btn btn-success btn-flat btn_edit'
                            > Sudah Terima</button></a>
                             <br>
                             <br>
                             <a href="proses/prosesKonfirmasi.php?d=<?php echo $tujuan;?>&u=<?php echo $id_u; ?>&code=2&level=<?php echo $_SESSION['level']; ?>&id=<?php echo $id;?>"><button type='submit'  class='btn btn-danger btn-flat btn_edit'
                            > Belum Terima</button>  </td></a>
+                            <br>
+                            <br>
+                            <a data-toggle="modal" class="btn" href="#myModal" id="<?php echo $sesi; ?>">Detail</a>
+                            <?php
+                        }else {
+                            ?>
+                            <a data-toggle="modal" class="btn" href="#myModal" id="<?php echo $sesi; ?>">Detail</a>
                             <?php
                         }
                         ?>
@@ -155,27 +162,18 @@
 
       </div>
       <!-- End of Main Content -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div id="modal-body" class="modal-body">
+                    
+                </div>
+            </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <form id="form_send" action='proses/prosesEditKonfig.php' method ='post'  enctype="multipart/form-data">	
-          <input type='hidden' name='id' id="id">
-          <label for="exampleInputEmail1">Pembelian</label>
-          <input type='text'class="form-control" name='pembelian' id="pembelian"> <br>
-          <label for="exampleInputEmail1">Deposit</label>
-          <input type='text'class="form-control" name='deposit' id="deposit"> <br>
-          <input type='submit' class="btn btn-primary" value='submit'>
-
-
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
 
@@ -262,6 +260,18 @@
           });
           */
           
+        });
+        $("a[data-toggle=modal]").click(function() {
+            var id_beli = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                dataType: "html",
+                url: "proses/detailProdukBelanja.php?id="+id_beli,
+                success: function(msg){
+                    $('#myModal').show();
+                    $('#modal-body').show().html(msg); //this part to pass the var                                                                                                       
+                }
+            });       
         });
   });
   </script>

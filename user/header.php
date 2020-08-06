@@ -16,30 +16,29 @@
                                     <li class="dropdown"><a href="#">Konfirmasi</a>
                                         <ul class="dropdown-menu">
                                             
-                                            <li><a href="#">Pembayaran</a></li>
-                                            <li><a href="#">Pembelian</a></li>
+                                            <li><a href="konfirmasiPembayaran.php">Pembayaran</a></li>
+                                            <li><a href="konfirmasiPembelian.php">Pembelian</a></li>
                                             
                                         </ul>
                                     </li>
                                     <li class="dropdown"><a href="#">Lihat Laporan</a>
                                         <ul class="dropdown-menu">
                                             
-                                            <li><a href="#">Laporan Pemesanan Reseller</a></li>
-                                            <li><a href="#">Laporan Stock Barang</a></li>
+                                            <li><a href="laporanPenjualan.php">Laporan Pemesanan Reseller</a></li>
+                                            <li><a href="laporanPembelian.php">Laporan Pembelian Distributor</a></li>
                                             
                                         </ul>
                                     </li>
                                     <?php 
                                     }else {
                                         ?>
-                                        <li><a href="pemesanan.php">Konfirmasi Pembelian</a></li>
+                                        <li><a href="konfirmasiPembelian.php">Konfirmasi Pembelian</a></li>
+                                        <li><a href="laporanPembelian.php">Laporan Pembelian</a></li>
                                         <?php
                                     }
                                     ?>
-                                    
                                     <li><a href="profile.php">Profil Saya</a></li>
                                     <li><a href="proses/prosesLogout.php">Log Out</a></li>
-                                    
                                 </ul>
                             </nav>
                         </div>

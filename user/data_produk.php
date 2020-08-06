@@ -3,7 +3,7 @@ include("proses/koneksi.php");
 SESSION_START();
 
  $id = $_GET['id'];
- $query = "SELECT * FROM produk INNER JOIN stock on produk.id_produk = stock.fk_id_produk  WHERE status_produk ='1'";
+$query = "SELECT * FROM produk INNER JOIN stock on produk.id_produk = stock.fk_id_produk  WHERE stock.fk_id_user = '$id' AND status_produk ='1'";
  $execute = mysqli_query($koneksi, $query);
  while($output = mysqli_fetch_assoc($execute)){
      $id =  $output['id_produk'];

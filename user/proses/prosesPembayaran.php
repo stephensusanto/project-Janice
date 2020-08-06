@@ -24,6 +24,7 @@
         while($o = mysqli_fetch_assoc($exe)){
             $qty += $o['quantity_barang'];
             $tipe = $o['tipe_sesi'];
+            $distributor = $o['id_distributor'];
         }
         //jika tipe transaksi nya register distributor / reseller maka tarik data dari konfigurasi
         if($tipe == "1" || $tipe =="2"){
@@ -33,7 +34,7 @@
             $trik = mysqli_fetch_assoc($exe3);
             $stokMinim = $trik['minimal_pembelian'];
             if($qty < $stokMinim){
-                header("Location:../pembayaran.php?alert=1");
+                header("Location:../pembayaran.php?alert=4");
             }else {
                 $ttl = date("d-m-Y", strtotime($dot));
                 $tg = explode("/",$tipeGambar)[1];
@@ -42,7 +43,13 @@
                 $query2 = "INSERT INTO konfirmasi_pembayaran (fk_id_sesi_transaksi, fk_id_rekening, nomor_rekening_pengirim, bank_pengirim, nama_pengirim, jumlah_transfer, tgl_transfer, bukti_transfer, konfirmasi_status) VALUE 
                 ('$order', '$rek', '$rekP', '$bank', '$nama', '$transfer', '$dot', '$realName', '2')";
                 $exe2 = mysqli_query ($koneksi, $query2);
-                if($exe2){
+                if($tipe == "1" || $tipe =="3"){
+                    $query3 = "INSERT INTO notifikasi (notifikasi_untuk_id, notifikasi_isi,notifikasi_status, notifikasi_tgl) VALUES('$distributor', 'Seorang Distributor Baru Saja Membeli Produk Anda ', '1', now())";
+                }else if($tipe == "2" || $tipe =="4") {
+                    $query3 = "INSERT INTO notifikasi (notifikasi_untuk_id, notifikasi_isi,notifikasi_status, notifikasi_tgl) VALUES('$distributor', 'Ada Reseller Baru Saja Membeli Produk Anda', '1', now())";
+                }
+                $exe3 = mysqli_query ($koneksi, $query3);
+                if($exe2 && $exe3){
                     $upload = move_uploaded_file($temporary, '../../admin/img/bukti/'.$realName);
                     header("Location:../pembayaran.php?alert=2");
                 }else {
@@ -51,19 +58,36 @@
             }
             //jika tipe transaksinya biasa maka langsung bisa order
         }else {
-            $ttl = date("d-m-Y", strtotime($dot));
-            $tg = explode("/",$tipeGambar)[1];
-            $realName = $order.$ttl.".".$tg;
-            //jika terisi semua
-           echo $query2 = "INSERT INTO konfirmasi_pembayaran (fk_id_sesi_transaksi, fk_id_rekening, nomor_rekening_pengirim, bank_pengirim, nama_pengirim, jumlah_transfer, tgl_transfer, bukti_transfer, konfirmasi_status) VALUE 
-            ('$order', '$rek', '$rekP', '$bank', '$nama', '$transfer', '$dot', '$realName', '2')";
-            $exe2 = mysqli_query ($koneksi, $query2);
-            if($exe2){
-                $upload = move_uploaded_file($temporary, '../../admin/img/bukti/'.$realName);
-                header("Location:../pembayaran.php?alert=2");
-            }else {
-                header("Location:../pembayaran.php?alert=3");
+            $level = $_SESSION['level'];
+            $query3 = "SELECT * FROM konfigurasi WHERE fk_id_level ='$level'";
+            $exe3 = mysqli_query($koneksi, $query3);
+            $trik = mysqli_fetch_assoc($exe3);
+            $stokMinim = $trik['minimal_pembelian'];
+            if($qty < $stokMinim){
+                header("Location:../pembayaran.php?alert=4");
             }
+            else {
+                $ttl = date("d-m-Y", strtotime($dot));
+                $tg = explode("/",$tipeGambar)[1];
+                $realName = $order.$ttl.".".$tg;
+                //jika terisi semua
+                $query2 = "INSERT INTO konfirmasi_pembayaran (fk_id_sesi_transaksi, fk_id_rekening, nomor_rekening_pengirim, bank_pengirim, nama_pengirim, jumlah_transfer, tgl_transfer, bukti_transfer, konfirmasi_status) VALUE 
+                ('$order', '$rek', '$rekP', '$bank', '$nama', '$transfer', '$dot', '$realName', '2')";
+                $exe2 = mysqli_query ($koneksi, $query2);
+                if($tipe == "1" || $tipe =="3"){
+                    $query3 = "INSERT INTO notifikasi (notifikasi_untuk_id, notifikasi_isi,notifikasi_status, notifikasi_tgl) VALUES('$distributor', 'Seorang Distributor Baru Saja Membeli Produk Anda ', '1', now())";
+                }else if($tipe == "2" || $tipe =="4") {
+                    $query3 = "INSERT INTO notifikasi (notifikasi_untuk_id, notifikasi_isi,notifikasi_status, notifikasi_tgl) VALUES('$distributor', 'Ada Reseller Baru Saja Membeli Produk Anda', '1', now())";
+                }
+                $exe3 = mysqli_query ($koneksi, $query3);
+                if($exe2 && $exe3){
+                    $upload = move_uploaded_file($temporary, '../../admin/img/bukti/'.$realName);
+                    header("Location:../pembayaran.php?alert=2");
+                }else {
+                    header("Location:../pembayaran.php?alert=3");
+                }
+            }
+                
         }
         
         

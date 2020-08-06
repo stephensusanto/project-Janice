@@ -15,7 +15,7 @@
     <meta name="author" content="INSPIRO" />
     <meta name="description" content="Themeforest Template Polo">
     <!-- Document title -->
-    <title>Home </title>
+    <title>Profile </title>
     <!-- DataTables css -->
     <link href='plugins/datatables/datatables.min.css' rel='stylesheet' />
     <!-- Stylesheets & Fonts -->
@@ -83,7 +83,6 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a href="index.php">Home</a> </li>
                         <li><a href="profile.php">Profile</a> </li>  
                         
                     </ul>
@@ -136,6 +135,12 @@
                                 <a href="gantiPass.php">  <button class="btn btn-lg btn-slide btn-dark" data-width="240" href="#">
                                     <i class="fa fa-lock"></i>
                                     <span>Ganti Password</span>
+                                </button>
+                                </a>
+
+                                <a href="rekening.php">  <button class="btn btn-lg btn-slide btn-warning" data-width="240" href="#">
+                                    <i class="fa fa-credit-card"></i>
+                                    <span>Data Rekening</span>
                                 </button>
                                 </a>
                                 <?php 

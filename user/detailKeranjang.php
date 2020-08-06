@@ -2,8 +2,8 @@
 include("proses/koneksi.php");
 SESSION_START();
 
- $id = $_GET['id'];
- $query = "SELECT *, detail_transaksi.harga_barang as hb FROM detail_transaksi INNER JOIN sesi_transaksi on sesi_transaksi.id_sesi = detail_transaksi.fk_id_sesi INNER JOIN produk on detail_transaksi.fk_id_produk = produk.id_produk WHERE fk_id_sesi = '$id'";
+ $sesi = $_GET['id'];
+ $query = "SELECT *, detail_transaksi.harga_barang as hb FROM detail_transaksi INNER JOIN sesi_transaksi on sesi_transaksi.id_sesi = detail_transaksi.fk_id_sesi INNER JOIN produk on detail_transaksi.fk_id_produk = produk.id_produk WHERE fk_id_sesi = '$sesi'";
  $execute = mysqli_query($koneksi, $query);
  
      ?>
@@ -17,6 +17,7 @@ SESSION_START();
                                     <th>Jumlah Barang </th>
                                     <th>Harga Barang</th>
                                     <th>Total Harga</th>
+                                    <th>Action</th>
                                     
                                 </tr>
                             </thead>
@@ -31,6 +32,7 @@ SESSION_START();
                                 $total = $stok * $harga;
                                 $hargaSe += $total;
                                 $tipe = $output['tipe_sesi'];
+                                $detail = $output['id_detail'];
                              ?>
                                 <tr>
                                     <td> <image height ="100px" width ="100px" src="<?php echo getDirectoryProduct().$gambar; ?>"></td>
@@ -38,6 +40,7 @@ SESSION_START();
                                     <td> <?php echo $stok?>  </td>
                                     <td> <?php echo rupiah($harga); ?>  </td>
                                     <td> <?php echo  rupiah($total); ?>  </td>
+                                    <td> <a href="proses/prosesDeleteProduk.php?sesi=<?php echo $sesi; ?>&id=<?php echo $detail;?>"> <p class="btn btn-danger">X</p>  </a></td>
                                 </tr>
                                 <?php
                                 }
@@ -54,12 +57,14 @@ SESSION_START();
                                     echo rupiah($deposit); ?>  </td>
                             </tr> 
                             <?php 
+                                }else {
+                                    $deposit = 0;
                                 }
                                 ?>    
                             <tr>
                                 <td colspan = "4"><center>Total Semua</center></td>
-                                <td><?php
-                                    $_SESSION['harga_semua'] = $hargaSe+$deposit;
+                                <td> <input type = "hidden" id="aaaaa" value="<?php echo  $hargaSe+$deposit; ?>">
+                                <?php
                                     echo rupiah($hargaSe+$deposit); ?>  </td>
                             </tr>        
                             </tbody>

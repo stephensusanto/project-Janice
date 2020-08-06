@@ -95,73 +95,136 @@
         <!-- Page Content -->
         <section id="page-content" class="no-sidebar">
             <div class="container">
+            <?php
+            $level = $_SESSION['level'];
+            $query ="SELECT * from konfigurasi WHERE fk_id_level = '$level'";
+            $jalan2 = mysqli_query($koneksi, $query);
+            $keluar = mysqli_fetch_assoc($jalan2);
+            $minimum = $keluar['minimal_pembelian'];
+                if (empty($_GET['alert'])) {
+                    echo "<div class='alert alert-danger'>
+                    <center><h4>Limit Pembelian!</h4>
+                    Pembelian Minimal Anda adalah ".$minimum." pcs!</center>
+                </div>";
+                } 
+
+
+            ?>
                 <!-- DataTable -->
                 <div class="row mb-3">
                     <div class="col-lg-6">
-                        <h4>Data Penjualan Anda</h4>
+                        <h4>Notifikasi</h4>
                     </div>
-                    <div class="col-lg-6 text-right">
-                        <div id="export_buttons" class="mt-2"></div>
+                    <?php
+                    if($_SESSION['level'] == "3"){
+                    ?>
+
+                    <div class="col-lg-6">
+                        <h4>Stock</h4>
                     </div>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
-                        <table id="datatable" class="table table-bordered table-hover" style="width:100%">
+                <?php 
+                  if($_SESSION['level'] == "3"){
+                      ?>
+                    <div class="col-lg-6">
+                    <?php 
+                  }else {
+                      ?>
+                     <div class="col-lg-12"> 
+                     <?php
+                  }
+                  ?>
+                        <table id="datatable2" class="table table-bordered table-hover" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Nama Pembeli</th>
-                                    <th>Barang</th>
-                                    <th>Jumlah Barang</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal Pembelian</th>
+                                    <th>No</th>
+                                    <th>Notifikasi</th>
+                                    <th>Tanggal</th>
                                     
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                     $id_u = $_SESSION['id_user'];
-                                    $sql  = "SELECT * FROM sesi_transaksi 
-                                    INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi 
-                                    INNER JOIN user on user.id_user = sesi_transaksi.fk_id_u 
-                                    INNER JOIN produk on produk.id_produk = detail_transaksi.fk_id_produk
-                                    WHERE (status_sesi ='1' 
-                                    AND sesi_transaksi.id_distributor= '$id_u') ";
+                                    $sql  = "SELECT * FROM notifikasi WHERE notifikasi_untuk_id = '$id_u' ORDER BY notifikasi_tgl DESC";
                                     $jalan =mysqli_query($koneksi, $sql);
-
+                                    $no = 1;
                                     while($output = mysqli_fetch_assoc($jalan)){
-                                        $namaPembeli = $output['nama_u'];
-                                        $barang = $output['nama_produk'];
-                                        $jml = $output['quantity_barang'];
-                                        $harga =$output['harga_barang'];
-                                        $total = $jml * $harga;
-                                        $tgl = $output['tanggal_sesi'];
+                                        $notifikasi = $output['notifikasi_isi'];
+                                        $date = $output['notifikasi_tgl'];
                                         ?>
                                         <tr>
-                                            <td><?php echo $namaPembeli ;?></td>
-                                            <td><?php echo $barang;?></td>
-                                            <td><?php echo $jml;?></td>
-                                            <td><?php echo rupiah($harga);?></td>
-                                            <td><?php echo rupiah($total);?></td>
-                                            <td><?php echo date("d-m-Y", strtotime($tgl));?></td>
+                                            <td><?php echo $no ;?></td>
+                                            <td><?php echo $notifikasi;?></td>
+                                            <td><?php echo date("d-m-Y h:i:s", strtotime($date)); ?> </td>
                                         </tr>
-                                   <?php } ?>
+                                   <?php 
+                                   $no+=1;
+                                } ?>
 
                             
 
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nama Pembeli</th>
-                                    <th>Barang</th>
-                                    <th>Jumlah Barang</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal Pembelian</th>
+                                <th>No</th>
+                                <th>Notifikasi</th>
+                                <th>Tanggal</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
+                    <?php 
+                      if($_SESSION['level'] == "3"){
+                          ?>
+                    <div class="col-lg-6">
+                        <table id="datatable" class="table table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Jumlah Barang</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    $id_u = $_SESSION['id_user'];
+                                    $sql  = "SELECT * FROM stock INNER JOIN produk on produk.id_produk = stock.fk_id_produk WHERE stock.fk_id_user = '$id_u'";
+                                    $jalan =mysqli_query($koneksi, $sql);
+                                    $no = 1;
+                                    while($output = mysqli_fetch_assoc($jalan)){
+                                        $nama = $output['nama_produk'];
+                                        $stock = $output['jumlah_stock'];
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $no ;?></td>
+                                            <td><?php echo $nama;?></td>
+                                            <td><?php echo $stock; ?> </td>
+                                        </tr>
+                                   <?php 
+                                   $no+=1;
+                                } ?>
+
+                            
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Jumlah Barang</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <?php
+                      }
+                      ?>
                 </div>
                 <!-- end: DataTable -->
             </div>
@@ -190,6 +253,39 @@
     <script>
         $(document).ready(function () {
             var table = $('#datatable').DataTable({
+                buttons: [{
+                    extend: 'print',
+                    title: 'Test Data export',
+                    exportOptions: {
+                        columns: "thead th:not(.noExport)"
+                    }
+                }, {
+                    extend: 'pdf',
+                    title: 'Test Data export',
+                    exportOptions: {
+                        columns: "thead th:not(.noExport)"
+                    }
+                }, {
+                    extend: 'excel',
+                    title: 'Test Data export',
+                    exportOptions: {
+                        columns: "thead th:not(.noExport)"
+                    }
+                }, {
+                    extend: 'csv',
+                    title: 'Test Data export',
+                    exportOptions: {
+                        columns: "thead th:not(.noExport)"
+                    }
+                }, {
+                    extend: 'copy',
+                    title: 'Test Data export',
+                    exportOptions: {
+                        columns: "thead th:not(.noExport)"
+                    }
+                }]
+            });
+            var table = $('#datatable2').DataTable({
                 buttons: [{
                     extend: 'print',
                     title: 'Test Data export',

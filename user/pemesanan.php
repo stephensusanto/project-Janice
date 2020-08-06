@@ -15,7 +15,7 @@
     <meta name="author" content="INSPIRO" />
     <meta name="description" content="Themeforest Template Polo">
     <!-- Document title -->
-    <title>Home </title>
+    <title>Pemesanan </title>
     <!-- DataTables css -->
     <link href='plugins/datatables/datatables.min.css' rel='stylesheet' />
     <!-- Stylesheets & Fonts -->

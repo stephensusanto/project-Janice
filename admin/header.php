@@ -68,14 +68,34 @@ if(!$_SESSION['nama_u']){
             <a class="collapse-item" href="user.php?level=2">Admin</a>
             <a class="collapse-item" href="user.php?level=3">Distributor</a>
             <a class="collapse-item" href="user.php?level=4">Reseller</a>
+            <?php
+            if($_SESSION['level'] == '1'){
+            ?>
+             <a class="collapse-item" href="stok.php">Stock Barang</a>
+            <?php
+            }
+            ?>
+          </div>
+        </div>
+        
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+          <span>Laporan</span>
+        </a>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="laporanPenjualan.php">Penjualan Supplier</a>
+            <a class="collapse-item" href="laporanDistributor.php">Penjualan Distributor</a>
           </div>
         </div>
       </li>
+    
       <li class="nav-item ">
       <a class="nav-link" href="konfirmasiPembayaran.php">
           <span>Konfirmasi Pembayaran</span></a>
       </li>
-             <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <span>Settings</span>
         </a>
@@ -88,6 +108,7 @@ if(!$_SESSION['nama_u']){
           </div>
         </div>
       </li>
+    
      
           <?php
         }else {

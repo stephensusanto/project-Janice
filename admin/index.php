@@ -68,7 +68,7 @@
                         
                           $tanggal = date("Y/m/d");
                           if($_SESSION['level'] == '1' || $_SESSION['level'] == '2'){
-                            $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.id_distributor WHERE (tanggal_sesi = '$tanggal' AND user.fk_id_level = '1') OR (tanggal_sesi = '$tanggal' AND user.fk_id_level = '2')  ";
+                            $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.id_distributor WHERE (tanggal_sesi = '$tanggal' AND user.fk_id_level = '1' AND status_sesi ='1') OR (tanggal_sesi = '$tanggal' AND user.fk_id_level = '2' AND status_sesi ='1')  ";
                             }
                             else {
                               $sql  = "SELECT * FROM sesi_transaksi INNER JOIN detail_transaksi on detail_transaksi.fk_id_sesi = sesi_transaksi.id_sesi INNER JOIN user on user.id_user = sesi_transaksi.id_distributor WHERE (tanggal_sesi = '$tanggal' AND user.id_user = ' $id_u')";
@@ -161,7 +161,7 @@
           <div class="row">
 
             <!-- Area Chart -->
-            <div class="col-xl-8 col-lg-7">
+            <div class="col-xl-6 col-lg-6">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -177,7 +177,7 @@
               </div>
             </div>
 
-            <div class="col-xl-4 col-lg-5">
+            <div class="col-xl-6 col-lg-6">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -192,16 +192,34 @@
                       <tr>
                         <th>Nomor</th>
                         <th>Notifikasi</th>
-                        
+                        <th>Tanggal</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
                       <th>Nomor</th>
                       <th>Notifikasi</th>
+                      <th>Tanggal</th>
                       </tr>
                     </tfoot>
                     <tbody>
+                    <?php
+                                    $id_u = $_SESSION['id_user'];
+                                    $sql  = "SELECT * FROM notifikasi WHERE notifikasi_untuk_id = '$id_u' ORDER BY notifikasi_tgl DESC";
+                                    $jalan =mysqli_query($koneksi, $sql);
+                                    $no = 1;
+                                    while($output = mysqli_fetch_assoc($jalan)){
+                                        $notifikasi = $output['notifikasi_isi'];
+                                        $date = $output['notifikasi_tgl'];
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $no ;?></td>
+                                            <td><?php echo $notifikasi;?></td>
+                                            <td><?php echo date("d-m-Y h:i:s", strtotime($date)); ?> </td>
+                                        </tr>
+                                   <?php 
+                                   $no+=1;
+                                } ?>
                     </tbody>
                     </table>
                   </div>

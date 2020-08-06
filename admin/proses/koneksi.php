@@ -13,9 +13,9 @@
    }
 
    function changeStatusSesi($koneksi, $idSesi, $user){
-      $query1 = "UPDATE sesi_transaksi SET status_sesi = '1' WHERE id_sesi = '$idSesi'";
+     echo $query1 = "UPDATE sesi_transaksi SET status_sesi = '1' WHERE id_sesi = '$idSesi'";
       $cek1 = mysqli_query($koneksi, $query1);
-      $query2 = "UPDATE user SET status_u = '1' WHERE id_user = '$user'";
+     echo $query2 = "UPDATE user SET status_u = '1' WHERE id_user = '$user'";
       $cek2 = mysqli_query($koneksi, $query2);
       if($cek1 && $cek2){
          return "1";
@@ -40,7 +40,7 @@
       }
    }
    
-   function changeStockEveryProductDistributorToReseller($koneksi, $konfirmasi, $user){
+   function changeStockEveryProductDistributorToReseller($koneksi, $konfirmasi, $user, $reseller){
       
          $idSesi = takeKonfirmasi($koneksi,$konfirmasi) ;
          if($idSesi != '0'){
@@ -67,7 +67,7 @@
                      array_push($array2,$b);
                   }
                   if(count(array_keys($array2, '1')) == count($array2)){
-                     if(changeStatusSesi($koneksi, $konfirmasi) != 0){ 
+                     if(changeStatusSesi($koneksi, $idSesi, $reseller) != 0){ 
                         return "1";
                      }else {
                         return "0";
@@ -214,6 +214,15 @@
    function getDirectoryBukti(){
       $loc = "http://localhost/gitHub/projectJanice/admin/img/bukti/";
       return $loc;
+   }
+
+   function getNamaUser($koneksi, $id){
+      $query = "SELECT nama_u FROM user WHERE id_user = '$id' ";
+      $hasil = mysqli_query($koneksi, $query);
+      while($output = mysqli_fetch_array($hasil)){
+         $nama = $output['nama_u'];
+       }
+       return $nama;
    }
   
 ?> 

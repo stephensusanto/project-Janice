@@ -7,12 +7,12 @@ if(!$_POST['email'] || !$_POST['pass']){
 }else {
     $email  = $_POST['email'];
     $pass = md5($_POST['pass']);
-    $sql  = "SELECT * FROM user WHERE email_u = '".$email."' AND password_u = '".$pass."'";
+    $sql  = "SELECT * FROM user WHERE (email_u = '".$email."' AND password_u = '".$pass."' AND fk_id_level = '1') OR (email_u = '".$email."' AND password_u = '".$pass."' AND fk_id_level = '2')";
     $cek=mysqli_query($koneksi,$sql);
 	$jumlah = mysqli_num_rows($cek);
-   echo $hasil = mysqli_fetch_assoc($cek);
+    $hasil = mysqli_fetch_assoc($cek);
     if($jumlah == 0 ){
-       // header("location:../login.php?alert=1");
+        header("location:../login.php?alert=1");
     }else {
         $_SESSION['id_user'] 			= $hasil ['id_user'];
         $_SESSION['level']  	        = $hasil ['fk_id_level'];

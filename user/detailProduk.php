@@ -165,7 +165,7 @@
                                         else {
                                             echo rupiah($_GET['harga']);
                                         }
-                                        ?> / lusin</span>
+                                        ?> / pcs</span>
                                         <br>
                                         <label>Quantity:</label>
                                         <input type="text" size="3" id="qty"  name="qty" value="1" />

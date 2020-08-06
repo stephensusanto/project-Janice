@@ -83,8 +83,7 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a href="index.php">Home</a> </li>
-                        <li><a href="profile.php">Ganti Profile</a> </li>  
+                        <li><a href="#">Pembayaran</a> </li>  
                         
                     </ul>
                 </div>
@@ -105,12 +104,45 @@
                                 <form action = "proses/prosesPembayaran.php" method = "POST" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-lg-12 form-group">
+                                        <?php
+                                            if (empty($_GET['alert'])) {
+                                                echo "";
+                                            } 
+
+                                            elseif ($_GET['alert'] == 1) {
+                                                echo "<div class='alert alert-danger alert-dismissable'>
+                                                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                                        <h4>  <i class='icon fa fa-times-circle'></i> Gagal Melakukan Pembayaran!</h4>
+                                                        Data Anda Ada yang kosong!
+                                                    </div>";
+                                            }
+                                            elseif ($_GET['alert'] == 2) {
+                                                echo "<div class='alert alert-success alert-dismissable'>
+                                                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                                        <h4>  <i class='icon fa fa-check-circle'></i> Success!</h4>
+                                                        Anda Telah Berhasil Mengubah Data Anda!
+                                                    </div>";
+                                            }
+                                            elseif ($_GET['alert'] == 3) {
+                                            echo "<div class='alert alert-info alert-dismissable'>
+                                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                                    <h4>  <i class='icon fa fa-check-circle'></i> Gagal!</h4>
+                                                    Terjadi kesalahan pada server silahkan mencoba beberapa saat lagi!
+                                                </div>";
+                                            } elseif ($_GET['alert'] == 4) {
+                                                echo "<div class='alert alert-danger alert-dismissable'>
+                                                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                                        <h4>  <i class='icon fa fa-times-circle'></i> Gagal Melakukan Pembayaran!</h4>
+                                                        Data Pembelian anda belum sesuai limit!
+                                                    </div>";
+                                            }
+                                        ?>
                                             <label >Detail Order</label>
                                             <select class="form-control" id="keranjang"  name="keranjang">
                                                 <option>Pilih ID Order</option>
                                                 <?php
                                                 $user = $_SESSION['id_user'];
-                                                $query = "SELECT * FROM sesi_transaksi INNER JOIN user on id_user = sesi_transaksi.id_distributor where fk_id_u = '$user' AND status_sesi = '0'";
+                                                $query = "SELECT * FROM sesi_transaksi INNER JOIN user on id_user = sesi_transaksi.id_distributor where fk_id_u = '$user' AND status_sesi != '1'";
                                                 $tampilin = mysqli_query($koneksi, $query);
                                                 while($output = mysqli_fetch_array($tampilin)){
                                                     $id = $output['id_sesi'];
@@ -157,7 +189,7 @@
                                             <input type="file" name="berkas" id="berkas"  class="form-control" >
                                         </div>
                                         <div class="col-lg-12 form-group">
-                                            <button id="btn" class="btn" type="input">Konfirmasi</button>
+                                            <button id="bt" class="btn" type="input">Konfirmasi</button>
                                         </div>
                                     </div> 
                            </form>
@@ -193,13 +225,14 @@
           dataType: "html",
           url: "detailKeranjang.php?id="+user,
           success: function(msg){
-             $("div#produk").html(msg);
-             $("#transfer").load(location.href + "#transfer");                                                                                                           
+             $("div#produk").html(msg);                                                                                                          
           }
-       });                    
+       });
+                           
      });  
      $("#keranjang").change(function(){
        var user = $(this).val(); 
+       
        $.ajax({
           type: "POST",
           dataType: "html",
@@ -211,21 +244,13 @@
      });  
     $('#transfer').change(function(e){
        var user = $(this).val(); 
-       var data = <?php 
-       if(!empty($_SESSION['harga_semua']))
-        { 
-           echo $_SESSION['harga_semua'];
-        } else {
-            echo "0";
-        }
-         ?>;
-         console.log(user);
-         console.log(data);
-       if(user == data){
-            $("#btn").prop('disabled', false);
+       var data = $("#aaaaa").val();
+       
+       if(user == data == true){
+         $("#bt").prop('disabled', false);
             
        } else {
-        $("#btn").prop('disabled', true);
+         $("#bt").prop('disabled', true);
        }         
     });
  
