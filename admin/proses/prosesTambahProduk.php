@@ -34,7 +34,7 @@ if(!empty($_FILES["berkas"])){
         if(!$desc || !$harga || !$harga_reseller || !$status){
             header("Location:../produk.php?alert=1");
         }else {
-            $realName = $_SESSION['id_user'].$barang.".".explode("/",$tipe)[1];
+            $realName = $barang.".".explode("/",$tipe)[1];
             $query = "INSERT INTO produk (fk_id_user, nama_produk,desc_produk,harga_produk,harga_reseller,gambar_produk,status_produk, tgl_masuk) VALUES
             ('$id_u','$barang',
             '$desc',
@@ -44,7 +44,7 @@ if(!empty($_FILES["berkas"])){
             '$status',now())";
            
             $hasil = mysqli_query($koneksi, $query);
-            $upload = move_uploaded_file($temporary, '../img/produk/'.$realName);
+            $upload = move_uploaded_file($temporary, '../img/bukti/'.$realName);
             if($hasil && $upload){
                 header("Location:../produk.php?alert=2");
             }else {

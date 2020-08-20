@@ -207,7 +207,7 @@
    }
 
    function getDirectoryProduct(){
-      $loc = "http://localhost/gitHub/projectJanice/admin/img/produk/";
+      $loc = "http://localhost/gitHub/projectJanice/admin/img/bukti/";
       return $loc;
    }
 

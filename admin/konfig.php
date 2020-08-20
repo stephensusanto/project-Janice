@@ -50,7 +50,7 @@
           <tr>
             <th>Nomor</th>
             <th>Nama Level</th>
-            <th>Minimal Pembelian /Dus</th>
+            <th>Minimal Pembelian /Pcs</th>
             <th>Deposit</th>
             <th>Action</th>
           </tr>
@@ -59,7 +59,7 @@
           <tr>
             <th>Nomor</th>
             <th>Nama Level</th>
-            <th>Minimal Pembelian /Dus</th>
+            <th>Minimal Pembelian /Pcs</th>
             <th>Deposit</th>
             <th>Action</th>
           </tr>
