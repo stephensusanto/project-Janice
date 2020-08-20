@@ -85,7 +85,7 @@
                     <tr>
                         <td><?php echo $nomor; ?></td>
                         <td><?php echo $namaLevel; ?></td>
-                        <td><?php echo $pembelian." dus"; ?></td>
+                        <td><?php echo $pembelian." pcs"; ?></td>
                         <td><?php echo rupiah($deposit); ?></td>
                        <td> <button type='submit' data-toggle='modal' data-target='#myModal' class='btn btn-primary btn-flat btn_edit'
                             data-id='<?php echo $id ;?>'
