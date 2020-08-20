@@ -18,7 +18,10 @@
     </div>
   <div class="card-body">
     <div class="table-responsive">
-    <form id="form_send" action='proses/prosesTambahUser.php' method ='post'  enctype="multipart/form-data">	
+    <?php
+          $level = $_SESSION['level'];
+        ?>
+    <form id="form_send" action='proses/prosesTambahUser.php?level=2' method ='post'  enctype="multipart/form-data">	
           <input type='hidden' name='id_barang' id="id_barang">
           <label for="exampleInputEmail1">Nama User</label>
           <input type='text'class="form-control" name='nama' > <br>
@@ -71,6 +74,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
+        
           <form id="form_send" action='proses/prosesEditProduk.php' method ='post'  enctype="multipart/form-data">	
           <input type='hidden' name='id_barang' id="id_barang">
           <label for="exampleInputEmail1">Nama Produk</label>

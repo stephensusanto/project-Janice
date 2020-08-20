@@ -27,9 +27,9 @@
     if(!empty($_POST["status"])){
         $status=$_POST['status'];
     }
-    if(!empty($_GET["level"])){
-        $editedLevel =   $_GET['level'] ;
-    }
+    
+    $editedLevel =   $_GET['level'] ;
+    
 
     if(!$nama || !$email || !$dob || !$pass || !$telp || !$alamat || !$tipe || !$status || !$alamat_p){
         if($editedLevel == '2'){
@@ -41,7 +41,7 @@
         }
     }else {
         $ttl = date("Y/m/d H:m:s");
-        $query = "INSERT INTO user (nama_u, email_u, dob_u, telp_u, alamat_u,alamat_pengiriman tanggal_daftar, password_u, level, fk_id_domisili, status_u)
+       echo $query = "INSERT INTO user (nama_u, email_u, dob_u, telp_u, alamat_u,alamat_pengiriman, tanggal_daftar, password_u, fk_id_level, fk_id_domisili, status_u)
         VALUES ('".$nama."', '".$email."', '".$dob."', '".$telp."','".$alamat."','".$alamat_p."', now(),'".$pass."','".$tipe."','0','".$status."')";
         $jalan = mysqli_query($koneksi,$query);
         if($jalan){
