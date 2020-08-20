@@ -108,13 +108,19 @@
                         <?php
                         
                         $tanggal = date("Y/m/d");
-                          $sql  = "SELECT * FROM Produk Where status_produk = '1'";
+                          $sql  = "SELECT count(*) as itung FROM Produk Where status_produk = '1'";
                           $cek=mysqli_query($koneksi,$sql);
                           $jumlah = mysqli_num_rows($cek);
+                          if($jumlah == 0){
+                            $a = 0;
+                          }else {
+                            $ambil = mysqli_fetch_assoc($cek);
+                            $a = $ambil['itung'];
+                          }
                         
 
                       ?>
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $jumlah; ?></div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $a; ?></div>
                         </div>
                         <div class="col">
                          
