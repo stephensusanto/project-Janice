@@ -103,7 +103,13 @@ if(!$_SESSION['nama_u']){
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="produk.php">Produk</a>
             <a class="collapse-item" href="level.php">Akses Level</a>
-            <a class="collapse-item" href="rekening.php">Rekening</a>
+            <?php
+            if($_SESSION['level'] == '1'){
+            ?>
+             <a class="collapse-item" href="rekening.php">Rekening</a>
+            <?php
+            }
+            ?>
             <a class="collapse-item" href="domisili.php">Domisili</a>
             <a class="collapse-item" href="konfig.php">Konfigurasi</a>
           </div>
