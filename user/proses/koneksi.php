@@ -207,12 +207,12 @@
    }
 
    function getDirectoryProduct(){
-      $loc = "http://localhost/gitHub/projectJanice/admin/img/bukti/";
+      $loc = "http://localhost/projectJanice/admin/img/bukti/";
       return $loc;
    }
 
    function getDirectoryBukti(){
-      $loc = "http://localhost/gitHub/projectJanice/admin/img/bukti/";
+      $loc = "http://localhost/projectJanice/admin/img/bukti/";
       return $loc;
    }
   
