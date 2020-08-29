@@ -82,7 +82,7 @@
                   
                   </form>
                   <div class="text-center">
-                    <a class="small" href="forgot-password.php">Forgot Password?</a>
+                   <!-- <a class="small" href="forgot-password.php">Forgot Password?</a> -->
                   </div>
                 </div>
               </div>
