@@ -166,7 +166,7 @@
                                         </div>
                                         <div class="col-lg-12 form-group">
                                             <label >Rekening Pengirim</label>
-                                            <input type="text" name="rekP" placeholder="Rekening Pengirim" class="form-control" >
+                                            <input type="text" onkeypress='validate(event)' name="rekP" placeholder="Rekening Pengirim" class="form-control" >
                                         </div>
                                         <div class="col-lg-12 form-group">
                                             <label >Bank Pengirim</label>
@@ -178,7 +178,7 @@
                                         </div>
                                         <div id="" class="col-lg-6 form-group">
                                             <label >Jumlah Transfer</label>
-                                            <input type="text" name = "trasfer" id= "transfer"  placeholder="Jumlah Transfer" class="form-control" >
+                                            <input type="text" onkeypress='validate(event)' name = "trasfer" id= "transfer"  placeholder="Jumlah Transfer" class="form-control" >
                                         </div>
                                         <div class="col-lg-6 form-group">
                                             <label >Tanggal Transfer</label>
@@ -255,6 +255,25 @@
     });
  
     </script>
+     <script>
+        function validate(evt) {
+            var theEvent = evt || window.event;
+            
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]|\./;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+  </script>
 </body>
 
 </html>

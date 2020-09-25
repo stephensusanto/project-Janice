@@ -23,7 +23,7 @@
           <label >Nama Rekening</label>
           <input type="text" name="nama"  placeholder="Nama Rekening" class="form-control" > <br>
           <label >Nomor Rekening</label>
-          <input type="text" name="nomor"  placeholder="Nomor Rekening" class="form-control" ><br>
+          <input type="text" name="nomor" onkeypress='validate(event)'  placeholder="Nomor Rekening" class="form-control" ><br>
 
           <label >Bank Rekening</label>
           <input type="text" name="bank"  placeholder="Bank Rekening" class="form-control" > <br>
@@ -138,7 +138,25 @@
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
   <script src="js/demo/datatables-demo.js"></script>
-  
+  <script>
+        function validate(evt) {
+            var theEvent = evt || window.event;
+            
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]|\./;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+  </script>
   
 </body>
 

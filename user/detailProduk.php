@@ -168,7 +168,7 @@
                                         ?> / pcs</span>
                                         <br>
                                         <label>Quantity:</label>
-                                        <input type="text" size="3" id="qty"  name="qty" value="1" />
+                                        <input type="text" size="3" id="qty" onkeypress='validate(event)'  name="qty" value="1" />
                                         <button id ="tombol"type="submit" name='submit' class="btn btn-fefault cart"> 
                                             <i class="fa fa-shopping-cart"></i>
                                             Add to cart
@@ -237,6 +237,25 @@
                         
      });  
     </script>
+     <script>
+  function validate(evt) {
+      var theEvent = evt || window.event;
+    
+      // Handle paste
+      if (theEvent.type === 'paste') {
+          key = event.clipboardData.getData('text/plain');
+      } else {
+      // Handle key press
+          var key = theEvent.keyCode || theEvent.which;
+          key = String.fromCharCode(key);
+      }
+      var regex = /[0-9]|\./;
+      if( !regex.test(key) ) {
+        theEvent.returnValue = false;
+        if(theEvent.preventDefault) theEvent.preventDefault();
+      }
+}
+  </script>
 </body>
 
 </html>

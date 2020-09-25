@@ -137,12 +137,12 @@
                                     
                                     <div class="col-lg-6 form-group">
                                         <label >Postcode / Zip</label>
-                                        <input type="text" name = "kodepos" value="" placeholder="Postcode / Zip" class="form-control">
+                                        <input type="text" name = "kodepos" value="" onkeypress='validate(event)' placeholder="Postcode / Zip" class="form-control">
                                     </div>
                                    
                                     <div class="col-lg-6 form-group">
                                         <label >Phone</label>
-                                        <input type="text" name="telp" value="" placeholder="Phone" class="form-control">
+                                        <input type="text" name="telp" onkeypress='validate(event)' value="" placeholder="Phone" class="form-control">
                                     </div>
                                     <div class="col-lg-12 form-group">
                                         <label >Delivery Address</label>
@@ -171,6 +171,25 @@
     <script src="js/plugins.js"></script>
     <!--Template functions-->
     <script src="js/functions.js"></script>
+    <script>
+  function validate(evt) {
+      var theEvent = evt || window.event;
+    
+      // Handle paste
+      if (theEvent.type === 'paste') {
+          key = event.clipboardData.getData('text/plain');
+      } else {
+      // Handle key press
+          var key = theEvent.keyCode || theEvent.which;
+          key = String.fromCharCode(key);
+      }
+      var regex = /[0-9]|\./;
+      if( !regex.test(key) ) {
+        theEvent.returnValue = false;
+        if(theEvent.preventDefault) theEvent.preventDefault();
+      }
+}
+  </script>
 </body>
 
 </html>
