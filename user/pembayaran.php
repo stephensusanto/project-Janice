@@ -186,7 +186,7 @@
                                         </div>
                                         <div class="col-lg-12 form-group">
                                             <label >Bukti Transfer</label>
-                                            <input type="file" name="berkas" id="berkas"  class="form-control" >
+                                            <input type="file"  accept='image/*' name="berkas" id="berkas"  class="form-control" >
                                         </div>
                                         <div class="col-lg-12 form-group">
                                             <button id="bt" class="btn" type="input">Konfirmasi</button>
