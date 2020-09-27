@@ -151,7 +151,7 @@
 
           <input type='text' class="form-control" name='harga_reseller' id="harga_reseller"><br>
           <label for="exampleInputEmail1">Gambar Produk</label> <br>
-          <input type="file" name="berkas" id="berkas"> <br> <br>    
+          <input type="file" accept='image/*'  name="berkas" id="berkas"> <br> <br>    
           <label for="exampleInputEmail1">Status</label>
           <Select class="form-control" name='status_barang' id="status_barang">
           <option value='1'> Aktif </option>
