@@ -40,7 +40,7 @@
                                     echo "<div class='alert alert-danger alert-dismissable'>
                                             <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
                                             <h4>  <i class='icon fa fa-times-circle'></i> Gagal Melakukan Registrasi!</h4>
-                                            Ada Data yang Kosong Mohon Mengisi Semua Data!
+                                            Mohon memeriksa kembali semua data Anda!
                                         </div>";
                                 }
                                 elseif ($_GET['alert'] == 2) {
