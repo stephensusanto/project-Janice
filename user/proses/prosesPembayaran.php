@@ -6,7 +6,9 @@
       $rekP = $_POST['rekP'];
       $bank = $_POST['bank'];
       $nama = $_POST['namaP'];
-      $transfer = $_POST['trasfer'];
+      $harga1 = str_replace(".","",$_POST['trasfer']);
+      $harga2 = str_replace(",","",$harga1);
+      $transfer = substr($harga2, 0, -2);
       $dot = $_POST['dot'];
     if(!empty($_FILES["berkas"])){
         $gambar = $_FILES['berkas']['name'];

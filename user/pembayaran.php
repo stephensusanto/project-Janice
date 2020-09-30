@@ -217,6 +217,7 @@
 
     <!--Datatables plugin files-->
     <script src='plugins/datatables/datatables.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
     <script>
        $("#keranjang").change(function(){
        var user = $(this).val(); 
@@ -244,16 +245,21 @@
      });  
     $('#transfer').change(function(e){
        var user = $(this).val(); 
+       var user1 = user.replaceAll(".", "");
+       var user2 = user1.replace(",", "");
+       var user3 = user2.slice(0,-2);
        var data = $("#aaaaa").val();
-       
-       if(user == data == true){
+       console.log(user3);
+       console.log(data);
+       if(user3 == data == true){
          $("#bt").prop('disabled', false);
             
        } else {
          $("#bt").prop('disabled', true);
        }         
     });
- 
+    
+    $("#transfer").mask('#.##0,00', {reverse: true});
     </script>
      <script>
         function validate(evt) {
