@@ -57,27 +57,23 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Reseller</th>
+            <th>Distributor</th>
             <th>Nama Barang</th>
-            <th>Harga Barang</th>
-            <th>Jumlah Barang</th>
             <th>Total Harga</th>
-            <th>Rekening Tujuan</th>
             <th>Tanggal Pembelian</th> 
             <th>Status Pembelian</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tfoot>
           <tr>
           <th>No</th>
-            <th>Reseller</th>
+            <th>Distributor</th>
             <th>Nama Barang</th>
-            <th>Harga Barang</th>
-            <th>Jumlah Barang</th>
             <th>Total Harga</th>
-            <th>Rekening Tujuan</th>
             <th>Tanggal Pembelian</th> 
             <th>Status Pembelian</th>
+            <th>Action</th>
           </tr>
         </tfoot>
         <tbody>
@@ -90,7 +86,7 @@
                                     $no = 1;
                                     while($output = mysqli_fetch_assoc($jalan)){
                                         $id = $output['id_sesi'];
-
+                                        $detail = $output['id_detail'];
                                         $nama = $output['nama_u'];
                                        
                                         //$orderId = "#".$output['id_sesi']."-".$id_u."-".$nama;
@@ -112,13 +108,10 @@
                                             <td><?php echo $no ;?></td>
                                             <td><?php echo $nama;?></td>
                                             <td><?php echo $produk;?></td>
-                                            <td><?php echo rupiah($harga);?></td>
-                                            <td><?php echo $qty." pcs";?></td>
                                             <td><?php echo rupiah($totalHarga);?></td>
-                                            <td><?php echo $rekening;?></td>
                                             <td><?php echo date("d-m-Y", strtotime($tgl));?></td>
                                             <td><?php echo $st;?></td>
-                                           
+                                            <td> <a data-toggle="modal" class="btn" href="#myModal" id="<?php echo $detail ; ?>">Detail</a></td>
                                         </tr>
                                    <?php $no+=1; } ?>
         </tbody>
@@ -245,7 +238,18 @@
             });
             table.buttons().container().appendTo('#export_buttons');
             $("#export_buttons .btn").removeClass('btn-secondary').addClass('btn-light');
-       
+          $("a[data-toggle=modal]").click(function() {
+            var id_beli = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                dataType: "html",
+                url: "proses/detailBarang.php?id="+id_beli,
+                success: function(msg){
+                    $('#myModal').show();
+                    $('#modal-body').show().html(msg); //this part to pass the var                                                                                                       
+                }
+            });       
+        });   
   });
   </script>
   
