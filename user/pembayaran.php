@@ -166,7 +166,7 @@
                                         </div>
                                         <div class="col-lg-12 form-group">
                                             <label >Rekening Pengirim</label>
-                                            <input type="text" name="rekP" placeholder="Rekening Pengirim" class="form-control" >
+                                            <input type="text" onkeypress='validate(event)' name="rekP" placeholder="Rekening Pengirim" class="form-control" >
                                         </div>
                                         <div class="col-lg-12 form-group">
                                             <label >Bank Pengirim</label>
@@ -178,7 +178,7 @@
                                         </div>
                                         <div id="" class="col-lg-6 form-group">
                                             <label >Jumlah Transfer</label>
-                                            <input type="text" name = "trasfer" id= "transfer"  placeholder="Jumlah Transfer" class="form-control" >
+                                            <input type="text" onkeypress='validate(event)' name = "trasfer" id= "transfer"  placeholder="Jumlah Transfer" class="form-control" >
                                         </div>
                                         <div class="col-lg-6 form-group">
                                             <label >Tanggal Transfer</label>
@@ -186,7 +186,7 @@
                                         </div>
                                         <div class="col-lg-12 form-group">
                                             <label >Bukti Transfer</label>
-                                            <input type="file" name="berkas" id="berkas"  class="form-control" >
+                                            <input type="file"  accept='image/*' name="berkas" id="berkas"  class="form-control" >
                                         </div>
                                         <div class="col-lg-12 form-group">
                                             <button id="bt" class="btn" type="input">Konfirmasi</button>
@@ -217,6 +217,7 @@
 
     <!--Datatables plugin files-->
     <script src='plugins/datatables/datatables.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
     <script>
        $("#keranjang").change(function(){
        var user = $(this).val(); 
@@ -244,17 +245,41 @@
      });  
     $('#transfer').change(function(e){
        var user = $(this).val(); 
+       var user1 = user.replaceAll(".", "");
+       var user2 = user1.replace(",", "");
+       var user3 = user2.slice(0,-2);
        var data = $("#aaaaa").val();
-       
-       if(user == data == true){
+       console.log(user3);
+       console.log(data);
+       if(user3 == data == true){
          $("#bt").prop('disabled', false);
             
        } else {
          $("#bt").prop('disabled', true);
        }         
     });
- 
+    
+    $("#transfer").mask('#.##0,00', {reverse: true});
     </script>
+     <script>
+        function validate(evt) {
+            var theEvent = evt || window.event;
+            
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]|\./;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+  </script>
 </body>
 
 </html>

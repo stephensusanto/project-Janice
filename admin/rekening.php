@@ -132,7 +132,7 @@
           <input type='text'class="form-control" name='nama' id="nama"> <br>
 
           <label for="exampleInputEmail1">Nomor Rekening</label> <br>
-          <input type='textarea' class="form-control" name='nomor' id="nomor"><br> 
+          <input type='textarea' onkeypress='validate(event)'  class="form-control" name='nomor' id="nomor"><br> 
 
           <label for="exampleInputEmail1">Bank Rekening</label>
           <input type='text' class="form-control" name='bank' id="bank"><br>
@@ -240,6 +240,25 @@
         });
   });
     </script>
+     <script>
+        function validate(evt) {
+            var theEvent = evt || window.event;
+            
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]|\./;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+  </script>
   
 </body>
 

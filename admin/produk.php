@@ -147,11 +147,11 @@
 
           <label for="exampleInputEmail1">Harga Distributor</label>
           <input type='text' class="form-control" name='harga_barang' id="harga_barang"><br>
-          <label for="exampleInputEmail1">Harga Reseller</label>
 
+          <label for="exampleInputEmail1">Harga Reseller</label>
           <input type='text' class="form-control" name='harga_reseller' id="harga_reseller"><br>
           <label for="exampleInputEmail1">Gambar Produk</label> <br>
-          <input type="file" name="berkas" id="berkas"> <br> <br>    
+          <input type="file" accept='image/*'  name="berkas" id="berkas"> <br> <br>    
           <label for="exampleInputEmail1">Status</label>
           <Select class="form-control" name='status_barang' id="status_barang">
           <option value='1'> Aktif </option>
@@ -227,8 +227,25 @@
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
   <script src="js/demo/datatables-demo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
   <script>
 		 $(document).ready(function() {
+      function formatRupiah(angka, prefix){
+          var number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split   		= number_string.split(','),
+          sisa     		= split[0].length % 3,
+          rupiah     		= split[0].substr(0, sisa),
+          ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+    
+          // tambahkan titik jika yang di input sudah menjadi angka ribuan
+          if(ribuan){
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+          }
+    
+          rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+          return prefix == undefined ? rupiah+",00" : (rupiah ? '' + rupiah+",00" : '');
+		}
         $(".btn_edit").click(function(event){
           var id_barang = $(this).data('id_barang');
           var nama_barang = $(this).data('nama_barang');
@@ -236,14 +253,14 @@
           var harga_barang = $(this).data('harga_barang');
           var harga_reseller = $(this).data('harga_reseller');
           var status_barang = $(this).data('status_barang');
-          
+          console.log();
         
           $("#id_barang").val(id_barang);
           $("#nama_barang").val(nama_barang);
           $("#deskripsi_barang").val(deskripsi_barang);
-          $("#harga_barang").val(harga_barang);
+          $("#harga_barang").val(formatRupiah(harga_barang.toString(), ""));
           
-          $("#harga_reseller").val(harga_reseller);
+          $("#harga_reseller").val(formatRupiah(harga_reseller.toString(), ""));
           
           
           $("#status_barang").val(status_barang);
@@ -257,6 +274,9 @@
           */
           
         });
+        $("#harga_barang").mask('#.##0,00', {reverse: true});
+        $("#harga_reseller").mask('#.##0,00', {reverse: true});
+      
   });
   </script>
   
