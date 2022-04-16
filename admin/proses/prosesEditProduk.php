@@ -11,10 +11,15 @@ if(!empty($_POST["deskripsi_barang"])){
     $desc = $_POST['deskripsi_barang'];
 }
 if(!empty($_POST["harga_barang"])){
-    $harga = $_POST['harga_barang'];
+    $harga1 = str_replace(".","",$_POST['harga_barang']);
+    $harga2 = str_replace(",","",$harga1);
+    $harga = substr($harga2, 0, -2);
 }
 if(!empty($_POST["harga_reseller"])){
-   $harga_reseller = $_POST['harga_reseller'];
+    $harga_reseller1 = str_replace(".","",$_POST['harga_reseller']);
+    $harga_reseller2 = str_replace(",","",$harga_reseller1);
+    $harga_reseller = substr($harga_reseller2, 0, -2);
+
 }
 
   $status = $_POST['status_barang'];
@@ -28,7 +33,7 @@ $id_u = $_SESSION['id_user'];
   
     if(!$gambar){
         if(!$desc || !$harga || !$harga_reseller || $status == ''){
-            header("Location:../produk.php?alert=1");
+         //   header("Location:../produk.php?alert=1");
         }else {
           echo  $query = "UPDATE produk
             SET
